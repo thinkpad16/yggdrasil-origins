@@ -1,0 +1,11 @@
+{
+  "icon": {
+    "id": "minecraft:ghast_tear"
+  },
+  "order": 23,
+  "impact": 2,
+  "powers": [
+    "yggdrasil_origins:path_tiefling_blood_rite_power",
+    "yggdrasil_origins:path_tiefling_blood_rite_no_regen"
+  ]
+}

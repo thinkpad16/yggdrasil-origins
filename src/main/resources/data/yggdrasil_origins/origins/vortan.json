@@ -1,0 +1,62 @@
+{
+  "icon": {
+    "id": "minecraft:copper_ingot"
+  },
+  "order": 18,
+  "impact": 2,
+  "powers": [
+    "yggdrasil_origins:vortan_fists",
+    "yggdrasil_origins:vortan_inner_force",
+    "yggdrasil_origins:vortan_empty_hand",
+    "yggdrasil_origins:vortan_weaponless",
+    "yggdrasil_origins:vortan_flow",
+    "yggdrasil_origins:vortan_no_plate",
+    "yggdrasil_origins:vortan_lean"
+  ],
+  "visual": {
+    "parts": [
+      "forelock",
+      "sash"
+    ],
+    "height": 1.02,
+    "width": 0.95,
+    "tint": "#B8484C",
+    "palette": [
+      "#B8484C",
+      "#D9C27E",
+      "#5B3A2F",
+      "#2F3A4A",
+      "#C9A227",
+      "#8C8176"
+    ],
+    "looks": [
+      {
+        "id": "vortan_steppe",
+        "tint": "#B8484C",
+        "size": 1.0,
+        "shapes": {
+          "forelock": 0,
+          "sash": 0
+        }
+      },
+      {
+        "id": "vortan_crimson",
+        "tint": "#D9C27E",
+        "size": 1.1,
+        "shapes": {
+          "forelock": 1,
+          "sash": 1
+        }
+      },
+      {
+        "id": "vortan_raven",
+        "tint": "#5B3A2F",
+        "size": 0.9,
+        "shapes": {
+          "forelock": 2,
+          "sash": 2
+        }
+      }
+    ]
+  }
+}

@@ -1,0 +1,25 @@
+# gradle
+build/
+.gradle/
+
+# the dev client and server: worlds, logs, configs and the mods they load
+run/
+
+# ides
+.idea/
+*.iml
+*.ipr
+*.iws
+.classpath
+.project
+.settings/
+.vscode/
+*.launch
+
+# os
+.DS_Store
+Thumbs.db
+
+# python leftovers from the tools
+__pycache__/
+*.pyc

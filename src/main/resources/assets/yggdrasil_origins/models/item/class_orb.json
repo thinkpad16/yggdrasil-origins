@@ -1,0 +1,4 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": { "layer0": "yggdrasil_origins:item/class_orb" }
+}

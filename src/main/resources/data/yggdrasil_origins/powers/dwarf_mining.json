@@ -1,0 +1,23 @@
+{
+  "type": "apoli:attribute",
+  "modifiers": [
+    {
+      "id": "yggdrasil_origins:dwarf_mining_block_break_speed",
+      "attribute": "minecraft:player.block_break_speed",
+      "amount": 0.3,
+      "operation": "add_multiplied_base"
+    },
+    {
+      "id": "yggdrasil_origins:dwarf_mining_mining_efficiency",
+      "attribute": "minecraft:player.mining_efficiency",
+      "amount": 4.0,
+      "operation": "add_value"
+    },
+    {
+      "id": "yggdrasil_origins:dwarf_mining_luck",
+      "attribute": "minecraft:generic.luck",
+      "amount": 1.0,
+      "operation": "add_value"
+    }
+  ]
+}

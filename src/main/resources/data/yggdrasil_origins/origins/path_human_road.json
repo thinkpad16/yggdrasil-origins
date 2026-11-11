@@ -1,0 +1,18 @@
+{
+  "icon": {
+    "id": "minecraft:leather_boots"
+  },
+  "order": 44,
+  "impact": 1,
+  "powers": [
+    "yggdrasil_origins:path_human_road_tier1",
+    "yggdrasil_origins:path_human_road_tier2",
+    "yggdrasil_origins:path_human_road_tier3",
+    "yggdrasil_origins:path_human_road_light"
+  ],
+  "visual": {
+    "parts": [
+      "travel_pack"
+    ]
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "icon": {
+    "id": "minecraft:golden_apple"
+  },
+  "order": 28,
+  "impact": 1,
+  "powers": [
+    "yggdrasil_origins:path_angel_warden_mercy",
+    "yggdrasil_origins:path_angel_warden_fragile"
+  ],
+  "visual": {
+    "parts": [
+      "pauldrons"
+    ]
+  }
+}

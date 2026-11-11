@@ -1,0 +1,9 @@
+{
+  "type": "apoli:attribute",
+  "modifier": {
+    "id": "yggdrasil_origins:angel_grace_distance",
+    "attribute": "combat_roll:distance",
+    "amount": 0.15,
+    "operation": "add_multiplied_base"
+  }
+}

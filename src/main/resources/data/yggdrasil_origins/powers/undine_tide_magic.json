@@ -1,0 +1,11 @@
+{
+  "type": "apoli:attribute",
+  "modifiers": [
+    {
+      "id": "yggdrasil_origins:undine_tide_magic_water",
+      "attribute": "spell_power:water",
+      "amount": 0.08,
+      "operation": "add_multiplied_total"
+    }
+  ]
+}

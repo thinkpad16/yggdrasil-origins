@@ -1,0 +1,11 @@
+{
+  "icon": {
+    "id": "minecraft:shield"
+  },
+  "order": 34,
+  "impact": 1,
+  "powers": [
+    "yggdrasil_origins:path_amberborn_wall_set",
+    "yggdrasil_origins:path_amberborn_wall_rooted"
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "type": "apoli:attribute",
+  "modifiers": [
+    {
+      "id": "yggdrasil_origins:angel_pacifist_attack_damage",
+      "attribute": "minecraft:generic.attack_damage",
+      "amount": -0.5,
+      "operation": "add_multiplied_base"
+    },
+    {
+      "id": "yggdrasil_origins:angel_pacifist_damage",
+      "attribute": "ranged_weapon:damage",
+      "amount": -0.5,
+      "operation": "add_multiplied_total"
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "type": "apoli:attribute",
+  "modifiers": [
+    {
+      "id": "yggdrasil_origins:path_geonite_bulwark_anchor_movement_speed",
+      "attribute": "minecraft:generic.movement_speed",
+      "amount": -0.08,
+      "operation": "add_multiplied_base"
+    },
+    {
+      "id": "yggdrasil_origins:path_geonite_bulwark_anchor_recharge",
+      "attribute": "combat_roll:recharge",
+      "amount": 0.27,
+      "operation": "add_multiplied_base"
+    }
+  ]
+}

@@ -1,0 +1,63 @@
+{
+  "icon": {
+    "id": "minecraft:amethyst_shard"
+  },
+  "order": 11,
+  "impact": 1,
+  "powers": [
+    "yggdrasil_origins:cantharis_resonance",
+    "yggdrasil_origins:cantharis_tempo",
+    "yggdrasil_origins:cantharis_crystal_voice",
+    "yggdrasil_origins:cantharis_hollow_frame",
+    "yggdrasil_origins:cantharis_no_steel",
+    "yggdrasil_origins:cantharis_brittle",
+    "yggdrasil_origins:cantharis_stage_nerves",
+    "yggdrasil_origins:cantharis_no_plate"
+  ],
+  "visual": {
+    "parts": [
+      "antennae",
+      "carapace"
+    ],
+    "height": 0.95,
+    "width": 0.95,
+    "tint": "#7FD1FF",
+    "palette": [
+      "#8FB94A",
+      "#C9A227",
+      "#4A5B2F",
+      "#D9C27E",
+      "#2F3A1F",
+      "#A8D9E0"
+    ],
+    "looks": [
+      {
+        "id": "cantharis_chitin",
+        "tint": "#8FB94A",
+        "size": 1.0,
+        "shapes": {
+          "antennae": 0,
+          "carapace": 0
+        }
+      },
+      {
+        "id": "cantharis_amber",
+        "tint": "#C9A227",
+        "size": 1.08,
+        "shapes": {
+          "antennae": 1,
+          "carapace": 1
+        }
+      },
+      {
+        "id": "cantharis_glow",
+        "tint": "#4A5B2F",
+        "size": 0.92,
+        "shapes": {
+          "antennae": 2,
+          "carapace": 2
+        }
+      }
+    ]
+  }
+}

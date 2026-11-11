@@ -1,0 +1,17 @@
+{
+  "type": "apoli:attribute",
+  "modifiers": [
+    {
+      "id": "yggdrasil_origins:path_human_road_light_armor",
+      "attribute": "minecraft:generic.armor",
+      "amount": -3.0,
+      "operation": "add_value"
+    },
+    {
+      "id": "yggdrasil_origins:path_human_road_light_recharge",
+      "attribute": "combat_roll:recharge",
+      "amount": 0.1,
+      "operation": "add_multiplied_base"
+    }
+  ]
+}

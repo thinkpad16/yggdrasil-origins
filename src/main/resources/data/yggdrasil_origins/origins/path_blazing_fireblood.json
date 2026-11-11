@@ -1,0 +1,11 @@
+{
+  "icon": {
+    "id": "minecraft:blaze_rod"
+  },
+  "order": 9,
+  "impact": 1,
+  "powers": [
+    "yggdrasil_origins:path_blazing_fireblood_splash",
+    "yggdrasil_origins:path_blazing_fireblood_boil"
+  ]
+}

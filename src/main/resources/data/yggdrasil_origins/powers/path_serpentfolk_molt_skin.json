@@ -1,0 +1,17 @@
+{
+  "type": "apoli:attribute",
+  "modifiers": [
+    {
+      "id": "yggdrasil_origins:path_serpentfolk_molt_skin_healing_taken",
+      "attribute": "spell_engine:healing_taken",
+      "amount": -0.15,
+      "operation": "add_multiplied_base"
+    },
+    {
+      "id": "yggdrasil_origins:path_serpentfolk_molt_skin_armor",
+      "attribute": "minecraft:generic.armor",
+      "amount": -1.0,
+      "operation": "add_value"
+    }
+  ]
+}

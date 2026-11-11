@@ -1,0 +1,29 @@
+{
+  "type": "apoli:conditioned_attribute",
+  "tick_rate": 5,
+  "condition": {
+    "type": "apoli:fall_distance",
+    "comparison": ">",
+    "compare_to": 1.0
+  },
+  "modifiers": [
+    {
+      "id": "yggdrasil_origins:path_sylph_windlens_aloft_air",
+      "attribute": "spell_power:air",
+      "amount": 0.05,
+      "operation": "add_multiplied_total"
+    },
+    {
+      "id": "yggdrasil_origins:path_sylph_windlens_aloft_lightning",
+      "attribute": "spell_power:lightning",
+      "amount": 0.03,
+      "operation": "add_multiplied_total"
+    },
+    {
+      "id": "yggdrasil_origins:path_sylph_windlens_aloft_velocity",
+      "attribute": "ranged_weapon:velocity",
+      "amount": 0.14,
+      "operation": "add_multiplied_total"
+    }
+  ]
+}

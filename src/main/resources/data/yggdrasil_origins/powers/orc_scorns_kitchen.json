@@ -1,0 +1,17 @@
+{
+  "type": "apoli:modify_food",
+  "item_condition": {
+    "type": "apoli:ingredient",
+    "ingredient": {
+      "tag": "yggdrasil_origins:cooked_food"
+    }
+  },
+  "food_modifier": {
+    "operation": "multiply_base_additive",
+    "amount": -0.25
+  },
+  "saturation_modifier": {
+    "operation": "multiply_base_additive",
+    "amount": -0.25
+  }
+}

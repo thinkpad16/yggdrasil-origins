@@ -1,0 +1,11 @@
+{
+  "icon": {
+    "id": "minecraft:iron_hoe"
+  },
+  "order": 1,
+  "impact": 1,
+  "powers": [
+    "yggdrasil_origins:path_undead_reaper_harvest",
+    "yggdrasil_origins:path_undead_reaper_dull"
+  ]
+}

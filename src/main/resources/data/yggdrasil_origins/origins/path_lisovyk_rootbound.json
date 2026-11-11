@@ -1,0 +1,17 @@
+{
+  "icon": {
+    "id": "minecraft:hanging_roots"
+  },
+  "order": 38,
+  "impact": 1,
+  "powers": [
+    "yggdrasil_origins:path_lisovyk_rootbound_hold",
+    "yggdrasil_origins:path_lisovyk_rootbound_drag"
+  ],
+  "visual": {
+    "parts": [
+      "roots"
+    ],
+    "tint": "#6B7F4A"
+  }
+}

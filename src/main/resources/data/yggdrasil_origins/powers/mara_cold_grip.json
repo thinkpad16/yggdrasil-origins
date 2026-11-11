@@ -1,0 +1,17 @@
+{
+  "type": "apoli:attribute",
+  "modifiers": [
+    {
+      "id": "yggdrasil_origins:mara_cold_grip_0",
+      "attribute": "mrpg_lib:spell_vampire",
+      "amount": 0.1,
+      "operation": "add_multiplied_base"
+    },
+    {
+      "id": "yggdrasil_origins:mara_cold_grip_1",
+      "attribute": "spell_engine:evasion_chance",
+      "amount": 0.06,
+      "operation": "add_multiplied_base"
+    }
+  ]
+}

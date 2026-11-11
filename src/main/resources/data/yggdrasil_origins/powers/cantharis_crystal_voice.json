@@ -1,0 +1,17 @@
+{
+  "type": "apoli:attribute",
+  "modifiers": [
+    {
+      "id": "yggdrasil_origins:cantharis_crystal_voice_healing_taken",
+      "attribute": "spell_engine:healing_taken",
+      "amount": 0.09,
+      "operation": "add_multiplied_base"
+    },
+    {
+      "id": "yggdrasil_origins:cantharis_crystal_voice_critical_chance",
+      "attribute": "spell_power:critical_chance",
+      "amount": 0.03,
+      "operation": "add_multiplied_base"
+    }
+  ]
+}

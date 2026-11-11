@@ -1,0 +1,23 @@
+{
+  "type": "apoli:multiple",
+  "melee": {
+    "type": "apoli:modify_damage_dealt",
+    "modifier": {
+      "operation": "multiply_base_additive",
+      "amount": -0.65
+    },
+    "damage_condition": {
+      "type": "apoli:type",
+      "damage_type": "minecraft:player_attack"
+    }
+  },
+  "ranged": {
+    "type": "apoli:attribute",
+    "modifier": {
+      "id": "yggdrasil_origins:lunaris_pacifist_hands_damage",
+      "attribute": "ranged_weapon:damage",
+      "amount": -0.55,
+      "operation": "add_multiplied_total"
+    }
+  }
+}

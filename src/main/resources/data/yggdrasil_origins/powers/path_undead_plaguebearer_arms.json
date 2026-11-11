@@ -1,0 +1,23 @@
+{
+  "type": "apoli:attribute",
+  "modifiers": [
+    {
+      "id": "yggdrasil_origins:path_undead_plaguebearer_arms_rogue_weapon_damage",
+      "attribute": "attributes_ld:rogue_weapon_damage",
+      "amount": -0.18,
+      "operation": "add_multiplied_base"
+    },
+    {
+      "id": "yggdrasil_origins:path_undead_plaguebearer_arms_axe_damage",
+      "attribute": "attributes_ld:axe_damage",
+      "amount": -0.18,
+      "operation": "add_multiplied_base"
+    },
+    {
+      "id": "yggdrasil_origins:path_undead_plaguebearer_arms_sickle_damage",
+      "attribute": "attributes_ld:sickle_damage",
+      "amount": -0.18,
+      "operation": "add_multiplied_base"
+    }
+  ]
+}

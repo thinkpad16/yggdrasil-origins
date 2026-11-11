@@ -1,0 +1,12 @@
+{
+  "type": "apoli:action_over_time",
+  "interval": 80,
+  "condition": {
+    "type": "apoli:submerged_in",
+    "fluid": "minecraft:water"
+  },
+  "entity_action": {
+    "type": "apoli:heal",
+    "amount": 1.0
+  }
+}

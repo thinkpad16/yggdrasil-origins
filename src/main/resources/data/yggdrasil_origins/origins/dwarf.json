@@ -1,0 +1,69 @@
+{
+  "icon": {
+    "id": "minecraft:iron_pickaxe"
+  },
+  "order": 3,
+  "impact": 3,
+  "powers": [
+    "yggdrasil_origins:dwarf_mining",
+    "yggdrasil_origins:dwarf_sturdy",
+    "yggdrasil_origins:dwarf_tenacity",
+    "yggdrasil_origins:dwarf_weapon_mastery",
+    "yggdrasil_origins:dwarf_earth_magic",
+    "yggdrasil_origins:dwarf_stature",
+    "yggdrasil_origins:dwarf_water_weakness",
+    "yggdrasil_origins:dwarf_underwater_mining",
+    "yggdrasil_origins:dwarf_air_weakness",
+    "yggdrasil_origins:dwarf_slow_draw",
+    "yggdrasil_origins:dwarf_short_roll",
+    "yggdrasil_origins:dwarf_magic_resistance",
+    "yggdrasil_origins:dwarf_deep_reserves",
+    "yggdrasil_origins:dwarf_shield_wall",
+    "yggdrasil_origins:dwarf_lava_sight"
+  ],
+  "visual": {
+    "parts": [
+      "beard"
+    ],
+    "height": 0.85,
+    "width": 1.12,
+    "tint": "#7A5A3A",
+    "palette": [
+      "#B5743A",
+      "#8C8C94",
+      "#5E4631",
+      "#D9A441",
+      "#6E6E78",
+      "#3F3A36"
+    ],
+    "looks": [
+      {
+        "id": "dwarf_forge",
+        "tint": "#B5743A",
+        "size": 1.1,
+        "shapes": {
+          "beard": 0,
+          "vambrace": 0
+        }
+      },
+      {
+        "id": "dwarf_iron",
+        "tint": "#8C8C94",
+        "size": 1.0,
+        "shapes": {
+          "beard": 1,
+          "vambrace": 1
+        }
+      },
+      {
+        "id": "dwarf_ash",
+        "tint": "#5E4631",
+        "size": 0.92,
+        "shapes": {
+          "beard": 2,
+          "vambrace": 2
+        }
+      }
+    ]
+  }
+}

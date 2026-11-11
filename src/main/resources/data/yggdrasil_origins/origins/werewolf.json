@@ -1,0 +1,66 @@
+{
+  "icon": {
+    "id": "minecraft:wolf_armor"
+  },
+  "order": 23,
+  "impact": 3,
+  "powers": [
+    "yggdrasil_origins:werewolf_night_hunter",
+    "yggdrasil_origins:werewolf_claws",
+    "yggdrasil_origins:werewolf_keen_senses",
+    "yggdrasil_origins:werewolf_curse",
+    "yggdrasil_origins:werewolf_sun_weary",
+    "yggdrasil_origins:werewolf_no_bows",
+    "yggdrasil_origins:werewolf_beast_mind"
+  ],
+  "visual": {
+    "parts": [
+      "wolf_ears",
+      "tail",
+      "fangs"
+    ],
+    "height": 1.04,
+    "width": 1.05,
+    "tint": "#6B5440",
+    "palette": [
+      "#8C8176",
+      "#3A332E",
+      "#E0DAD0",
+      "#6B4A32",
+      "#A9A29B",
+      "#51402F"
+    ],
+    "looks": [
+      {
+        "id": "werewolf_grey",
+        "tint": "#8C8176",
+        "size": 1.0,
+        "shapes": {
+          "wolf_ears": 0,
+          "tail": 0,
+          "fangs": 0
+        }
+      },
+      {
+        "id": "werewolf_black",
+        "tint": "#3A332E",
+        "size": 1.1,
+        "shapes": {
+          "wolf_ears": 1,
+          "tail": 1,
+          "fangs": 1
+        }
+      },
+      {
+        "id": "werewolf_snow",
+        "tint": "#E0DAD0",
+        "size": 0.92,
+        "shapes": {
+          "wolf_ears": 2,
+          "tail": 2,
+          "fangs": 2
+        }
+      }
+    ]
+  }
+}

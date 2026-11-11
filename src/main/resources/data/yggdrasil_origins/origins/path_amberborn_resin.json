@@ -1,0 +1,16 @@
+{
+  "icon": {
+    "id": "minecraft:honeycomb"
+  },
+  "order": 45,
+  "impact": 1,
+  "powers": [
+    "yggdrasil_origins:path_amberborn_resin_set",
+    "yggdrasil_origins:path_amberborn_resin_run"
+  ],
+  "visual": {
+    "parts": [
+      "gorget"
+    ]
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "type": "apoli:attribute",
+  "modifiers": [
+    {
+      "id": "yggdrasil_origins:undine_fluid_form_water_movement_efficiency",
+      "attribute": "minecraft:generic.water_movement_efficiency",
+      "amount": 0.75,
+      "operation": "add_value"
+    },
+    {
+      "id": "yggdrasil_origins:undine_fluid_form_oxygen_bonus",
+      "attribute": "minecraft:generic.oxygen_bonus",
+      "amount": 10.0,
+      "operation": "add_value"
+    },
+    {
+      "id": "yggdrasil_origins:undine_fluid_form_evasion_chance",
+      "attribute": "spell_engine:evasion_chance",
+      "amount": 0.08,
+      "operation": "add_multiplied_base"
+    },
+    {
+      "id": "yggdrasil_origins:undine_fluid_form_swim_speed",
+      "attribute": "yggdrasil_origins:swim_speed",
+      "amount": 0.4,
+      "operation": "add_multiplied_base"
+    }
+  ]
+}

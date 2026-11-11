@@ -1,0 +1,66 @@
+{
+  "icon": {
+    "id": "minecraft:phantom_membrane"
+  },
+  "order": 27,
+  "impact": 3,
+  "powers": [
+    "yggdrasil_origins:mara_shadow_word",
+    "yggdrasil_origins:mara_cold_grip",
+    "yggdrasil_origins:mara_waking_dread",
+    "yggdrasil_origins:mara_unseen",
+    "yggdrasil_origins:mara_night_born",
+    "yggdrasil_origins:mara_thin_as_sleep",
+    "yggdrasil_origins:mara_daylight_undoes_her",
+    "yggdrasil_origins:mara_no_iron"
+  ],
+  "visual": {
+    "parts": [
+      "braid",
+      "tendrils"
+    ],
+    "optional": [
+      "braid"
+    ],
+    "height": 1.02,
+    "width": 0.88,
+    "tint": "#6E6A8C",
+    "palette": [
+      "#6E8C6A",
+      "#8C8AA8",
+      "#C4B48C",
+      "#4A5A6B",
+      "#A8C4B8",
+      "#3E4A44"
+    ],
+    "looks": [
+      {
+        "id": "mara_water",
+        "tint": "#6E8C6A",
+        "size": 1.0,
+        "shapes": {
+          "braid": 0,
+          "tendrils": 0
+        }
+      },
+      {
+        "id": "mara_willow",
+        "tint": "#8C8AA8",
+        "size": 1.1,
+        "shapes": {
+          "braid": 1,
+          "tendrils": 1
+        }
+      },
+      {
+        "id": "mara_dusk",
+        "tint": "#C4B48C",
+        "size": 0.92,
+        "shapes": {
+          "braid": 2,
+          "tendrils": 2
+        }
+      }
+    ]
+  }
+}

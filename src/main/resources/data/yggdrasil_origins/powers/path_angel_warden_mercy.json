@@ -1,0 +1,17 @@
+{
+  "type": "apoli:attribute",
+  "modifiers": [
+    {
+      "id": "yggdrasil_origins:path_angel_warden_mercy_healing",
+      "attribute": "spell_power:healing",
+      "amount": 0.2,
+      "operation": "add_multiplied_total"
+    },
+    {
+      "id": "yggdrasil_origins:path_angel_warden_mercy_healing_taken",
+      "attribute": "spell_engine:healing_taken",
+      "amount": 0.1,
+      "operation": "add_multiplied_base"
+    }
+  ]
+}

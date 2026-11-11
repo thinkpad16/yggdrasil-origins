@@ -1,0 +1,38 @@
+{
+  "type": "apoli:action_when_hit",
+  "cooldown": 20,
+  "condition": {
+    "type": "apoli:all_of",
+    "conditions": [
+      {
+        "type": "apoli:relative_health",
+        "comparison": "<",
+        "compare_to": 0.2
+      },
+      {
+        "type": "apoli:power_active",
+        "power": "yggdrasil_origins:path_half_giant_second_wind_timer"
+      }
+    ]
+  },
+  "bientity_action": {
+    "type": "apoli:target_action",
+    "action": {
+      "type": "apoli:sequence",
+      "actions": [
+        {
+          "type": "apoli:trigger_cooldown",
+          "power": "yggdrasil_origins:path_half_giant_second_wind_timer"
+        },
+        {
+          "type": "apoli:absorb",
+          "fraction_of_max_health": 0.3
+        },
+        {
+          "type": "apoli:play_sound",
+          "sound": "minecraft:item.totem.use"
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "type": "apoli:attribute",
+  "modifiers": [
+    {
+      "id": "yggdrasil_origins:hydroletilus_water_master_water_movement_efficiency",
+      "attribute": "minecraft:generic.water_movement_efficiency",
+      "amount": 0.45,
+      "operation": "add_value"
+    },
+    {
+      "id": "yggdrasil_origins:hydroletilus_water_master_water_speed",
+      "attribute": "yggdrasil_origins:swim_speed",
+      "amount": 0.45,
+      "operation": "add_multiplied_base"
+    },
+    {
+      "id": "yggdrasil_origins:hydroletilus_water_master_submerged_mining_speed",
+      "attribute": "minecraft:player.submerged_mining_speed",
+      "amount": 0.5,
+      "operation": "add_value"
+    },
+    {
+      "id": "yggdrasil_origins:hydroletilus_water_master_oxygen_bonus",
+      "attribute": "minecraft:generic.oxygen_bonus",
+      "amount": 10.0,
+      "operation": "add_value"
+    }
+  ]
+}

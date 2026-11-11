@@ -1,0 +1,11 @@
+{
+  "icon": {
+    "id": "minecraft:feather"
+  },
+  "order": 52,
+  "impact": 1,
+  "powers": [
+    "yggdrasil_origins:path_halfling_unseen_quiet",
+    "yggdrasil_origins:path_halfling_unseen_small"
+  ]
+}

@@ -1,0 +1,24 @@
+{
+  "type": "apoli:conditioned_attribute",
+  "tick_rate": 10,
+  "condition": {
+    "type": "apoli:any_of",
+    "conditions": [
+      {
+        "type": "apoli:on_fire"
+      },
+      {
+        "type": "apoli:dimension",
+        "dimension": "minecraft:the_nether"
+      }
+    ]
+  },
+  "modifiers": [
+    {
+      "id": "yggdrasil_origins:path_blazing_pyromancer_whitehot_fire",
+      "attribute": "spell_power:fire",
+      "amount": 0.05,
+      "operation": "add_multiplied_total"
+    }
+  ]
+}

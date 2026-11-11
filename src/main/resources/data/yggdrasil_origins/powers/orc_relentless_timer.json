@@ -1,0 +1,8 @@
+{
+  "type": "apoli:cooldown",
+  "cooldown": 4800,
+  "hidden": true,
+  "hud_render": {
+    "should_render": true
+  }
+}

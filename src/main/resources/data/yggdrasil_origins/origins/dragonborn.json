@@ -1,0 +1,72 @@
+{
+  "icon": {
+    "id": "minecraft:dragon_breath"
+  },
+  "order": 22,
+  "impact": 3,
+  "powers": [
+    "yggdrasil_origins:dragonborn_scales",
+    "yggdrasil_origins:dragonborn_breath",
+    "yggdrasil_origins:dragonborn_draconic_blood",
+    "yggdrasil_origins:dragonborn_proud",
+    "yggdrasil_origins:dragonborn_bulk",
+    "yggdrasil_origins:dragonborn_cold_blooded",
+    "yggdrasil_origins:dragonborn_magic_resistance",
+    "yggdrasil_origins:dragonborn_deep_reserves",
+    "yggdrasil_origins:dragonborn_shield_wall",
+    "yggdrasil_origins:dragonborn_lava_born"
+  ],
+  "visual": {
+    "parts": [
+      "dragon_tail",
+      "crest",
+      "claws"
+    ],
+    "optional": [
+      "crest"
+    ],
+    "height": 1.06,
+    "width": 1.05,
+    "tint": "#8FBF78",
+    "palette": [
+      "#7FB069",
+      "#C4902F",
+      "#8C3B2E",
+      "#2E6B5E",
+      "#D9CBA3",
+      "#3A4A55"
+    ],
+    "looks": [
+      {
+        "id": "dragonborn_scale",
+        "tint": "#7FB069",
+        "size": 1.0,
+        "shapes": {
+          "dragon_tail": 0,
+          "crest": 0,
+          "claws": 0
+        }
+      },
+      {
+        "id": "dragonborn_ember",
+        "tint": "#C4902F",
+        "size": 1.1,
+        "shapes": {
+          "dragon_tail": 1,
+          "crest": 1,
+          "claws": 1
+        }
+      },
+      {
+        "id": "dragonborn_jade",
+        "tint": "#8C3B2E",
+        "size": 0.92,
+        "shapes": {
+          "dragon_tail": 2,
+          "crest": 2,
+          "claws": 2
+        }
+      }
+    ]
+  }
+}

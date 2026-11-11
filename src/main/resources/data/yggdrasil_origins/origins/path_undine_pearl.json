@@ -1,0 +1,11 @@
+{
+  "icon": {
+    "id": "minecraft:nautilus_shell"
+  },
+  "order": 57,
+  "impact": 1,
+  "powers": [
+    "yggdrasil_origins:path_undine_pearl_deep",
+    "yggdrasil_origins:path_undine_pearl_dry"
+  ]
+}

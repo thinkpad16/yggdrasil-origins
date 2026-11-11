@@ -1,0 +1,11 @@
+{
+  "icon": {
+    "id": "minecraft:netherite_axe"
+  },
+  "order": 17,
+  "impact": 1,
+  "powers": [
+    "yggdrasil_origins:path_orc_shieldbreaker_pierce",
+    "yggdrasil_origins:path_orc_shieldbreaker_naked"
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "type": "apoli:attribute",
+  "modifiers": [
+    {
+      "id": "yggdrasil_origins:ferrine_heavy_step_movement_speed",
+      "attribute": "minecraft:generic.movement_speed",
+      "amount": -0.19,
+      "operation": "add_multiplied_base"
+    },
+    {
+      "id": "yggdrasil_origins:ferrine_heavy_step_recharge",
+      "attribute": "combat_roll:recharge",
+      "amount": 0.51,
+      "operation": "add_multiplied_base"
+    }
+  ]
+}

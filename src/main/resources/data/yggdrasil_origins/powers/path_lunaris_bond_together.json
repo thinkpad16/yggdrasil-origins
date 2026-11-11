@@ -1,0 +1,32 @@
+{
+  "type": "apoli:conditioned_attribute",
+  "tick_rate": 20,
+  "condition": {
+    "type": "apoli:entity_in_radius",
+    "radius": 8,
+    "shape": "cube",
+    "comparison": ">=",
+    "compare_to": 2,
+    "bientity_condition": {
+      "type": "apoli:target_condition",
+      "condition": {
+        "type": "apoli:entity_type",
+        "entity_type": "minecraft:player"
+      }
+    }
+  },
+  "modifiers": [
+    {
+      "id": "yggdrasil_origins:path_lunaris_bond_together_healing",
+      "attribute": "spell_power:healing",
+      "amount": 0.17,
+      "operation": "add_multiplied_total"
+    },
+    {
+      "id": "yggdrasil_origins:path_lunaris_bond_together_armor",
+      "attribute": "minecraft:generic.armor",
+      "amount": 2.0,
+      "operation": "add_value"
+    }
+  ]
+}

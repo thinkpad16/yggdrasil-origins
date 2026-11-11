@@ -1,0 +1,26 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "org.origins_yggdrasil.yggdrasil_origins.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "mixins": [
+    "EffectImmunityMixin",
+    "EffectMixin",
+    "FluidWalkMixin",
+    "FoodDataRegenMixin",
+    "FoodMixin",
+    "LivingEntityDamageMixin",
+    "PlayerDimensionsMixin",
+    "PlayerMiscMixin",
+    "SwimSpeedMixin",
+    "VisibilityMixin",
+    "VisualHolderMixin",
+    "WaterPushMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  },
+  "overwrites": {
+    "requireAnnotations": true
+  }
+}

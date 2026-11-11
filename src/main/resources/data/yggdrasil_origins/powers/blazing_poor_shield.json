@@ -1,0 +1,9 @@
+{
+  "type": "apoli:attribute",
+  "modifier": {
+    "id": "yggdrasil_origins:blazing_poor_shield_shield_bonus",
+    "attribute": "attributes_ld:shield_bonus",
+    "amount": -0.42,
+    "operation": "add_multiplied_base"
+  }
+}

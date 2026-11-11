@@ -1,0 +1,17 @@
+{
+  "type": "apoli:attribute",
+  "modifiers": [
+    {
+      "id": "yggdrasil_origins:path_cantharis_second_voice_echo_arcane",
+      "attribute": "spell_power:arcane",
+      "amount": 0.05,
+      "operation": "add_multiplied_total"
+    },
+    {
+      "id": "yggdrasil_origins:path_cantharis_second_voice_echo_haste",
+      "attribute": "spell_power:haste",
+      "amount": 0.06,
+      "operation": "add_multiplied_base"
+    }
+  ]
+}

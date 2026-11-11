@@ -1,0 +1,23 @@
+{
+  "type": "apoli:attribute",
+  "modifiers": [
+    {
+      "id": "yggdrasil_origins:mara_no_iron_0",
+      "attribute": "attributes_ld:warrior_weapon_damage",
+      "amount": -0.34,
+      "operation": "add_multiplied_base"
+    },
+    {
+      "id": "yggdrasil_origins:mara_no_iron_1",
+      "attribute": "attributes_ld:hammer_damage",
+      "amount": -0.4,
+      "operation": "add_multiplied_base"
+    },
+    {
+      "id": "yggdrasil_origins:mara_no_iron_2",
+      "attribute": "attributes_ld:shield_bonus",
+      "amount": -0.45,
+      "operation": "add_multiplied_base"
+    }
+  ]
+}

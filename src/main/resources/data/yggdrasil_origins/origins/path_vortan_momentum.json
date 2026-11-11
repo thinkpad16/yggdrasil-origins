@@ -1,0 +1,11 @@
+{
+  "icon": {
+    "id": "minecraft:sugar"
+  },
+  "order": 14,
+  "impact": 1,
+  "powers": [
+    "yggdrasil_origins:path_vortan_momentum_tempo",
+    "yggdrasil_origins:path_vortan_momentum_price"
+  ]
+}

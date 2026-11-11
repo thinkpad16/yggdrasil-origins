@@ -1,0 +1,21 @@
+{
+  "type": "apoli:conditioned_attribute",
+  "tick_rate": 20,
+  "condition": {
+    "type": "apoli:exposed_to_sun"
+  },
+  "modifiers": [
+    {
+      "id": "yggdrasil_origins:lunaris_sun_wilt_healing",
+      "attribute": "spell_power:healing",
+      "amount": -0.65,
+      "operation": "add_multiplied_total"
+    },
+    {
+      "id": "yggdrasil_origins:lunaris_sun_wilt_movement_speed",
+      "attribute": "minecraft:generic.movement_speed",
+      "amount": -0.11,
+      "operation": "add_multiplied_base"
+    }
+  ]
+}

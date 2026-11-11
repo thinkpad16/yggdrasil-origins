@@ -1,0 +1,46 @@
+{
+  "type": "apoli:burn",
+  "interval": 20,
+  "burn_duration": 4,
+  "condition": {
+    "type": "apoli:all_of",
+    "conditions": [
+      {
+        "type": "apoli:all_of",
+        "conditions": [
+          {
+            "type": "apoli:exposed_to_sun"
+          },
+          {
+            "type": "apoli:invisible",
+            "inverted": true
+          },
+          {
+            "type": "apoli:status_effect",
+            "effect": "minecraft:fire_resistance",
+            "inverted": true
+          }
+        ]
+      },
+      {
+        "type": "apoli:any_of",
+        "conditions": [
+          {
+            "type": "apoli:status_effect",
+            "effect": "yggdrasil_origins:warded"
+          },
+          {
+            "type": "apoli:inventory_item",
+            "item_condition": {
+              "type": "apoli:ingredient",
+              "ingredient": {
+                "item": "yggdrasil_origins:ward_gem"
+              }
+            }
+          }
+        ],
+        "inverted": true
+      }
+    ]
+  }
+}

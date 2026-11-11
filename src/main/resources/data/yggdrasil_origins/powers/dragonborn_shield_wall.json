@@ -1,0 +1,22 @@
+{
+  "type": "apoli:conditioned_attribute",
+  "tick_rate": 5,
+  "condition": {
+    "type": "apoli:equipped_item",
+    "equipment_slot": "offhand",
+    "item_condition": {
+      "type": "apoli:ingredient",
+      "ingredient": {
+        "tag": "rpg_series:archetype/defense_weapon"
+      }
+    }
+  },
+  "modifiers": [
+    {
+      "id": "yggdrasil_origins:dragonborn_shield_wall_weapon",
+      "attribute": "attributes_ld:warrior_weapon_damage",
+      "amount": 0.05,
+      "operation": "add_multiplied_base"
+    }
+  ]
+}

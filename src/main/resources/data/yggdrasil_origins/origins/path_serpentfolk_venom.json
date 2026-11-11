@@ -1,0 +1,11 @@
+{
+  "icon": {
+    "id": "minecraft:spider_eye"
+  },
+  "order": 56,
+  "impact": 1,
+  "powers": [
+    "yggdrasil_origins:path_serpentfolk_venom_glands",
+    "yggdrasil_origins:path_serpentfolk_venom_thin"
+  ]
+}

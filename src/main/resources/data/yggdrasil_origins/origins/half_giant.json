@@ -1,0 +1,64 @@
+{
+  "icon": {
+    "id": "minecraft:mace"
+  },
+  "order": 6,
+  "impact": 3,
+  "powers": [
+    "yggdrasil_origins:half_giant_might",
+    "yggdrasil_origins:half_giant_size",
+    "yggdrasil_origins:half_giant_slow",
+    "yggdrasil_origins:half_giant_heavy_fall",
+    "yggdrasil_origins:half_giant_heavy_weapons",
+    "yggdrasil_origins:half_giant_small_weapons",
+    "yggdrasil_origins:half_giant_no_magic",
+    "yggdrasil_origins:half_giant_clumsy_roll",
+    "yggdrasil_origins:half_giant_magic_resistance",
+    "yggdrasil_origins:half_giant_deep_reserves",
+    "yggdrasil_origins:half_giant_shield_wall"
+  ],
+  "visual": {
+    "parts": [
+      "brow"
+    ],
+    "height": 1.1,
+    "width": 1.12,
+    "palette": [
+      "#9AA3B0",
+      "#C7D3E0",
+      "#6B6356",
+      "#A8805A",
+      "#D7D2C4",
+      "#4F5A66"
+    ],
+    "looks": [
+      {
+        "id": "half_giant_stone",
+        "tint": "#9AA3B0",
+        "size": 1.0,
+        "shapes": {
+          "brow": 0,
+          "mane": 0
+        }
+      },
+      {
+        "id": "half_giant_frost",
+        "tint": "#C7D3E0",
+        "size": 1.1,
+        "shapes": {
+          "brow": 1,
+          "mane": 1
+        }
+      },
+      {
+        "id": "half_giant_clan",
+        "tint": "#6B6356",
+        "size": 0.92,
+        "shapes": {
+          "brow": 2,
+          "mane": 2
+        }
+      }
+    ]
+  }
+}

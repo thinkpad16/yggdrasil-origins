@@ -1,0 +1,17 @@
+{
+  "type": "apoli:attribute",
+  "modifiers": [
+    {
+      "id": "yggdrasil_origins:half_giant_clumsy_roll_distance",
+      "attribute": "combat_roll:distance",
+      "amount": -0.6,
+      "operation": "add_multiplied_base"
+    },
+    {
+      "id": "yggdrasil_origins:half_giant_clumsy_roll_recharge",
+      "attribute": "combat_roll:recharge",
+      "amount": 0.7,
+      "operation": "add_multiplied_base"
+    }
+  ]
+}

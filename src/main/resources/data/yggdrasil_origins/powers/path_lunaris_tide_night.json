@@ -1,0 +1,23 @@
+{
+  "type": "apoli:conditioned_attribute",
+  "tick_rate": 5,
+  "condition": {
+    "type": "apoli:brightness",
+    "comparison": "<=",
+    "compare_to": 0.35
+  },
+  "modifiers": [
+    {
+      "id": "yggdrasil_origins:path_lunaris_tide_night_haste",
+      "attribute": "spell_power:haste",
+      "amount": 0.08,
+      "operation": "add_multiplied_base"
+    },
+    {
+      "id": "yggdrasil_origins:path_lunaris_tide_night_evasion",
+      "attribute": "spell_engine:evasion_chance",
+      "amount": 0.06,
+      "operation": "add_multiplied_base"
+    }
+  ]
+}

@@ -1,0 +1,63 @@
+{
+  "icon": {
+    "id": "minecraft:bread"
+  },
+  "order": 21,
+  "impact": 1,
+  "powers": [
+    "yggdrasil_origins:halfling_lucky",
+    "yggdrasil_origins:halfling_nimble",
+    "yggdrasil_origins:halfling_brave",
+    "yggdrasil_origins:halfling_second_breakfast",
+    "yggdrasil_origins:halfling_sling",
+    "yggdrasil_origins:halfling_small",
+    "yggdrasil_origins:halfling_no_big_weapons",
+    "yggdrasil_origins:halfling_small_sip",
+    "yggdrasil_origins:halfling_easily_thrown"
+  ],
+  "visual": {
+    "parts": [
+      "hair_tuft",
+      "scarf"
+    ],
+    "height": 0.8,
+    "width": 0.96,
+    "palette": [
+      "#C9A227",
+      "#8FA85B",
+      "#C96F4A",
+      "#E5D8B8",
+      "#7B5B3A",
+      "#A8C2D9"
+    ],
+    "looks": [
+      {
+        "id": "halfling_field",
+        "tint": "#C9A227",
+        "size": 1.0,
+        "shapes": {
+          "hair_tuft": 0,
+          "scarf": 0
+        }
+      },
+      {
+        "id": "halfling_hearth",
+        "tint": "#8FA85B",
+        "size": 1.08,
+        "shapes": {
+          "hair_tuft": 1,
+          "scarf": 1
+        }
+      },
+      {
+        "id": "halfling_road",
+        "tint": "#C96F4A",
+        "size": 0.92,
+        "shapes": {
+          "hair_tuft": 2,
+          "scarf": 2
+        }
+      }
+    ]
+  }
+}

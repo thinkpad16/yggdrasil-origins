@@ -1,0 +1,11 @@
+{
+  "icon": {
+    "id": "minecraft:breeze_rod"
+  },
+  "order": 19,
+  "impact": 1,
+  "powers": [
+    "yggdrasil_origins:path_sylph_windlens_aloft",
+    "yggdrasil_origins:path_sylph_windlens_grounded"
+  ]
+}

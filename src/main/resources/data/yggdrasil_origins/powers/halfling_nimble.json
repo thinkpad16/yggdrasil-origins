@@ -1,0 +1,23 @@
+{
+  "type": "apoli:attribute",
+  "modifiers": [
+    {
+      "id": "yggdrasil_origins:halfling_nimble_count",
+      "attribute": "combat_roll:count",
+      "amount": 1.0,
+      "operation": "add_value"
+    },
+    {
+      "id": "yggdrasil_origins:halfling_nimble_distance",
+      "attribute": "combat_roll:distance",
+      "amount": 0.19,
+      "operation": "add_multiplied_base"
+    },
+    {
+      "id": "yggdrasil_origins:halfling_nimble_movement_speed",
+      "attribute": "minecraft:generic.movement_speed",
+      "amount": 0.04,
+      "operation": "add_multiplied_base"
+    }
+  ]
+}

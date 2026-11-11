@@ -1,0 +1,23 @@
+{
+  "type": "apoli:attribute",
+  "modifiers": [
+    {
+      "id": "yggdrasil_origins:amberborn_amber_plate_armor",
+      "attribute": "minecraft:generic.armor",
+      "amount": 4.0,
+      "operation": "add_value"
+    },
+    {
+      "id": "yggdrasil_origins:amberborn_amber_plate_knockback",
+      "attribute": "minecraft:generic.knockback_resistance",
+      "amount": 0.3,
+      "operation": "add_value"
+    },
+    {
+      "id": "yggdrasil_origins:amberborn_amber_plate_shield",
+      "attribute": "attributes_ld:shield_bonus",
+      "amount": 0.2,
+      "operation": "add_multiplied_base"
+    }
+  ]
+}

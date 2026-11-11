@@ -1,0 +1,60 @@
+{
+  "icon": {
+    "id": "minecraft:amethyst_cluster"
+  },
+  "order": 19,
+  "impact": 1,
+  "powers": [
+    "yggdrasil_origins:lunaris_moonlight",
+    "yggdrasil_origins:lunaris_focus",
+    "yggdrasil_origins:lunaris_communion",
+    "yggdrasil_origins:lunaris_night_blessing",
+    "yggdrasil_origins:lunaris_sun_wilt",
+    "yggdrasil_origins:lunaris_pacifist_hands",
+    "yggdrasil_origins:lunaris_thin"
+  ],
+  "visual": {
+    "parts": [
+      "crescent"
+    ],
+    "width": 0.96,
+    "tint": "#CFE3FF",
+    "palette": [
+      "#CFE3FF",
+      "#9FB6D9",
+      "#E8EEF7",
+      "#7A8CA8",
+      "#B8A8D9",
+      "#5A6B8C"
+    ],
+    "looks": [
+      {
+        "id": "lunaris_moon",
+        "tint": "#CFE3FF",
+        "size": 1.0,
+        "shapes": {
+          "crescent": 0,
+          "wisps": 0
+        }
+      },
+      {
+        "id": "lunaris_mist",
+        "tint": "#9FB6D9",
+        "size": 1.08,
+        "shapes": {
+          "crescent": 1,
+          "wisps": 1
+        }
+      },
+      {
+        "id": "lunaris_silver",
+        "tint": "#E8EEF7",
+        "size": 0.92,
+        "shapes": {
+          "crescent": 2,
+          "wisps": 2
+        }
+      }
+    ]
+  }
+}

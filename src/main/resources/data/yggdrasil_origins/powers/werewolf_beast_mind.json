@@ -1,0 +1,9 @@
+{
+  "type": "apoli:attribute",
+  "modifier": {
+    "id": "yggdrasil_origins:werewolf_beast_mind_generic",
+    "attribute": "spell_power:generic",
+    "amount": -0.53,
+    "operation": "add_multiplied_base"
+  }
+}

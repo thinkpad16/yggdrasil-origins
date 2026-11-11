@@ -1,0 +1,11 @@
+{
+  "icon": {
+    "id": "minecraft:deepslate_tiles"
+  },
+  "order": 10,
+  "impact": 1,
+  "powers": [
+    "yggdrasil_origins:path_geonite_bulwark_rooted",
+    "yggdrasil_origins:path_geonite_bulwark_anchor"
+  ]
+}

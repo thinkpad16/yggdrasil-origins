@@ -1,0 +1,9 @@
+{
+  "type": "apoli:attribute",
+  "modifier": {
+    "id": "yggdrasil_origins:tiefling_no_shield_shield_bonus",
+    "attribute": "attributes_ld:shield_bonus",
+    "amount": -0.36,
+    "operation": "add_multiplied_base"
+  }
+}

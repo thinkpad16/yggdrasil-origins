@@ -1,0 +1,13 @@
+{
+  "type": "apoli:target_action_on_hit",
+  "cooldown": 60,
+  "entity_action": {
+    "type": "apoli:random_chance",
+    "chance": 0.25,
+    "action": {
+      "type": "apoli:damage",
+      "damage_type": "minecraft:dragon_breath",
+      "amount": 4.0
+    }
+  }
+}

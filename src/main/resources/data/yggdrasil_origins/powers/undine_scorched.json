@@ -1,0 +1,17 @@
+{
+  "type": "apoli:attribute",
+  "modifiers": [
+    {
+      "id": "yggdrasil_origins:undine_scorched_fire",
+      "attribute": "spell_power:fire",
+      "amount": -0.83,
+      "operation": "add_multiplied_total"
+    },
+    {
+      "id": "yggdrasil_origins:undine_scorched_burning_time",
+      "attribute": "minecraft:generic.burning_time",
+      "amount": 0.69,
+      "operation": "add_multiplied_base"
+    }
+  ]
+}

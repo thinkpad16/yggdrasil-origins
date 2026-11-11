@@ -1,0 +1,9 @@
+{
+  "type": "apoli:attacker_action_when_hit",
+  "cooldown": 120,
+  "entity_action": {
+    "type": "apoli:damage",
+    "damage_type": "minecraft:on_fire",
+    "fraction_of_max_health": 0.03
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "icon": {
+    "id": "minecraft:shield"
+  },
+  "order": 32,
+  "impact": 1,
+  "powers": [
+    "yggdrasil_origins:path_hydroletilus_deep_shell_plate",
+    "yggdrasil_origins:path_hydroletilus_deep_shell_drag"
+  ]
+}

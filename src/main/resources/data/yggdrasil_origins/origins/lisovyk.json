@@ -1,0 +1,62 @@
+{
+  "icon": {
+    "id": "minecraft:oak_sapling"
+  },
+  "order": 26,
+  "impact": 3,
+  "powers": [
+    "yggdrasil_origins:lisovyk_green_word",
+    "yggdrasil_origins:lisovyk_bark",
+    "yggdrasil_origins:lisovyk_old_wood",
+    "yggdrasil_origins:lisovyk_woodcutter",
+    "yggdrasil_origins:lisovyk_quiet_step",
+    "yggdrasil_origins:lisovyk_slow_as_timber",
+    "yggdrasil_origins:lisovyk_dry_wood",
+    "yggdrasil_origins:lisovyk_no_steel"
+  ],
+  "visual": {
+    "parts": [
+      "antlers"
+    ],
+    "height": 1.05,
+    "width": 1.08,
+    "tint": "#7E9A5C",
+    "palette": [
+      "#6B8C3A",
+      "#9C7B4A",
+      "#C9A227",
+      "#3E5B2F",
+      "#D9C9A3",
+      "#5B4A2F"
+    ],
+    "looks": [
+      {
+        "id": "lisovyk_oak",
+        "tint": "#6B8C3A",
+        "size": 1.0,
+        "shapes": {
+          "antlers": 0,
+          "roots": 0
+        }
+      },
+      {
+        "id": "lisovyk_moss",
+        "tint": "#9C7B4A",
+        "size": 1.1,
+        "shapes": {
+          "antlers": 1,
+          "roots": 1
+        }
+      },
+      {
+        "id": "lisovyk_autumn",
+        "tint": "#C9A227",
+        "size": 0.92,
+        "shapes": {
+          "antlers": 2,
+          "roots": 2
+        }
+      }
+    ]
+  }
+}

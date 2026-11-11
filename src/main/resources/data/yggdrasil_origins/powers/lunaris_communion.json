@@ -1,0 +1,17 @@
+{
+  "type": "apoli:attribute",
+  "modifiers": [
+    {
+      "id": "yggdrasil_origins:lunaris_communion_healing_taken",
+      "attribute": "spell_engine:healing_taken",
+      "amount": 0.11,
+      "operation": "add_multiplied_base"
+    },
+    {
+      "id": "yggdrasil_origins:lunaris_communion_spell_vampire",
+      "attribute": "mrpg_lib:spell_vampire",
+      "amount": 0.07,
+      "operation": "add_multiplied_base"
+    }
+  ]
+}

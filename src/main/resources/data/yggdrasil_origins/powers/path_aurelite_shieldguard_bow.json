@@ -1,0 +1,17 @@
+{
+  "type": "apoli:attribute",
+  "modifiers": [
+    {
+      "id": "yggdrasil_origins:path_aurelite_shieldguard_bow_ranged",
+      "attribute": "ranged_weapon:damage",
+      "amount": -0.12,
+      "operation": "add_multiplied_base"
+    },
+    {
+      "id": "yggdrasil_origins:path_aurelite_shieldguard_bow_generic.movement_speed",
+      "attribute": "minecraft:generic.movement_speed",
+      "amount": -0.03,
+      "operation": "add_multiplied_base"
+    }
+  ]
+}

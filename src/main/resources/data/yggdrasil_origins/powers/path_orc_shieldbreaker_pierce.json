@@ -1,0 +1,17 @@
+{
+  "type": "apoli:attribute",
+  "modifiers": [
+    {
+      "id": "yggdrasil_origins:path_orc_shieldbreaker_pierce_armor_piercing",
+      "attribute": "mrpg_lib:armor_piercing",
+      "amount": 0.25,
+      "operation": "add_multiplied_base"
+    },
+    {
+      "id": "yggdrasil_origins:path_orc_shieldbreaker_pierce_stagger_chance",
+      "attribute": "mrpg_lib:stagger_chance",
+      "amount": 0.12,
+      "operation": "add_multiplied_base"
+    }
+  ]
+}

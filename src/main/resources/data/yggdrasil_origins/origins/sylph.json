@@ -1,0 +1,64 @@
+{
+  "icon": {
+    "id": "minecraft:breeze_rod"
+  },
+  "order": 14,
+  "impact": 3,
+  "powers": [
+    "yggdrasil_origins:sylph_storm_magic",
+    "yggdrasil_origins:sylph_lightning",
+    "yggdrasil_origins:sylph_weightless",
+    "yggdrasil_origins:sylph_evasive",
+    "yggdrasil_origins:sylph_gossamer",
+    "yggdrasil_origins:sylph_rooted_fear",
+    "yggdrasil_origins:sylph_no_heavy",
+    "yggdrasil_origins:sylph_updraft",
+    "yggdrasil_origins:sylph_caged"
+  ],
+  "visual": {
+    "parts": [
+      "streamers",
+      "vanes"
+    ],
+    "height": 0.98,
+    "width": 0.9,
+    "tint": "#CFE9FF",
+    "palette": [
+      "#D9E8F2",
+      "#A8C4D9",
+      "#F2F7FA",
+      "#7A9AB8",
+      "#C4D9E8",
+      "#5B7A94"
+    ],
+    "looks": [
+      {
+        "id": "sylph_wind",
+        "tint": "#D9E8F2",
+        "size": 1.0,
+        "shapes": {
+          "streamers": 0,
+          "vanes": 0
+        }
+      },
+      {
+        "id": "sylph_storm",
+        "tint": "#A8C4D9",
+        "size": 1.1,
+        "shapes": {
+          "streamers": 1,
+          "vanes": 1
+        }
+      },
+      {
+        "id": "sylph_cloud",
+        "tint": "#F2F7FA",
+        "size": 0.9,
+        "shapes": {
+          "streamers": 2,
+          "vanes": 2
+        }
+      }
+    ]
+  }
+}

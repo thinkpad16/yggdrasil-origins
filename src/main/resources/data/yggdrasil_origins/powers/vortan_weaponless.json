@@ -1,0 +1,171 @@
+{
+  "type": "apoli:conditioned_attribute",
+  "tick_rate": 5,
+  "condition": {
+    "type": "apoli:equipped_item",
+    "equipment_slot": "mainhand",
+    "item_condition": {
+      "type": "apoli:any_of",
+      "conditions": [
+        {
+          "type": "apoli:ingredient",
+          "ingredient": {
+            "tag": "rpg_series:weapon_type/claymore"
+          }
+        },
+        {
+          "type": "apoli:ingredient",
+          "ingredient": {
+            "tag": "rpg_series:weapon_type/dagger"
+          }
+        },
+        {
+          "type": "apoli:ingredient",
+          "ingredient": {
+            "tag": "rpg_series:weapon_type/glaive"
+          }
+        },
+        {
+          "type": "apoli:ingredient",
+          "ingredient": {
+            "tag": "rpg_series:weapon_type/hammer"
+          }
+        },
+        {
+          "type": "apoli:ingredient",
+          "ingredient": {
+            "tag": "rpg_series:weapon_type/mace"
+          }
+        },
+        {
+          "type": "apoli:ingredient",
+          "ingredient": {
+            "tag": "rpg_series:weapon_type/spear"
+          }
+        },
+        {
+          "type": "apoli:ingredient",
+          "ingredient": {
+            "tag": "rpg_series:weapon_type/sickle"
+          }
+        },
+        {
+          "type": "apoli:ingredient",
+          "ingredient": {
+            "tag": "rpg_series:weapon_type/sword"
+          }
+        },
+        {
+          "type": "apoli:ingredient",
+          "ingredient": {
+            "tag": "rpg_series:weapon_type/double_axe"
+          }
+        },
+        {
+          "type": "apoli:ingredient",
+          "ingredient": {
+            "tag": "rpg_series:weapon_type/short_bow"
+          }
+        },
+        {
+          "type": "apoli:ingredient",
+          "ingredient": {
+            "tag": "rpg_series:weapon_type/long_bow"
+          }
+        },
+        {
+          "type": "apoli:ingredient",
+          "ingredient": {
+            "tag": "rpg_series:weapon_type/heavy_crossbow"
+          }
+        },
+        {
+          "type": "apoli:ingredient",
+          "ingredient": {
+            "tag": "rpg_series:weapon_type/rapid_crossbow"
+          }
+        },
+        {
+          "type": "apoli:ingredient",
+          "ingredient": {
+            "tag": "rpg_series:weapon_type/damage_staff"
+          }
+        },
+        {
+          "type": "apoli:ingredient",
+          "ingredient": {
+            "tag": "rpg_series:weapon_type/healing_staff"
+          }
+        },
+        {
+          "type": "apoli:ingredient",
+          "ingredient": {
+            "tag": "rpg_series:weapon_type/damage_wand"
+          }
+        },
+        {
+          "type": "apoli:ingredient",
+          "ingredient": {
+            "tag": "rpg_series:weapon_type/healing_wand"
+          }
+        },
+        {
+          "type": "apoli:ingredient",
+          "ingredient": {
+            "tag": "rpg_series:weapon_type/spell_blade"
+          }
+        },
+        {
+          "type": "apoli:ingredient",
+          "ingredient": {
+            "tag": "rpg_series:weapon_type/spell_scythe"
+          }
+        },
+        {
+          "type": "apoli:ingredient",
+          "ingredient": {
+            "tag": "minecraft:enchantable/weapon"
+          }
+        },
+        {
+          "type": "apoli:ingredient",
+          "ingredient": {
+            "tag": "minecraft:enchantable/bow"
+          }
+        },
+        {
+          "type": "apoli:ingredient",
+          "ingredient": {
+            "tag": "minecraft:enchantable/crossbow"
+          }
+        },
+        {
+          "type": "apoli:ingredient",
+          "ingredient": {
+            "tag": "minecraft:enchantable/trident"
+          }
+        }
+      ]
+    }
+  },
+  "modifiers": [
+    {
+      "id": "yggdrasil_origins:vortan_weaponless_attack_damage",
+      "attribute": "minecraft:generic.attack_damage",
+      "amount": -0.46,
+      "operation": "add_multiplied_base"
+    },
+    {
+      "id": "yggdrasil_origins:vortan_weaponless_attack_speed",
+      "attribute": "minecraft:generic.attack_speed",
+      "amount": -0.21,
+      "operation": "add_multiplied_base"
+    },
+    {
+      "id": "yggdrasil_origins:vortan_weaponless_haste",
+      "attribute": "spell_power:haste",
+      "amount": -0.29,
+      "operation": "add_multiplied_base"
+    }
+  ]
+}

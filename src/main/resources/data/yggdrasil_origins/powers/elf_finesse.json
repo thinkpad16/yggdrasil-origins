@@ -1,0 +1,23 @@
+{
+  "type": "apoli:attribute",
+  "modifiers": [
+    {
+      "id": "yggdrasil_origins:elf_finesse_rogue_weapon_damage",
+      "attribute": "attributes_ld:rogue_weapon_damage",
+      "amount": 0.14,
+      "operation": "add_multiplied_base"
+    },
+    {
+      "id": "yggdrasil_origins:elf_finesse_archer_melee_damage",
+      "attribute": "attributes_ld:archer_melee_damage",
+      "amount": 0.14,
+      "operation": "add_multiplied_base"
+    },
+    {
+      "id": "yggdrasil_origins:elf_finesse_dagger_damage",
+      "attribute": "attributes_ld:dagger_damage",
+      "amount": 0.17,
+      "operation": "add_multiplied_base"
+    }
+  ]
+}

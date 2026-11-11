@@ -1,0 +1,23 @@
+{
+  "type": "apoli:attribute",
+  "modifiers": [
+    {
+      "id": "yggdrasil_origins:sylph_storm_magic_air",
+      "attribute": "spell_power:air",
+      "amount": 0.05,
+      "operation": "add_multiplied_total"
+    },
+    {
+      "id": "yggdrasil_origins:sylph_storm_magic_damage",
+      "attribute": "ranged_weapon:damage",
+      "amount": 0.1,
+      "operation": "add_multiplied_total"
+    },
+    {
+      "id": "yggdrasil_origins:sylph_storm_magic_velocity",
+      "attribute": "ranged_weapon:velocity",
+      "amount": 0.13,
+      "operation": "add_multiplied_total"
+    }
+  ]
+}

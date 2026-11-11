@@ -1,0 +1,11 @@
+{
+  "icon": {
+    "id": "minecraft:lightning_rod"
+  },
+  "order": 36,
+  "impact": 1,
+  "powers": [
+    "yggdrasil_origins:path_sylph_storm_heart_surge",
+    "yggdrasil_origins:path_sylph_storm_heart_calm"
+  ]
+}

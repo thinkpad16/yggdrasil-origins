@@ -1,0 +1,9 @@
+{
+  "type": "apoli:attribute",
+  "modifier": {
+    "id": "yggdrasil_origins:dwarf_slow_draw_pull_time",
+    "attribute": "ranged_weapon:pull_time",
+    "amount": 0.25,
+    "operation": "add_multiplied_total"
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "type": "apoli:attribute",
+  "modifiers": [
+    {
+      "id": "yggdrasil_origins:path_orc_shieldbreaker_naked_armor",
+      "attribute": "minecraft:generic.armor",
+      "amount": -4.0,
+      "operation": "add_value"
+    },
+    {
+      "id": "yggdrasil_origins:path_orc_shieldbreaker_naked_damage_taken",
+      "attribute": "spell_engine:damage_taken",
+      "amount": 0.15,
+      "operation": "add_multiplied_base"
+    }
+  ]
+}

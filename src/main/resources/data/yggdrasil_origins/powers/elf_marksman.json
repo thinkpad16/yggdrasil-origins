@@ -1,0 +1,17 @@
+{
+  "type": "apoli:attribute",
+  "modifiers": [
+    {
+      "id": "yggdrasil_origins:elf_marksman_damage",
+      "attribute": "ranged_weapon:damage",
+      "amount": 0.19,
+      "operation": "add_multiplied_total"
+    },
+    {
+      "id": "yggdrasil_origins:elf_marksman_haste",
+      "attribute": "ranged_weapon:haste",
+      "amount": 0.1,
+      "operation": "add_multiplied_base"
+    }
+  ]
+}

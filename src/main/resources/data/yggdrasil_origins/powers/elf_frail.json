@@ -1,0 +1,17 @@
+{
+  "type": "apoli:attribute",
+  "modifiers": [
+    {
+      "id": "yggdrasil_origins:elf_frail_max_health",
+      "attribute": "minecraft:generic.max_health",
+      "amount": -4.0,
+      "operation": "add_value"
+    },
+    {
+      "id": "yggdrasil_origins:elf_frail_armor",
+      "attribute": "minecraft:generic.armor",
+      "amount": -1.0,
+      "operation": "add_value"
+    }
+  ]
+}

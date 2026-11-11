@@ -1,0 +1,23 @@
+{
+  "type": "apoli:attribute",
+  "modifiers": [
+    {
+      "id": "yggdrasil_origins:dragonborn_bulk_movement_speed",
+      "attribute": "minecraft:generic.movement_speed",
+      "amount": -0.22,
+      "operation": "add_multiplied_base"
+    },
+    {
+      "id": "yggdrasil_origins:dragonborn_bulk_distance",
+      "attribute": "combat_roll:distance",
+      "amount": -0.34,
+      "operation": "add_multiplied_base"
+    },
+    {
+      "id": "yggdrasil_origins:dragonborn_bulk_fall_damage_multiplier",
+      "attribute": "minecraft:generic.fall_damage_multiplier",
+      "amount": 0.56,
+      "operation": "add_multiplied_base"
+    }
+  ]
+}

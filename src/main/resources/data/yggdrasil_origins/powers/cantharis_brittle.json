@@ -1,0 +1,9 @@
+{
+  "type": "apoli:attribute",
+  "modifier": {
+    "id": "yggdrasil_origins:cantharis_brittle_damage_taken",
+    "attribute": "spell_engine:damage_taken",
+    "amount": 0.0,
+    "operation": "add_multiplied_base"
+  }
+}

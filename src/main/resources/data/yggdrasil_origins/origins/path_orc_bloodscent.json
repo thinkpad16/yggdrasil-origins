@@ -1,0 +1,12 @@
+{
+  "icon": {
+    "id": "minecraft:spider_eye"
+  },
+  "order": 16,
+  "impact": 1,
+  "powers": [
+    "yggdrasil_origins:path_orc_bloodscent_scent",
+    "yggdrasil_origins:path_orc_bloodscent_finish",
+    "yggdrasil_origins:path_orc_bloodscent_bored"
+  ]
+}

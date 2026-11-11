@@ -1,0 +1,62 @@
+{
+  "icon": {
+    "id": "minecraft:bow"
+  },
+  "order": 4,
+  "impact": 2,
+  "powers": [
+    "yggdrasil_origins:elf_grace",
+    "yggdrasil_origins:elf_marksman",
+    "yggdrasil_origins:elf_agile_roll",
+    "yggdrasil_origins:elf_finesse",
+    "yggdrasil_origins:elf_frail",
+    "yggdrasil_origins:elf_poor_sweeping",
+    "yggdrasil_origins:elf_heavy_weapon_weakness",
+    "yggdrasil_origins:elf_vulnerable"
+  ],
+  "visual": {
+    "parts": [
+      "elf_ears",
+      "earring"
+    ],
+    "height": 1.02,
+    "width": 0.9,
+    "palette": [
+      "#D9E2EC",
+      "#8FB98A",
+      "#D9C27E",
+      "#6E8FA8",
+      "#B48EAD",
+      "#F2E8D5"
+    ],
+    "looks": [
+      {
+        "id": "elf_silver",
+        "tint": "#D9E2EC",
+        "size": 1.0,
+        "shapes": {
+          "elf_ears": 0,
+          "earring": 0
+        }
+      },
+      {
+        "id": "elf_wood",
+        "tint": "#8FB98A",
+        "size": 1.08,
+        "shapes": {
+          "elf_ears": 1,
+          "earring": 1
+        }
+      },
+      {
+        "id": "elf_gold",
+        "tint": "#D9C27E",
+        "size": 0.94,
+        "shapes": {
+          "elf_ears": 2,
+          "earring": 2
+        }
+      }
+    ]
+  }
+}

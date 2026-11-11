@@ -1,0 +1,17 @@
+{
+  "type": "apoli:attribute",
+  "modifiers": [
+    {
+      "id": "yggdrasil_origins:lisovyk_old_wood_0",
+      "attribute": "minecraft:generic.max_health",
+      "amount": 8.0,
+      "operation": "add_value"
+    },
+    {
+      "id": "yggdrasil_origins:lisovyk_old_wood_1",
+      "attribute": "spell_engine:healing_taken",
+      "amount": 0.1,
+      "operation": "add_multiplied_base"
+    }
+  ]
+}

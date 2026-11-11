@@ -1,0 +1,9 @@
+{
+  "type": "apoli:attribute",
+  "modifier": {
+    "id": "yggdrasil_origins:dwarf_underwater_mining_submerged_mining_speed",
+    "attribute": "minecraft:player.submerged_mining_speed",
+    "amount": -0.34,
+    "operation": "add_multiplied_base"
+  }
+}

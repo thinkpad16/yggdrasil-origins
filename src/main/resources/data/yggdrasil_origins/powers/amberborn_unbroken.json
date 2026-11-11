@@ -1,0 +1,11 @@
+{
+  "type": "apoli:attribute",
+  "modifiers": [
+    {
+      "id": "yggdrasil_origins:amberborn_unbroken_tenacity",
+      "attribute": "mrpg_lib:tenacity",
+      "amount": 0.1,
+      "operation": "add_multiplied_base"
+    }
+  ]
+}

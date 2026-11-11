@@ -1,0 +1,22 @@
+{
+  "type": "apoli:status_effect",
+  "effect": "rogues:stealth",
+  "fallback": "minecraft:invisibility",
+  "condition": {
+    "type": "apoli:all_of",
+    "conditions": [
+      {
+        "type": "apoli:sneaking"
+      },
+      {
+        "type": "apoli:brightness",
+        "comparison": "<",
+        "compare_to": 0.25
+      },
+      {
+        "type": "apoli:moving",
+        "inverted": true
+      }
+    ]
+  }
+}

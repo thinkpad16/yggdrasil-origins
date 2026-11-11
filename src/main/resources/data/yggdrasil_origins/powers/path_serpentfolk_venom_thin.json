@@ -1,0 +1,11 @@
+{
+  "type": "apoli:attribute",
+  "modifiers": [
+    {
+      "id": "yggdrasil_origins:path_serpentfolk_venom_thin_health",
+      "attribute": "minecraft:generic.max_health",
+      "amount": -2.0,
+      "operation": "add_value"
+    }
+  ]
+}

@@ -1,0 +1,64 @@
+{
+  "icon": {
+    "id": "minecraft:netherite_scrap"
+  },
+  "order": 17,
+  "impact": 3,
+  "powers": [
+    "yggdrasil_origins:ferrine_iron_grip",
+    "yggdrasil_origins:ferrine_ironhide",
+    "yggdrasil_origins:ferrine_crushing",
+    "yggdrasil_origins:ferrine_rust",
+    "yggdrasil_origins:ferrine_sinks",
+    "yggdrasil_origins:ferrine_magic_deaf",
+    "yggdrasil_origins:ferrine_heavy_step",
+    "yggdrasil_origins:ferrine_magic_resistance",
+    "yggdrasil_origins:ferrine_deep_reserves",
+    "yggdrasil_origins:ferrine_shield_wall"
+  ],
+  "visual": {
+    "parts": [
+      "plates",
+      "iron_spine"
+    ],
+    "width": 1.08,
+    "tint": "#9AA2AE",
+    "palette": [
+      "#B8BCC6",
+      "#8C8176",
+      "#6E7380",
+      "#C96F4A",
+      "#3A3F4A",
+      "#D9DCE2"
+    ],
+    "looks": [
+      {
+        "id": "ferrine_steel",
+        "tint": "#B8BCC6",
+        "size": 1.0,
+        "shapes": {
+          "plates": 0,
+          "iron_spine": 0
+        }
+      },
+      {
+        "id": "ferrine_rust",
+        "tint": "#8C8176",
+        "size": 1.08,
+        "shapes": {
+          "plates": 1,
+          "iron_spine": 1
+        }
+      },
+      {
+        "id": "ferrine_raven",
+        "tint": "#6E7380",
+        "size": 0.92,
+        "shapes": {
+          "plates": 2,
+          "iron_spine": 2
+        }
+      }
+    ]
+  }
+}

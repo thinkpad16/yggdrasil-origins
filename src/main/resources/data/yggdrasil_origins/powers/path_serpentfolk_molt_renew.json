@@ -1,0 +1,17 @@
+{
+  "type": "apoli:attribute",
+  "modifiers": [
+    {
+      "id": "yggdrasil_origins:path_serpentfolk_molt_renew_tenacity",
+      "attribute": "mrpg_lib:tenacity",
+      "amount": 0.12,
+      "operation": "add_multiplied_base"
+    },
+    {
+      "id": "yggdrasil_origins:path_serpentfolk_molt_renew_resistance",
+      "attribute": "spell_power:resistance.generic",
+      "amount": 0.08,
+      "operation": "add_multiplied_base"
+    }
+  ]
+}

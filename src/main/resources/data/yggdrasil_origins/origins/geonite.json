@@ -1,0 +1,71 @@
+{
+  "icon": {
+    "id": "minecraft:mossy_cobblestone"
+  },
+  "order": 13,
+  "impact": 3,
+  "powers": [
+    "yggdrasil_origins:geonite_stone_magic",
+    "yggdrasil_origins:geonite_verdant",
+    "yggdrasil_origins:geonite_bedrock_skin",
+    "yggdrasil_origins:geonite_unyielding",
+    "yggdrasil_origins:geonite_ponderous",
+    "yggdrasil_origins:geonite_skyless",
+    "yggdrasil_origins:geonite_dense",
+    "yggdrasil_origins:geonite_slow_roll",
+    "yggdrasil_origins:geonite_stone_still",
+    "yggdrasil_origins:geonite_stonefist",
+    "yggdrasil_origins:geonite_bare_hands",
+    "yggdrasil_origins:geonite_clumsy_tools",
+    "yggdrasil_origins:geonite_magic_resistance",
+    "yggdrasil_origins:geonite_deep_reserves",
+    "yggdrasil_origins:geonite_shield_wall",
+    "yggdrasil_origins:geonite_lava_sight"
+  ],
+  "visual": {
+    "parts": [
+      "shards",
+      "stone_fists"
+    ],
+    "height": 0.95,
+    "width": 1.15,
+    "tint": "#8A8F99",
+    "palette": [
+      "#9A9AA3",
+      "#C7B9A3",
+      "#6B6B75",
+      "#A8C4D9",
+      "#D9D2C4",
+      "#4A4A52"
+    ],
+    "looks": [
+      {
+        "id": "geonite_granite",
+        "tint": "#9A9AA3",
+        "size": 1.0,
+        "shapes": {
+          "shards": 0,
+          "stone_fists": 0
+        }
+      },
+      {
+        "id": "geonite_quartz",
+        "tint": "#C7B9A3",
+        "size": 1.1,
+        "shapes": {
+          "shards": 1,
+          "stone_fists": 1
+        }
+      },
+      {
+        "id": "geonite_ore",
+        "tint": "#6B6B75",
+        "size": 0.92,
+        "shapes": {
+          "shards": 2,
+          "stone_fists": 2
+        }
+      }
+    ]
+  }
+}

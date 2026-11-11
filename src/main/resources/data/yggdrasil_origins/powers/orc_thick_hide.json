@@ -1,0 +1,17 @@
+{
+  "type": "apoli:attribute",
+  "modifiers": [
+    {
+      "id": "yggdrasil_origins:orc_thick_hide_armor",
+      "attribute": "minecraft:generic.armor",
+      "amount": 5.0,
+      "operation": "add_value"
+    },
+    {
+      "id": "yggdrasil_origins:orc_thick_hide_knockback_resistance",
+      "attribute": "minecraft:generic.knockback_resistance",
+      "amount": 0.4,
+      "operation": "add_value"
+    }
+  ]
+}

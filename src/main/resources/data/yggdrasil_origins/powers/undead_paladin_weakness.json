@@ -1,0 +1,9 @@
+{
+  "type": "apoli:attribute",
+  "modifier": {
+    "id": "yggdrasil_origins:undead_paladin_weakness_paladin_weapon_damage",
+    "attribute": "attributes_ld:paladin_weapon_damage",
+    "amount": -0.3,
+    "operation": "add_multiplied_base"
+  }
+}

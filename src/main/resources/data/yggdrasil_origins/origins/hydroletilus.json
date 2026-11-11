@@ -1,0 +1,63 @@
+{
+  "icon": {
+    "id": "minecraft:heart_of_the_sea"
+  },
+  "order": 9,
+  "impact": 3,
+  "powers": [
+    "yggdrasil_origins:hydroletilus_water_master",
+    "yggdrasil_origins:hydroletilus_water_eyes",
+    "yggdrasil_origins:hydroletilus_land_sluggish",
+    "yggdrasil_origins:hydroletilus_dry_skin",
+    "yggdrasil_origins:hydroletilus_frost_magic",
+    "yggdrasil_origins:hydroletilus_fire_weakness",
+    "yggdrasil_origins:hydroletilus_polearms",
+    "yggdrasil_origins:hydroletilus_heavy_weapons",
+    "yggdrasil_origins:hydroletilus_shield_wall",
+    "yggdrasil_origins:hydroletilus_soft_scales"
+  ],
+  "visual": {
+    "parts": [
+      "fins"
+    ],
+    "width": 0.95,
+    "tint": "#6FD3E8",
+    "palette": [
+      "#4FA3C4",
+      "#2E6B7A",
+      "#A8E0E8",
+      "#1F4A5B",
+      "#C4E8F2",
+      "#5B8C9A"
+    ],
+    "looks": [
+      {
+        "id": "hydroletilus_deep",
+        "tint": "#4FA3C4",
+        "size": 1.0,
+        "shapes": {
+          "fins": 0,
+          "frost_shards": 0
+        }
+      },
+      {
+        "id": "hydroletilus_reef",
+        "tint": "#2E6B7A",
+        "size": 1.1,
+        "shapes": {
+          "fins": 1,
+          "frost_shards": 1
+        }
+      },
+      {
+        "id": "hydroletilus_ice",
+        "tint": "#A8E0E8",
+        "size": 0.92,
+        "shapes": {
+          "fins": 2,
+          "frost_shards": 2
+        }
+      }
+    ]
+  }
+}

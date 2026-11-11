@@ -1,0 +1,23 @@
+{
+  "type": "apoli:attribute",
+  "modifiers": [
+    {
+      "id": "yggdrasil_origins:hydroletilus_polearms_spear_damage",
+      "attribute": "attributes_ld:spear_damage",
+      "amount": 0.1,
+      "operation": "add_multiplied_base"
+    },
+    {
+      "id": "yggdrasil_origins:hydroletilus_polearms_glaive_damage",
+      "attribute": "attributes_ld:glaive_damage",
+      "amount": 0.08,
+      "operation": "add_multiplied_base"
+    },
+    {
+      "id": "yggdrasil_origins:hydroletilus_polearms_shield_bonus",
+      "attribute": "attributes_ld:shield_bonus",
+      "amount": 0.15,
+      "operation": "add_multiplied_base"
+    }
+  ]
+}

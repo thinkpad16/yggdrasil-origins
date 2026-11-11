@@ -1,0 +1,11 @@
+{
+  "type": "apoli:attribute",
+  "modifiers": [
+    {
+      "id": "yggdrasil_origins:undead_lifesteal_lifesteal_modifier",
+      "attribute": "mrpg_lib:lifesteal_modifier",
+      "amount": 0.18,
+      "operation": "add_multiplied_base"
+    }
+  ]
+}

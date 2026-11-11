@@ -1,0 +1,23 @@
+{
+  "type": "apoli:attribute",
+  "modifiers": [
+    {
+      "id": "yggdrasil_origins:elf_grace_movement_speed",
+      "attribute": "minecraft:generic.movement_speed",
+      "amount": 0.06,
+      "operation": "add_multiplied_base"
+    },
+    {
+      "id": "yggdrasil_origins:elf_grace_safe_fall_distance",
+      "attribute": "minecraft:generic.safe_fall_distance",
+      "amount": 1.5,
+      "operation": "add_value"
+    },
+    {
+      "id": "yggdrasil_origins:elf_grace_air",
+      "attribute": "spell_power:air",
+      "amount": 0.04,
+      "operation": "add_multiplied_total"
+    }
+  ]
+}

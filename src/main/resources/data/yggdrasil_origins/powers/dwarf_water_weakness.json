@@ -1,0 +1,115 @@
+{
+  "type": "apoli:multiple",
+  "swim_speed": {
+    "type": "apoli:conditioned_attribute",
+    "tick_rate": 10,
+    "condition": {
+      "type": "apoli:all_of",
+      "conditions": [
+        {
+          "type": "apoli:any_of",
+          "conditions": [
+            {
+              "type": "apoli:status_effect",
+              "effect": "yggdrasil_origins:warded"
+            },
+            {
+              "type": "apoli:inventory_item",
+              "item_condition": {
+                "type": "apoli:ingredient",
+                "ingredient": {
+                  "item": "yggdrasil_origins:ward_gem"
+                }
+              }
+            }
+          ],
+          "inverted": true
+        }
+      ]
+    },
+    "modifiers": [
+      {
+        "id": "yggdrasil_origins:dwarf_swim_water_speed",
+        "attribute": "yggdrasil_origins:swim_speed",
+        "amount": -0.32,
+        "operation": "add_multiplied_base"
+      }
+    ]
+  },
+  "sinking": {
+    "type": "apoli:conditioned_attribute",
+    "tick_rate": 5,
+    "condition": {
+      "type": "apoli:all_of",
+      "conditions": [
+        {
+          "type": "apoli:submerged_in",
+          "fluid": "minecraft:water"
+        },
+        {
+          "type": "apoli:any_of",
+          "conditions": [
+            {
+              "type": "apoli:status_effect",
+              "effect": "yggdrasil_origins:warded"
+            },
+            {
+              "type": "apoli:inventory_item",
+              "item_condition": {
+                "type": "apoli:ingredient",
+                "ingredient": {
+                  "item": "yggdrasil_origins:ward_gem"
+                }
+              }
+            }
+          ],
+          "inverted": true
+        }
+      ]
+    },
+    "modifiers": [
+      {
+        "id": "yggdrasil_origins:dwarf_sinking_gravity",
+        "attribute": "minecraft:generic.gravity",
+        "amount": 0.5,
+        "operation": "add_multiplied_base"
+      }
+    ]
+  },
+  "no_depth_strider": {
+    "type": "apoli:conditioned_attribute",
+    "tick_rate": 10,
+    "condition": {
+      "type": "apoli:all_of",
+      "conditions": [
+        {
+          "type": "apoli:any_of",
+          "conditions": [
+            {
+              "type": "apoli:status_effect",
+              "effect": "yggdrasil_origins:warded"
+            },
+            {
+              "type": "apoli:inventory_item",
+              "item_condition": {
+                "type": "apoli:ingredient",
+                "ingredient": {
+                  "item": "yggdrasil_origins:ward_gem"
+                }
+              }
+            }
+          ],
+          "inverted": true
+        }
+      ]
+    },
+    "modifiers": [
+      {
+        "id": "yggdrasil_origins:dwarf_water_eff_water_movement_efficiency",
+        "attribute": "minecraft:generic.water_movement_efficiency",
+        "amount": -1.0,
+        "operation": "add_value"
+      }
+    ]
+  }
+}

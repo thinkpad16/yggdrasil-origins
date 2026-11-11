@@ -1,0 +1,11 @@
+{
+  "icon": {
+    "id": "minecraft:shield"
+  },
+  "order": 47,
+  "impact": 1,
+  "powers": [
+    "yggdrasil_origins:path_aurelite_shieldguard_wall",
+    "yggdrasil_origins:path_aurelite_shieldguard_bow"
+  ]
+}

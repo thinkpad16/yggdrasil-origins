@@ -1,0 +1,17 @@
+{
+  "icon": {
+    "id": "minecraft:blue_ice"
+  },
+  "order": 42,
+  "impact": 1,
+  "powers": [
+    "yggdrasil_origins:path_hydroletilus_icewake_guard",
+    "yggdrasil_origins:path_hydroletilus_icewake_cold"
+  ],
+  "visual": {
+    "parts": [
+      "frost_shards"
+    ],
+    "tint": "#9FE4FF"
+  }
+}

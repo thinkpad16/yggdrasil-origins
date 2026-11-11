@@ -1,0 +1,17 @@
+{
+  "type": "apoli:attribute",
+  "modifiers": [
+    {
+      "id": "yggdrasil_origins:lisovyk_green_word_0",
+      "attribute": "spell_power:earth",
+      "amount": 0.08,
+      "operation": "add_multiplied_total"
+    },
+    {
+      "id": "yggdrasil_origins:lisovyk_green_word_1",
+      "attribute": "spell_power:nature",
+      "amount": 0.05,
+      "operation": "add_multiplied_total"
+    }
+  ]
+}

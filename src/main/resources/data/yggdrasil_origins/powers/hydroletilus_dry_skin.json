@@ -1,0 +1,17 @@
+{
+  "type": "apoli:attribute",
+  "modifiers": [
+    {
+      "id": "yggdrasil_origins:hydroletilus_dry_skin_burning_time",
+      "attribute": "minecraft:generic.burning_time",
+      "amount": 0.59,
+      "operation": "add_multiplied_base"
+    },
+    {
+      "id": "yggdrasil_origins:hydroletilus_dry_skin_fall_damage_multiplier",
+      "attribute": "minecraft:generic.fall_damage_multiplier",
+      "amount": 0.34,
+      "operation": "add_multiplied_base"
+    }
+  ]
+}

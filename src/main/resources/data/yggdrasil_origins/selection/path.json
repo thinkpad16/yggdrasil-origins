@@ -1,0 +1,226 @@
+{
+  "order": 1,
+  "required": true,
+  "default": "yggdrasil_origins:path_free",
+  "entries": [
+    {
+      "id": "yggdrasil_origins:path_free"
+    },
+    {
+      "id": "yggdrasil_origins:path_undead_reaper",
+      "requires": "yggdrasil_origins:undead"
+    },
+    {
+      "id": "yggdrasil_origins:path_undead_plaguebearer",
+      "requires": "yggdrasil_origins:undead"
+    },
+    {
+      "id": "yggdrasil_origins:path_undead_bonecage",
+      "requires": "yggdrasil_origins:undead"
+    },
+    {
+      "id": "yggdrasil_origins:path_elf_cold_head",
+      "requires": "yggdrasil_origins:elf"
+    },
+    {
+      "id": "yggdrasil_origins:path_elf_woodwise",
+      "requires": "yggdrasil_origins:elf"
+    },
+    {
+      "id": "yggdrasil_origins:path_elf_venomstring",
+      "requires": "yggdrasil_origins:elf"
+    },
+    {
+      "id": "yggdrasil_origins:path_blazing_pyromancer",
+      "requires": "yggdrasil_origins:blazing"
+    },
+    {
+      "id": "yggdrasil_origins:path_blazing_emberguard",
+      "requires": "yggdrasil_origins:blazing"
+    },
+    {
+      "id": "yggdrasil_origins:path_blazing_fireblood",
+      "requires": "yggdrasil_origins:blazing"
+    },
+    {
+      "id": "yggdrasil_origins:path_geonite_bulwark",
+      "requires": "yggdrasil_origins:geonite"
+    },
+    {
+      "id": "yggdrasil_origins:path_geonite_stonecaller",
+      "requires": "yggdrasil_origins:geonite"
+    },
+    {
+      "id": "yggdrasil_origins:path_vortan_momentum",
+      "requires": "yggdrasil_origins:vortan"
+    },
+    {
+      "id": "yggdrasil_origins:path_vortan_ironshirt",
+      "requires": "yggdrasil_origins:vortan"
+    },
+    {
+      "id": "yggdrasil_origins:path_orc_bloodscent",
+      "requires": "yggdrasil_origins:orc"
+    },
+    {
+      "id": "yggdrasil_origins:path_orc_shieldbreaker",
+      "requires": "yggdrasil_origins:orc"
+    },
+    {
+      "id": "yggdrasil_origins:path_dwarf_oreseeker",
+      "requires": "yggdrasil_origins:dwarf"
+    },
+    {
+      "id": "yggdrasil_origins:path_sylph_windlens",
+      "requires": "yggdrasil_origins:sylph"
+    },
+    {
+      "id": "yggdrasil_origins:path_aurelite_lightbearer",
+      "requires": "yggdrasil_origins:aurelite"
+    },
+    {
+      "id": "yggdrasil_origins:path_werewolf_packleader",
+      "requires": "yggdrasil_origins:werewolf"
+    },
+    {
+      "id": "yggdrasil_origins:path_serpentfolk_molt",
+      "requires": "yggdrasil_origins:serpentfolk"
+    },
+    {
+      "id": "yggdrasil_origins:path_tiefling_blood_rite",
+      "requires": "yggdrasil_origins:tiefling"
+    },
+    {
+      "id": "yggdrasil_origins:path_half_giant_second_wind",
+      "requires": "yggdrasil_origins:half_giant"
+    },
+    {
+      "id": "yggdrasil_origins:path_lunaris_bond",
+      "requires": "yggdrasil_origins:lunaris"
+    },
+    {
+      "id": "yggdrasil_origins:path_ferrine_retribution",
+      "requires": "yggdrasil_origins:ferrine"
+    },
+    {
+      "id": "yggdrasil_origins:path_dwarf_forgehand",
+      "requires": "yggdrasil_origins:dwarf"
+    },
+    {
+      "id": "yggdrasil_origins:path_angel_warden",
+      "requires": "yggdrasil_origins:angel"
+    },
+    {
+      "id": "yggdrasil_origins:path_cantharis_second_voice",
+      "requires": "yggdrasil_origins:cantharis"
+    },
+    {
+      "id": "yggdrasil_origins:path_dragonborn_furnace",
+      "requires": "yggdrasil_origins:dragonborn"
+    },
+    {
+      "id": "yggdrasil_origins:path_halfling_slinger",
+      "requires": "yggdrasil_origins:halfling"
+    },
+    {
+      "id": "yggdrasil_origins:path_hydroletilus_deep_shell",
+      "requires": "yggdrasil_origins:hydroletilus"
+    },
+    {
+      "id": "yggdrasil_origins:path_undine_current",
+      "requires": "yggdrasil_origins:undine"
+    },
+    {
+      "id": "yggdrasil_origins:path_amberborn_wall",
+      "requires": "yggdrasil_origins:amberborn"
+    },
+    {
+      "id": "yggdrasil_origins:path_werewolf_pack",
+      "requires": "yggdrasil_origins:werewolf"
+    },
+    {
+      "id": "yggdrasil_origins:path_sylph_storm_heart",
+      "requires": "yggdrasil_origins:sylph"
+    },
+    {
+      "id": "yggdrasil_origins:path_tiefling_temptation",
+      "requires": "yggdrasil_origins:tiefling"
+    },
+    {
+      "id": "yggdrasil_origins:path_lisovyk_rootbound",
+      "requires": "yggdrasil_origins:lisovyk"
+    },
+    {
+      "id": "yggdrasil_origins:path_mara_shroud",
+      "requires": "yggdrasil_origins:mara"
+    },
+    {
+      "id": "yggdrasil_origins:path_blazing_crown",
+      "requires": "yggdrasil_origins:blazing"
+    },
+    {
+      "id": "yggdrasil_origins:path_hydroletilus_icewake",
+      "requires": "yggdrasil_origins:hydroletilus"
+    },
+    {
+      "id": "yggdrasil_origins:path_human_levy",
+      "requires": "yggdrasil_origins:human"
+    },
+    {
+      "id": "yggdrasil_origins:path_human_road",
+      "requires": "yggdrasil_origins:human"
+    },
+    {
+      "id": "yggdrasil_origins:path_amberborn_resin",
+      "requires": "yggdrasil_origins:amberborn"
+    },
+    {
+      "id": "yggdrasil_origins:path_angel_dawnsong",
+      "requires": "yggdrasil_origins:angel"
+    },
+    {
+      "id": "yggdrasil_origins:path_aurelite_shieldguard",
+      "requires": "yggdrasil_origins:aurelite"
+    },
+    {
+      "id": "yggdrasil_origins:path_cantharis_swarm",
+      "requires": "yggdrasil_origins:cantharis"
+    },
+    {
+      "id": "yggdrasil_origins:path_dragonborn_scaled",
+      "requires": "yggdrasil_origins:dragonborn"
+    },
+    {
+      "id": "yggdrasil_origins:path_ferrine_ironweight",
+      "requires": "yggdrasil_origins:ferrine"
+    },
+    {
+      "id": "yggdrasil_origins:path_half_giant_stride",
+      "requires": "yggdrasil_origins:half_giant"
+    },
+    {
+      "id": "yggdrasil_origins:path_halfling_unseen",
+      "requires": "yggdrasil_origins:halfling"
+    },
+    {
+      "id": "yggdrasil_origins:path_lisovyk_greenwhisper",
+      "requires": "yggdrasil_origins:lisovyk"
+    },
+    {
+      "id": "yggdrasil_origins:path_lunaris_tide",
+      "requires": "yggdrasil_origins:lunaris"
+    },
+    {
+      "id": "yggdrasil_origins:path_mara_ring",
+      "requires": "yggdrasil_origins:mara"
+    },
+    {
+      "id": "yggdrasil_origins:path_serpentfolk_venom",
+      "requires": "yggdrasil_origins:serpentfolk"
+    },
+    {
+      "id": "yggdrasil_origins:path_undine_pearl",
+      "requires": "yggdrasil_origins:undine"
+    }
+  ]
+}

@@ -1,0 +1,23 @@
+{
+  "type": "apoli:attribute",
+  "modifiers": [
+    {
+      "id": "yggdrasil_origins:undine_soft_shell_max_health",
+      "attribute": "minecraft:generic.max_health",
+      "amount": -4.0,
+      "operation": "add_value"
+    },
+    {
+      "id": "yggdrasil_origins:undine_soft_shell_armor",
+      "attribute": "minecraft:generic.armor",
+      "amount": -2.0,
+      "operation": "add_value"
+    },
+    {
+      "id": "yggdrasil_origins:undine_soft_shell_shield_bonus",
+      "attribute": "attributes_ld:shield_bonus",
+      "amount": -0.49,
+      "operation": "add_multiplied_base"
+    }
+  ]
+}

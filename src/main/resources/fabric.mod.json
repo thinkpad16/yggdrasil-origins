@@ -1,0 +1,46 @@
+{
+  "schemaVersion": 1,
+  "id": "yggdrasil_origins",
+  "version": "${version}",
+  "name": "Yggdrasil Origins",
+  "description": "A standalone class system for the Minestar Yggdrasil (FallenEden) pack: its own picker screen, storage and commands, its own power engine, and per-class looks with matching hitboxes. Abilities are plain JSON data and lean on RPG Series attributes as soft dependencies.",
+  "authors": [
+    "Tend1tnuy"
+  ],
+  "contact": {},
+  "license": "All-Rights-Reserved",
+  "icon": "assets/yggdrasil_origins/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "org.origins_yggdrasil.yggdrasil_origins.YggdrasilOrigins"
+    ],
+    "client": [
+      "org.origins_yggdrasil.yggdrasil_origins.client.YggdrasilOriginsClient"
+    ],
+    "fabric-datagen": [
+      "org.origins_yggdrasil.yggdrasil_origins.client.YggdrasilOriginsDataGenerator"
+    ]
+  },
+  "mixins": [
+    "yggdrasil_origins.mixins.json",
+    {
+      "config": "yggdrasil_origins.client.mixins.json",
+      "environment": "client"
+    }
+  ],
+  "depends": {
+    "fabricloader": ">=${loader_version}",
+    "minecraft": "${minecraft_version}",
+    "fabric-api": "*"
+  },
+  "suggests": {
+    "spell_power": "*",
+    "spell_engine": "*",
+    "mrpg_lib": "*",
+    "attributes_ld": "*",
+    "combat_roll": "*",
+    "ranged_weapon_api": "*",
+    "critical_strike": "*"
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "type": "apoli:attribute",
+  "modifiers": [
+    {
+      "id": "yggdrasil_origins:geonite_slow_roll_distance",
+      "attribute": "combat_roll:distance",
+      "amount": -0.45,
+      "operation": "add_multiplied_base"
+    },
+    {
+      "id": "yggdrasil_origins:geonite_slow_roll_recharge",
+      "attribute": "combat_roll:recharge",
+      "amount": 0.45,
+      "operation": "add_multiplied_base"
+    }
+  ]
+}

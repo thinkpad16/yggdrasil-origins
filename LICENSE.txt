@@ -1,0 +1,18 @@
+Copyright (c) 2026 Tend1tnuy
+All rights reserved.
+
+You may:
+  - download this mod and run it, on a client or a server, privately or publicly;
+  - include it in a modpack, provided the pack links back to an official download
+    and the mod itself is not modified;
+  - change its behaviour through datapacks and resource packs, and distribute those
+    separately (they are your work, not a derivative of this mod's code).
+
+You may not, without written permission from the copyright holder:
+  - redistribute this mod or its source, modified or not, as your own download;
+  - publish a fork, a port to another loader or Minecraft version, or a recompiled jar;
+  - sell it, or put it behind a paywall, including "early access" tiers.
+
+This mod is provided "as is", without warranty of any kind, express or implied.
+The copyright holder is not liable for any damage, data loss or world corruption
+arising from its use.

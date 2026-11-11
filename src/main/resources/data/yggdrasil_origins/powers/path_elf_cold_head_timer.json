@@ -1,0 +1,5 @@
+{
+  "type": "apoli:cooldown",
+  "cooldown": 100,
+  "hidden": true
+}

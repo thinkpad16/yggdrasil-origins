@@ -1,0 +1,17 @@
+{
+  "type": "apoli:attribute",
+  "modifiers": [
+    {
+      "id": "yggdrasil_origins:blazing_frail_max_health",
+      "attribute": "minecraft:generic.max_health",
+      "amount": -4.0,
+      "operation": "add_value"
+    },
+    {
+      "id": "yggdrasil_origins:blazing_frail_damage_taken",
+      "attribute": "spell_engine:damage_taken",
+      "amount": 0.2,
+      "operation": "add_multiplied_base"
+    }
+  ]
+}

@@ -1,0 +1,29 @@
+{
+  "type": "apoli:attribute",
+  "modifiers": [
+    {
+      "id": "yggdrasil_origins:orc_no_retreat_damage_taken",
+      "attribute": "spell_engine:damage_taken",
+      "amount": 0.29,
+      "operation": "add_multiplied_base"
+    },
+    {
+      "id": "yggdrasil_origins:orc_no_retreat_recharge",
+      "attribute": "combat_roll:recharge",
+      "amount": 0.71,
+      "operation": "add_multiplied_base"
+    },
+    {
+      "id": "yggdrasil_origins:orc_no_retreat_movement_speed",
+      "attribute": "minecraft:generic.movement_speed",
+      "amount": -0.11,
+      "operation": "add_multiplied_base"
+    },
+    {
+      "id": "yggdrasil_origins:orc_no_retreat_healing_taken",
+      "attribute": "spell_engine:healing_taken",
+      "amount": -0.48,
+      "operation": "add_multiplied_base"
+    }
+  ]
+}

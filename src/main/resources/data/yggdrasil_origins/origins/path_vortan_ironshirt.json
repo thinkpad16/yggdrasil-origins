@@ -1,0 +1,11 @@
+{
+  "icon": {
+    "id": "minecraft:chainmail_chestplate"
+  },
+  "order": 15,
+  "impact": 1,
+  "powers": [
+    "yggdrasil_origins:path_vortan_ironshirt_guard",
+    "yggdrasil_origins:path_vortan_ironshirt_heavy"
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "type": "apoli:attribute",
+  "modifiers": [
+    {
+      "id": "yggdrasil_origins:half_giant_magic_resistance_resistance",
+      "attribute": "spell_power:resistance.generic",
+      "amount": 0.06,
+      "operation": "add_multiplied_base"
+    }
+  ]
+}

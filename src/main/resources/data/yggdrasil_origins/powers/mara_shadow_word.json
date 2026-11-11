@@ -1,0 +1,23 @@
+{
+  "type": "apoli:attribute",
+  "modifiers": [
+    {
+      "id": "yggdrasil_origins:mara_shadow_word_0",
+      "attribute": "spell_power:arcane",
+      "amount": 0.08,
+      "operation": "add_multiplied_total"
+    },
+    {
+      "id": "yggdrasil_origins:mara_shadow_word_1",
+      "attribute": "spell_power:soul",
+      "amount": 0.05,
+      "operation": "add_multiplied_total"
+    },
+    {
+      "id": "yggdrasil_origins:mara_shadow_word_2",
+      "attribute": "spell_power:haste",
+      "amount": 0.06,
+      "operation": "add_multiplied_base"
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "type": "apoli:attribute",
+  "modifiers": [
+    {
+      "id": "yggdrasil_origins:halfling_sling_damage",
+      "attribute": "ranged_weapon:damage",
+      "amount": 0.11,
+      "operation": "add_multiplied_total"
+    },
+    {
+      "id": "yggdrasil_origins:halfling_sling_dagger_damage",
+      "attribute": "attributes_ld:dagger_damage",
+      "amount": 0.14,
+      "operation": "add_multiplied_base"
+    }
+  ]
+}

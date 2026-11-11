@@ -1,0 +1,23 @@
+{
+  "type": "apoli:attribute",
+  "modifiers": [
+    {
+      "id": "yggdrasil_origins:dwarf_stature_scale",
+      "attribute": "minecraft:generic.scale",
+      "amount": -0.2,
+      "operation": "add_multiplied_base"
+    },
+    {
+      "id": "yggdrasil_origins:dwarf_stature_movement_speed",
+      "attribute": "minecraft:generic.movement_speed",
+      "amount": -0.1,
+      "operation": "add_multiplied_base"
+    },
+    {
+      "id": "yggdrasil_origins:dwarf_stature_jump_strength",
+      "attribute": "minecraft:generic.jump_strength",
+      "amount": -0.1,
+      "operation": "add_multiplied_base"
+    }
+  ]
+}

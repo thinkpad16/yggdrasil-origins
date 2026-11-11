@@ -1,0 +1,69 @@
+{
+  "icon": {
+    "id": "minecraft:iron_axe"
+  },
+  "order": 20,
+  "impact": 3,
+  "powers": [
+    "yggdrasil_origins:orc_brutal_strength",
+    "yggdrasil_origins:orc_thick_hide",
+    "yggdrasil_origins:orc_relentless_timer",
+    "yggdrasil_origins:orc_relentless",
+    "yggdrasil_origins:orc_bloodlust",
+    "yggdrasil_origins:orc_spell_deaf",
+    "yggdrasil_origins:orc_no_retreat",
+    "yggdrasil_origins:orc_raw_feast",
+    "yggdrasil_origins:orc_scorns_kitchen",
+    "yggdrasil_origins:orc_magic_resistance",
+    "yggdrasil_origins:orc_deep_reserves",
+    "yggdrasil_origins:orc_shield_wall"
+  ],
+  "visual": {
+    "parts": [
+      "tusks",
+      "markings"
+    ],
+    "optional": [
+      "markings"
+    ],
+    "height": 1.04,
+    "width": 1.12,
+    "palette": [
+      "#E3DCC6",
+      "#9B3B2E",
+      "#5E6B4A",
+      "#2F3A2C",
+      "#C8A165",
+      "#7A7266"
+    ],
+    "looks": [
+      {
+        "id": "orc_bone",
+        "tint": "#E3DCC6",
+        "size": 1.0,
+        "shapes": {
+          "tusks": 0,
+          "markings": 0
+        }
+      },
+      {
+        "id": "orc_blood",
+        "tint": "#9B3B2E",
+        "size": 1.1,
+        "shapes": {
+          "tusks": 1,
+          "markings": 1
+        }
+      },
+      {
+        "id": "orc_war",
+        "tint": "#5E6B4A",
+        "size": 0.9,
+        "shapes": {
+          "tusks": 2,
+          "markings": 2
+        }
+      }
+    ]
+  }
+}

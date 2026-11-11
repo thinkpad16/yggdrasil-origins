@@ -1,0 +1,11 @@
+{
+  "type": "apoli:attribute",
+  "modifiers": [
+    {
+      "id": "yggdrasil_origins:ferrine_crushing_armor_piercing",
+      "attribute": "mrpg_lib:armor_piercing",
+      "amount": 0.16,
+      "operation": "add_multiplied_base"
+    }
+  ]
+}

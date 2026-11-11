@@ -1,0 +1,16 @@
+{
+  "icon": {
+    "id": "minecraft:anvil"
+  },
+  "order": 27,
+  "impact": 1,
+  "powers": [
+    "yggdrasil_origins:path_dwarf_forgehand_hammer",
+    "yggdrasil_origins:path_dwarf_forgehand_weight"
+  ],
+  "visual": {
+    "parts": [
+      "vambrace"
+    ]
+  }
+}

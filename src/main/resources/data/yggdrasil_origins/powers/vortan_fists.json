@@ -1,0 +1,17 @@
+{
+  "type": "apoli:attribute",
+  "modifiers": [
+    {
+      "id": "yggdrasil_origins:vortan_fists_knuckles_damage",
+      "attribute": "attributes_ld:knuckles_damage",
+      "amount": 0.3,
+      "operation": "add_multiplied_base"
+    },
+    {
+      "id": "yggdrasil_origins:vortan_fists_attack_speed",
+      "attribute": "minecraft:generic.attack_speed",
+      "amount": 0.13,
+      "operation": "add_multiplied_base"
+    }
+  ]
+}

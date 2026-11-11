@@ -1,0 +1,17 @@
+{
+  "type": "apoli:attribute",
+  "modifiers": [
+    {
+      "id": "yggdrasil_origins:path_half_giant_stride_stride_fall",
+      "attribute": "minecraft:generic.fall_damage_multiplier",
+      "amount": -0.25,
+      "operation": "add_multiplied_base"
+    },
+    {
+      "id": "yggdrasil_origins:path_half_giant_stride_stride_knockback",
+      "attribute": "minecraft:generic.knockback_resistance",
+      "amount": 0.08,
+      "operation": "add_multiplied_base"
+    }
+  ]
+}

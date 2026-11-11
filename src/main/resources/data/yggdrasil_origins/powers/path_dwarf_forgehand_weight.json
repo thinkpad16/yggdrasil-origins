@@ -1,0 +1,17 @@
+{
+  "type": "apoli:attribute",
+  "modifiers": [
+    {
+      "id": "yggdrasil_origins:path_dwarf_forgehand_weight_movement_speed",
+      "attribute": "minecraft:generic.movement_speed",
+      "amount": -0.08,
+      "operation": "add_multiplied_base"
+    },
+    {
+      "id": "yggdrasil_origins:path_dwarf_forgehand_weight_damage",
+      "attribute": "ranged_weapon:damage",
+      "amount": -0.2,
+      "operation": "add_multiplied_total"
+    }
+  ]
+}

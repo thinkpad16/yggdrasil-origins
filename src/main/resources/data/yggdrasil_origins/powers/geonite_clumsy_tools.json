@@ -1,0 +1,9 @@
+{
+  "type": "apoli:attribute",
+  "modifier": {
+    "id": "yggdrasil_origins:geonite_clumsy_tools_block_break_speed",
+    "attribute": "minecraft:player.block_break_speed",
+    "amount": -0.16,
+    "operation": "add_multiplied_base"
+  }
+}

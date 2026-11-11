@@ -1,0 +1,17 @@
+{
+  "type": "apoli:attribute",
+  "modifiers": [
+    {
+      "id": "yggdrasil_origins:path_blazing_emberguard_dull_fire",
+      "attribute": "spell_power:fire",
+      "amount": -0.25,
+      "operation": "add_multiplied_total"
+    },
+    {
+      "id": "yggdrasil_origins:path_blazing_emberguard_dull_haste",
+      "attribute": "spell_power:haste",
+      "amount": -0.1,
+      "operation": "add_multiplied_base"
+    }
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "icon": {
+    "id": "minecraft:blaze_powder"
+  },
+  "order": 49,
+  "impact": 1,
+  "powers": [
+    "yggdrasil_origins:path_dragonborn_scaled_scale",
+    "yggdrasil_origins:path_dragonborn_scaled_cold"
+  ]
+}

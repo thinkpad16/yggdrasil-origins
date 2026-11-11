@@ -1,0 +1,9 @@
+{
+  "type": "apoli:attribute",
+  "modifier": {
+    "id": "yggdrasil_origins:dragonborn_proud_healing_taken",
+    "attribute": "spell_engine:healing_taken",
+    "amount": -0.25,
+    "operation": "add_multiplied_base"
+  }
+}

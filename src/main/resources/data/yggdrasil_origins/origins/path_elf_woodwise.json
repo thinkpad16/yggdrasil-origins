@@ -1,0 +1,11 @@
+{
+  "icon": {
+    "id": "minecraft:oak_sapling"
+  },
+  "order": 5,
+  "impact": 1,
+  "powers": [
+    "yggdrasil_origins:path_elf_woodwise_home",
+    "yggdrasil_origins:path_elf_woodwise_stranger"
+  ]
+}

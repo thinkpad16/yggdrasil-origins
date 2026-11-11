@@ -1,0 +1,35 @@
+{
+  "type": "apoli:conditioned_attribute",
+  "tick_rate": 10,
+  "condition": {
+    "type": "apoli:brightness",
+    "comparison": "<",
+    "compare_to": 0.2
+  },
+  "modifiers": [
+    {
+      "id": "yggdrasil_origins:aurelite_light_starved_paladin_weapon_damage",
+      "attribute": "attributes_ld:paladin_weapon_damage",
+      "amount": -0.95,
+      "operation": "add_multiplied_base"
+    },
+    {
+      "id": "yggdrasil_origins:aurelite_light_starved_healing",
+      "attribute": "spell_power:healing",
+      "amount": -0.95,
+      "operation": "add_multiplied_total"
+    },
+    {
+      "id": "yggdrasil_origins:aurelite_light_starved_armor",
+      "attribute": "minecraft:generic.armor",
+      "amount": -3.0,
+      "operation": "add_value"
+    },
+    {
+      "id": "yggdrasil_origins:aurelite_light_starved_movement_speed",
+      "attribute": "minecraft:generic.movement_speed",
+      "amount": -0.06,
+      "operation": "add_multiplied_base"
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "type": "apoli:attribute",
+  "modifiers": [
+    {
+      "id": "yggdrasil_origins:path_vortan_ironshirt_heavy_count",
+      "attribute": "combat_roll:count",
+      "amount": -1.0,
+      "operation": "add_value"
+    },
+    {
+      "id": "yggdrasil_origins:path_vortan_ironshirt_heavy_movement_speed",
+      "attribute": "minecraft:generic.movement_speed",
+      "amount": -0.06,
+      "operation": "add_multiplied_base"
+    }
+  ]
+}

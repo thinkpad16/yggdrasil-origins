@@ -1,0 +1,17 @@
+{
+  "type": "apoli:attribute",
+  "modifiers": [
+    {
+      "id": "yggdrasil_origins:lisovyk_woodcutter_0",
+      "attribute": "attributes_ld:axe_damage",
+      "amount": 0.14,
+      "operation": "add_multiplied_base"
+    },
+    {
+      "id": "yggdrasil_origins:lisovyk_woodcutter_1",
+      "attribute": "minecraft:player.block_break_speed",
+      "amount": 0.18,
+      "operation": "add_multiplied_base"
+    }
+  ]
+}

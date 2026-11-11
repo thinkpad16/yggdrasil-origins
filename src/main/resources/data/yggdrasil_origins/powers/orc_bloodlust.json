@@ -1,0 +1,23 @@
+{
+  "type": "apoli:conditioned_attribute",
+  "tick_rate": 10,
+  "condition": {
+    "type": "apoli:relative_health",
+    "comparison": "<",
+    "compare_to": 0.5
+  },
+  "modifiers": [
+    {
+      "id": "yggdrasil_origins:orc_bloodlust_warrior_weapon_damage",
+      "attribute": "attributes_ld:warrior_weapon_damage",
+      "amount": 0.37,
+      "operation": "add_multiplied_base"
+    },
+    {
+      "id": "yggdrasil_origins:orc_bloodlust_lifesteal_modifier",
+      "attribute": "mrpg_lib:lifesteal_modifier",
+      "amount": 0.49,
+      "operation": "add_multiplied_base"
+    }
+  ]
+}

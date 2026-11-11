@@ -1,0 +1,11 @@
+{
+  "icon": {
+    "id": "minecraft:amethyst_shard"
+  },
+  "order": 29,
+  "impact": 1,
+  "powers": [
+    "yggdrasil_origins:path_cantharis_second_voice_echo",
+    "yggdrasil_origins:path_cantharis_second_voice_strain"
+  ]
+}

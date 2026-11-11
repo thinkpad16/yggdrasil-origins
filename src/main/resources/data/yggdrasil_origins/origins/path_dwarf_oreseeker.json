@@ -1,0 +1,11 @@
+{
+  "icon": {
+    "id": "minecraft:raw_gold"
+  },
+  "order": 18,
+  "impact": 1,
+  "powers": [
+    "yggdrasil_origins:path_dwarf_oreseeker_deep",
+    "yggdrasil_origins:path_dwarf_oreseeker_surface"
+  ]
+}

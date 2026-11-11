@@ -1,0 +1,23 @@
+{
+  "type": "apoli:attribute",
+  "modifiers": [
+    {
+      "id": "yggdrasil_origins:ferrine_ironhide_armor",
+      "attribute": "minecraft:generic.armor",
+      "amount": 3.0,
+      "operation": "add_value"
+    },
+    {
+      "id": "yggdrasil_origins:ferrine_ironhide_knockback_resistance",
+      "attribute": "minecraft:generic.knockback_resistance",
+      "amount": 0.4,
+      "operation": "add_value"
+    },
+    {
+      "id": "yggdrasil_origins:ferrine_ironhide_shield_bonus",
+      "attribute": "attributes_ld:shield_bonus",
+      "amount": 0.35,
+      "operation": "add_multiplied_base"
+    }
+  ]
+}

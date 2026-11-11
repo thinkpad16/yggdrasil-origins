@@ -1,0 +1,23 @@
+{
+  "type": "apoli:attribute",
+  "modifiers": [
+    {
+      "id": "yggdrasil_origins:angel_mortal_frame_0",
+      "attribute": "spell_power:haste",
+      "amount": -0.25,
+      "operation": "add_multiplied_base"
+    },
+    {
+      "id": "yggdrasil_origins:angel_mortal_frame_1",
+      "attribute": "spell_engine:damage_taken",
+      "amount": 0.31,
+      "operation": "add_multiplied_base"
+    },
+    {
+      "id": "yggdrasil_origins:angel_mortal_frame_2",
+      "attribute": "mrpg_lib:tenacity",
+      "amount": -0.21,
+      "operation": "add_multiplied_base"
+    }
+  ]
+}

@@ -1,0 +1,34 @@
+{
+  "type": "apoli:conditioned_attribute",
+  "tick_rate": 20,
+  "condition": {
+    "type": "apoli:exposed_to_sun",
+    "inverted": true
+  },
+  "modifiers": [
+    {
+      "id": "yggdrasil_origins:werewolf_night_hunter_rogue_weapon_damage",
+      "attribute": "attributes_ld:rogue_weapon_damage",
+      "amount": 0.4,
+      "operation": "add_multiplied_base"
+    },
+    {
+      "id": "yggdrasil_origins:werewolf_night_hunter_warrior_weapon_damage",
+      "attribute": "attributes_ld:warrior_weapon_damage",
+      "amount": 0.32,
+      "operation": "add_multiplied_base"
+    },
+    {
+      "id": "yggdrasil_origins:werewolf_night_hunter_movement_speed",
+      "attribute": "minecraft:generic.movement_speed",
+      "amount": 0.13,
+      "operation": "add_multiplied_base"
+    },
+    {
+      "id": "yggdrasil_origins:werewolf_night_hunter_chance",
+      "attribute": "critical_strike:chance",
+      "amount": 0.05,
+      "operation": "add_multiplied_base"
+    }
+  ]
+}

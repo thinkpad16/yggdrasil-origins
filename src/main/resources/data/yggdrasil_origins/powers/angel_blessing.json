@@ -1,0 +1,23 @@
+{
+  "type": "apoli:attribute",
+  "modifiers": [
+    {
+      "id": "yggdrasil_origins:angel_blessing_max_health",
+      "attribute": "minecraft:generic.max_health",
+      "amount": 4.0,
+      "operation": "add_value"
+    },
+    {
+      "id": "yggdrasil_origins:angel_blessing_armor",
+      "attribute": "minecraft:generic.armor",
+      "amount": 1.0,
+      "operation": "add_value"
+    },
+    {
+      "id": "yggdrasil_origins:angel_blessing_safe_fall_distance",
+      "attribute": "minecraft:generic.safe_fall_distance",
+      "amount": 8.0,
+      "operation": "add_value"
+    }
+  ]
+}

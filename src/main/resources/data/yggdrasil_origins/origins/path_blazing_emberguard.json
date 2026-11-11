@@ -1,0 +1,11 @@
+{
+  "icon": {
+    "id": "minecraft:magma_block"
+  },
+  "order": 8,
+  "impact": 1,
+  "powers": [
+    "yggdrasil_origins:path_blazing_emberguard_crust",
+    "yggdrasil_origins:path_blazing_emberguard_dull"
+  ]
+}

@@ -1,0 +1,102 @@
+{
+  "type": "apoli:multiple",
+  "no_swimming": {
+    "type": "apoli:ignore_water",
+    "condition": {
+      "type": "apoli:all_of",
+      "conditions": [
+        {
+          "type": "apoli:any_of",
+          "conditions": [
+            {
+              "type": "apoli:status_effect",
+              "effect": "yggdrasil_origins:warded"
+            },
+            {
+              "type": "apoli:inventory_item",
+              "item_condition": {
+                "type": "apoli:ingredient",
+                "ingredient": {
+                  "item": "yggdrasil_origins:ward_gem"
+                }
+              }
+            }
+          ],
+          "inverted": true
+        }
+      ]
+    }
+  },
+  "no_drowning": {
+    "type": "apoli:action_over_time",
+    "interval": 10,
+    "condition": {
+      "type": "apoli:all_of",
+      "conditions": [
+        {
+          "type": "apoli:submerged_in",
+          "fluid": "minecraft:water"
+        },
+        {
+          "type": "apoli:any_of",
+          "conditions": [
+            {
+              "type": "apoli:status_effect",
+              "effect": "yggdrasil_origins:warded"
+            },
+            {
+              "type": "apoli:inventory_item",
+              "item_condition": {
+                "type": "apoli:ingredient",
+                "ingredient": {
+                  "item": "yggdrasil_origins:ward_gem"
+                }
+              }
+            }
+          ],
+          "inverted": true
+        }
+      ]
+    },
+    "entity_action": {
+      "type": "apoli:gain_air",
+      "value": 30
+    }
+  },
+  "dead_weight": {
+    "type": "apoli:conditioned_attribute",
+    "tick_rate": 10,
+    "condition": {
+      "type": "apoli:all_of",
+      "conditions": [
+        {
+          "type": "apoli:any_of",
+          "conditions": [
+            {
+              "type": "apoli:status_effect",
+              "effect": "yggdrasil_origins:warded"
+            },
+            {
+              "type": "apoli:inventory_item",
+              "item_condition": {
+                "type": "apoli:ingredient",
+                "ingredient": {
+                  "item": "yggdrasil_origins:ward_gem"
+                }
+              }
+            }
+          ],
+          "inverted": true
+        }
+      ]
+    },
+    "modifiers": [
+      {
+        "id": "yggdrasil_origins:undead_swim_speed",
+        "attribute": "yggdrasil_origins:swim_speed",
+        "amount": -0.95,
+        "operation": "add_multiplied_base"
+      }
+    ]
+  }
+}

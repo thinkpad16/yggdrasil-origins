@@ -1,0 +1,11 @@
+{
+  "icon": {
+    "id": "minecraft:bow"
+  },
+  "order": 31,
+  "impact": 1,
+  "powers": [
+    "yggdrasil_origins:path_halfling_slinger_sling",
+    "yggdrasil_origins:path_halfling_slinger_light"
+  ]
+}

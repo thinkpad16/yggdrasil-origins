@@ -1,0 +1,63 @@
+{
+  "icon": {
+    "id": "minecraft:feather"
+  },
+  "order": 8,
+  "impact": 2,
+  "powers": [
+    "yggdrasil_origins:angel_blessing",
+    "yggdrasil_origins:angel_pacifist",
+    "yggdrasil_origins:angel_no_melee",
+    "yggdrasil_origins:angel_holy_magic",
+    "yggdrasil_origins:angel_blessed_healing",
+    "yggdrasil_origins:angel_grace",
+    "yggdrasil_origins:angel_fire_weakness",
+    "yggdrasil_origins:angel_mortal_frame"
+  ],
+  "visual": {
+    "height": 1.03,
+    "width": 0.98,
+    "parts": [
+      "wings",
+      "halo"
+    ],
+    "tint": "#F2F4FF",
+    "palette": [
+      "#FFF2CC",
+      "#DCE6F2",
+      "#E8C46A",
+      "#B8C9D9",
+      "#FFFFFF",
+      "#C2A368"
+    ],
+    "looks": [
+      {
+        "id": "angel_light",
+        "tint": "#FFF2CC",
+        "size": 1.0,
+        "shapes": {
+          "wings": 0,
+          "halo": 0
+        }
+      },
+      {
+        "id": "angel_dawn",
+        "tint": "#DCE6F2",
+        "size": 1.1,
+        "shapes": {
+          "wings": 1,
+          "halo": 1
+        }
+      },
+      {
+        "id": "angel_storm",
+        "tint": "#E8C46A",
+        "size": 0.92,
+        "shapes": {
+          "wings": 2,
+          "halo": 2
+        }
+      }
+    ]
+  }
+}

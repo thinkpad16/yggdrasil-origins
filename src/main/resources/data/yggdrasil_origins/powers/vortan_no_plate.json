@@ -1,0 +1,67 @@
+{
+  "type": "apoli:restrict_armor",
+  "head": {
+    "type": "apoli:any_of",
+    "conditions": [
+      {
+        "type": "apoli:ingredient",
+        "ingredient": {
+          "tag": "rpg_series:armor_type/melee"
+        }
+      },
+      {
+        "type": "apoli:armor_value",
+        "comparison": ">=",
+        "compare_to": 3
+      }
+    ]
+  },
+  "chest": {
+    "type": "apoli:any_of",
+    "conditions": [
+      {
+        "type": "apoli:ingredient",
+        "ingredient": {
+          "tag": "rpg_series:armor_type/melee"
+        }
+      },
+      {
+        "type": "apoli:armor_value",
+        "comparison": ">=",
+        "compare_to": 6
+      }
+    ]
+  },
+  "legs": {
+    "type": "apoli:any_of",
+    "conditions": [
+      {
+        "type": "apoli:ingredient",
+        "ingredient": {
+          "tag": "rpg_series:armor_type/melee"
+        }
+      },
+      {
+        "type": "apoli:armor_value",
+        "comparison": ">=",
+        "compare_to": 5
+      }
+    ]
+  },
+  "feet": {
+    "type": "apoli:any_of",
+    "conditions": [
+      {
+        "type": "apoli:ingredient",
+        "ingredient": {
+          "tag": "rpg_series:armor_type/melee"
+        }
+      },
+      {
+        "type": "apoli:armor_value",
+        "comparison": ">=",
+        "compare_to": 3
+      }
+    ]
+  }
+}

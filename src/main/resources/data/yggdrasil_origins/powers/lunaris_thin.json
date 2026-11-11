@@ -1,0 +1,17 @@
+{
+  "type": "apoli:attribute",
+  "modifiers": [
+    {
+      "id": "yggdrasil_origins:lunaris_thin_max_health",
+      "attribute": "minecraft:generic.max_health",
+      "amount": -6.0,
+      "operation": "add_value"
+    },
+    {
+      "id": "yggdrasil_origins:lunaris_thin_armor",
+      "attribute": "minecraft:generic.armor",
+      "amount": -3.0,
+      "operation": "add_value"
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "icon": {
+    "id": "minecraft:black_dye"
+  },
+  "order": 39,
+  "impact": 1,
+  "powers": [
+    "yggdrasil_origins:path_mara_shroud_drink",
+    "yggdrasil_origins:path_mara_shroud_thin"
+  ],
+  "visual": {
+    "tint": "#55517A"
+  }
+}

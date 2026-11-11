@@ -1,0 +1,68 @@
+{
+  "icon": {
+    "id": "minecraft:rotten_flesh"
+  },
+  "order": 7,
+  "impact": 3,
+  "powers": [
+    "yggdrasil_origins:undead_sunburn",
+    "yggdrasil_origins:undead_drowned_walker",
+    "yggdrasil_origins:undead_rotten_body",
+    "yggdrasil_origins:undead_lifeless",
+    "yggdrasil_origins:undead_minion",
+    "yggdrasil_origins:undead_lifesteal",
+    "yggdrasil_origins:undead_soul_magic",
+    "yggdrasil_origins:undead_holy_weakness",
+    "yggdrasil_origins:undead_no_healing",
+    "yggdrasil_origins:undead_paladin_weakness",
+    "yggdrasil_origins:undead_grave_reaper",
+    "yggdrasil_origins:undead_carrion",
+    "yggdrasil_origins:undead_dead_palate",
+    "yggdrasil_origins:undead_shield_wall"
+  ],
+  "visual": {
+    "parts": [
+      "bone_spur",
+      "ribs"
+    ],
+    "width": 0.93,
+    "tint": "#D8D2BE",
+    "palette": [
+      "#CFC9B4",
+      "#7D8A6A",
+      "#5A5248",
+      "#9FB3A1",
+      "#3E3A34",
+      "#D6CFC0"
+    ],
+    "looks": [
+      {
+        "id": "undead_grave",
+        "tint": "#CFC9B4",
+        "size": 1.0,
+        "shapes": {
+          "bone_spur": 0,
+          "ribs": 0
+        }
+      },
+      {
+        "id": "undead_pale",
+        "tint": "#7D8A6A",
+        "size": 0.92,
+        "shapes": {
+          "bone_spur": 1,
+          "ribs": 1
+        }
+      },
+      {
+        "id": "undead_rot",
+        "tint": "#5A5248",
+        "size": 1.1,
+        "shapes": {
+          "bone_spur": 2,
+          "ribs": 2
+        }
+      }
+    ]
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "type": "apoli:conditioned_attribute",
+  "tick_rate": 5,
+  "condition": {
+    "type": "apoli:power_active",
+    "power": "yggdrasil_origins:path_elf_cold_head_timer",
+    "inverted": true
+  },
+  "modifiers": [
+    {
+      "id": "yggdrasil_origins:path_elf_cold_head_shaken_damage",
+      "attribute": "ranged_weapon:damage",
+      "amount": -0.2,
+      "operation": "add_multiplied_total"
+    },
+    {
+      "id": "yggdrasil_origins:path_elf_cold_head_shaken_damage_taken",
+      "attribute": "spell_engine:damage_taken",
+      "amount": 0.1,
+      "operation": "add_multiplied_base"
+    }
+  ]
+}

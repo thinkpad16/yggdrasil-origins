@@ -1,0 +1,9 @@
+{
+  "type": "apoli:attribute",
+  "modifier": {
+    "id": "yggdrasil_origins:geonite_verdant_nature",
+    "attribute": "spell_power:nature",
+    "amount": 0.05,
+    "operation": "add_multiplied_total"
+  }
+}

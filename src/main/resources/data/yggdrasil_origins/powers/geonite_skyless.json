@@ -1,0 +1,9 @@
+{
+  "type": "apoli:attribute",
+  "modifier": {
+    "id": "yggdrasil_origins:geonite_skyless_air",
+    "attribute": "spell_power:air",
+    "amount": -0.79,
+    "operation": "add_multiplied_total"
+  }
+}

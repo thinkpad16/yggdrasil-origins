@@ -1,0 +1,63 @@
+{
+  "icon": {
+    "id": "minecraft:wither_rose"
+  },
+  "order": 10,
+  "impact": 2,
+  "powers": [
+    "yggdrasil_origins:tiefling_demon_blood",
+    "yggdrasil_origins:tiefling_arcane",
+    "yggdrasil_origins:tiefling_spell_vampire",
+    "yggdrasil_origins:tiefling_holy_weakness",
+    "yggdrasil_origins:tiefling_cursed_flesh",
+    "yggdrasil_origins:tiefling_no_shield",
+    "yggdrasil_origins:tiefling_lava_born"
+  ],
+  "visual": {
+    "parts": [
+      "horns",
+      "demon_tail"
+    ],
+    "tint": "#8C2F2F",
+    "palette": [
+      "#8A8FA3",
+      "#C0392B",
+      "#5B2333",
+      "#E07A3C",
+      "#2B2033",
+      "#D9B08C"
+    ],
+    "looks": [
+      {
+        "id": "tiefling_ash",
+        "tint": "#8A8FA3",
+        "size": 0.95,
+        "shapes": {
+          "torc": 0,
+          "horns": 0,
+          "demon_tail": 0
+        }
+      },
+      {
+        "id": "tiefling_ember",
+        "tint": "#C0392B",
+        "size": 1.1,
+        "shapes": {
+          "torc": 1,
+          "horns": 1,
+          "demon_tail": 1
+        }
+      },
+      {
+        "id": "tiefling_night",
+        "tint": "#5B2333",
+        "size": 1.0,
+        "shapes": {
+          "torc": 2,
+          "horns": 2,
+          "demon_tail": 2
+        }
+      }
+    ]
+  }
+}

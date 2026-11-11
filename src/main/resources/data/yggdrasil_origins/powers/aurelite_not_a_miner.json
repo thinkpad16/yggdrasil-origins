@@ -1,0 +1,17 @@
+{
+  "type": "apoli:attribute",
+  "modifiers": [
+    {
+      "id": "yggdrasil_origins:aurelite_not_a_miner_block_break_speed",
+      "attribute": "minecraft:player.block_break_speed",
+      "amount": -0.28,
+      "operation": "add_multiplied_base"
+    },
+    {
+      "id": "yggdrasil_origins:aurelite_not_a_miner_movement_speed",
+      "attribute": "minecraft:generic.movement_speed",
+      "amount": -0.05,
+      "operation": "add_multiplied_base"
+    }
+  ]
+}

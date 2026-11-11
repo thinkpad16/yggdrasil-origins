@@ -1,0 +1,17 @@
+{
+  "type": "apoli:attribute",
+  "modifiers": [
+    {
+      "id": "yggdrasil_origins:tiefling_demon_blood_burning_time",
+      "attribute": "minecraft:generic.burning_time",
+      "amount": -0.49,
+      "operation": "add_multiplied_base"
+    },
+    {
+      "id": "yggdrasil_origins:tiefling_demon_blood_max_health",
+      "attribute": "minecraft:generic.max_health",
+      "amount": -2.0,
+      "operation": "add_value"
+    }
+  ]
+}

@@ -1,0 +1,33 @@
+{
+  "type": "apoli:prevent_death",
+  "condition": {
+    "type": "apoli:power_active",
+    "power": "yggdrasil_origins:orc_relentless_timer"
+  },
+  "entity_action": {
+    "type": "apoli:sequence",
+    "actions": [
+      {
+        "type": "apoli:trigger_cooldown",
+        "power": "yggdrasil_origins:orc_relentless_timer"
+      },
+      {
+        "type": "apoli:heal",
+        "amount": 3.0
+      },
+      {
+        "type": "apoli:apply_effect",
+        "effect": {
+          "id": "minecraft:regeneration",
+          "effect": "minecraft:regeneration",
+          "duration": 100,
+          "amplifier": 1
+        }
+      },
+      {
+        "type": "apoli:play_sound",
+        "sound": "minecraft:entity.ravager.roar"
+      }
+    ]
+  }
+}

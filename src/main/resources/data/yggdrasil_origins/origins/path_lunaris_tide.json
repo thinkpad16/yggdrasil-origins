@@ -1,0 +1,11 @@
+{
+  "icon": {
+    "id": "minecraft:clock"
+  },
+  "order": 54,
+  "impact": 1,
+  "powers": [
+    "yggdrasil_origins:path_lunaris_tide_night",
+    "yggdrasil_origins:path_lunaris_tide_day"
+  ]
+}

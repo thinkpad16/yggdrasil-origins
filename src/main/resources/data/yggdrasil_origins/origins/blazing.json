@@ -1,0 +1,63 @@
+{
+  "icon": {
+    "id": "minecraft:blaze_powder"
+  },
+  "order": 5,
+  "impact": 3,
+  "powers": [
+    "yggdrasil_origins:blazing_fire_immunity",
+    "yggdrasil_origins:blazing_lava_walker",
+    "yggdrasil_origins:blazing_regeneration",
+    "yggdrasil_origins:blazing_fire_magic",
+    "yggdrasil_origins:blazing_frail",
+    "yggdrasil_origins:blazing_water_weakness",
+    "yggdrasil_origins:blazing_cold_weakness",
+    "yggdrasil_origins:blazing_poor_shield",
+    "yggdrasil_origins:blazing_palm_forge",
+    "yggdrasil_origins:blazing_burnt_brews",
+    "yggdrasil_origins:blazing_lava_born"
+  ],
+  "visual": {
+    "parts": [
+      "embers"
+    ],
+    "tint": "#FF9A3C",
+    "palette": [
+      "#FF9A3C",
+      "#E85C2B",
+      "#FFD08A",
+      "#A33B1F",
+      "#FFF0C2",
+      "#5B2F1F"
+    ],
+    "looks": [
+      {
+        "id": "blazing_coal",
+        "tint": "#FF9A3C",
+        "size": 0.92,
+        "shapes": {
+          "embers": 0,
+          "flame_crown": 0
+        }
+      },
+      {
+        "id": "blazing_flame",
+        "tint": "#E85C2B",
+        "size": 1.1,
+        "shapes": {
+          "embers": 1,
+          "flame_crown": 1
+        }
+      },
+      {
+        "id": "blazing_char",
+        "tint": "#FFD08A",
+        "size": 1.0,
+        "shapes": {
+          "embers": 2,
+          "flame_crown": 2
+        }
+      }
+    ]
+  }
+}

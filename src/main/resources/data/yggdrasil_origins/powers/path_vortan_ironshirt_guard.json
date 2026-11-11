@@ -1,0 +1,26 @@
+{
+  "type": "apoli:modify_damage_taken",
+  "modifier": {
+    "operation": "multiply_base_additive",
+    "amount": -0.2
+  },
+  "condition": {
+    "type": "apoli:all_of",
+    "conditions": [
+      {
+        "type": "apoli:equipped_item",
+        "equipment_slot": "mainhand",
+        "item_condition": {
+          "type": "apoli:empty"
+        }
+      },
+      {
+        "type": "apoli:equipped_item",
+        "equipment_slot": "offhand",
+        "item_condition": {
+          "type": "apoli:empty"
+        }
+      }
+    ]
+  }
+}

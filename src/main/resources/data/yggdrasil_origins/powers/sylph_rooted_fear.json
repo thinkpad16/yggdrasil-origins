@@ -1,0 +1,9 @@
+{
+  "type": "apoli:attribute",
+  "modifier": {
+    "id": "yggdrasil_origins:sylph_rooted_fear_earth",
+    "attribute": "spell_power:earth",
+    "amount": -0.43,
+    "operation": "add_multiplied_total"
+  }
+}

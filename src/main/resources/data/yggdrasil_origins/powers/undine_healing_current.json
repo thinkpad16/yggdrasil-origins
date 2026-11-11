@@ -1,0 +1,17 @@
+{
+  "type": "apoli:attribute",
+  "modifiers": [
+    {
+      "id": "yggdrasil_origins:undine_healing_current_healing",
+      "attribute": "spell_power:healing",
+      "amount": 0.32,
+      "operation": "add_multiplied_total"
+    },
+    {
+      "id": "yggdrasil_origins:undine_healing_current_frost",
+      "attribute": "spell_power:frost",
+      "amount": 0.05,
+      "operation": "add_multiplied_total"
+    }
+  ]
+}

@@ -1,0 +1,9 @@
+{
+  "type": "apoli:attribute",
+  "modifier": {
+    "id": "yggdrasil_origins:sylph_lightning_lightning",
+    "attribute": "spell_power:lightning",
+    "amount": 0.05,
+    "operation": "add_multiplied_total"
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "icon": {
+    "id": "minecraft:lily_pad"
+  },
+  "order": 55,
+  "impact": 1,
+  "powers": [
+    "yggdrasil_origins:path_mara_ring_water",
+    "yggdrasil_origins:path_mara_ring_ash"
+  ]
+}

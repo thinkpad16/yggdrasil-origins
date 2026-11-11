@@ -1,0 +1,22 @@
+{
+  "type": "apoli:conditioned_attribute",
+  "tick_rate": 20,
+  "condition": {
+    "type": "apoli:exposed_to_sky",
+    "inverted": true
+  },
+  "modifiers": [
+    {
+      "id": "yggdrasil_origins:sylph_caged_air",
+      "attribute": "spell_power:air",
+      "amount": -0.25,
+      "operation": "add_multiplied_total"
+    },
+    {
+      "id": "yggdrasil_origins:sylph_caged_evasion_chance",
+      "attribute": "spell_engine:evasion_chance",
+      "amount": -0.04,
+      "operation": "add_multiplied_base"
+    }
+  ]
+}

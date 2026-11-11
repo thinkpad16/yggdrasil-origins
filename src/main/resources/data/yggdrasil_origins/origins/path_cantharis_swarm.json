@@ -1,0 +1,11 @@
+{
+  "icon": {
+    "id": "minecraft:fermented_spider_eye"
+  },
+  "order": 48,
+  "impact": 1,
+  "powers": [
+    "yggdrasil_origins:path_cantharis_swarm_press",
+    "yggdrasil_origins:path_cantharis_swarm_lone"
+  ]
+}

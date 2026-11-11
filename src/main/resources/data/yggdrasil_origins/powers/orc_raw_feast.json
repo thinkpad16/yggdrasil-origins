@@ -1,0 +1,22 @@
+{
+  "type": "apoli:modify_food",
+  "item_condition": {
+    "type": "apoli:ingredient",
+    "ingredient": {
+      "tag": "yggdrasil_origins:raw_meat"
+    }
+  },
+  "prevent_effects": true,
+  "food_modifier": {
+    "operation": "multiply_base_additive",
+    "amount": 0.4
+  },
+  "entity_action": {
+    "type": "apoli:apply_effect",
+    "effect": {
+      "id": "minecraft:strength",
+      "effect": "minecraft:strength",
+      "duration": 160
+    }
+  }
+}

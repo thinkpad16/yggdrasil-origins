@@ -1,0 +1,8 @@
+{
+  "type": "apoli:walk_on_fluid",
+  "fluid": "minecraft:lava",
+  "condition": {
+    "type": "apoli:sneaking",
+    "inverted": true
+  }
+}

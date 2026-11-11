@@ -1,0 +1,23 @@
+{
+  "type": "apoli:attribute",
+  "modifiers": [
+    {
+      "id": "yggdrasil_origins:amberborn_heavy_resin_speed",
+      "attribute": "minecraft:generic.movement_speed",
+      "amount": -0.14,
+      "operation": "add_multiplied_base"
+    },
+    {
+      "id": "yggdrasil_origins:amberborn_heavy_resin_distance",
+      "attribute": "combat_roll:distance",
+      "amount": -0.53,
+      "operation": "add_multiplied_base"
+    },
+    {
+      "id": "yggdrasil_origins:amberborn_heavy_resin_recharge",
+      "attribute": "combat_roll:recharge",
+      "amount": 0.64,
+      "operation": "add_multiplied_base"
+    }
+  ]
+}

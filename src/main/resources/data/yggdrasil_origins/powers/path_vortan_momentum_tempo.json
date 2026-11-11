@@ -1,0 +1,23 @@
+{
+  "type": "apoli:attribute",
+  "modifiers": [
+    {
+      "id": "yggdrasil_origins:path_vortan_momentum_tempo_attack_speed",
+      "attribute": "minecraft:generic.attack_speed",
+      "amount": 0.08,
+      "operation": "add_multiplied_base"
+    },
+    {
+      "id": "yggdrasil_origins:path_vortan_momentum_tempo_haste",
+      "attribute": "spell_power:haste",
+      "amount": 0.08,
+      "operation": "add_multiplied_base"
+    },
+    {
+      "id": "yggdrasil_origins:path_vortan_momentum_tempo_ranged_haste",
+      "attribute": "ranged_weapon:haste",
+      "amount": 0.08,
+      "operation": "add_multiplied_base"
+    }
+  ]
+}

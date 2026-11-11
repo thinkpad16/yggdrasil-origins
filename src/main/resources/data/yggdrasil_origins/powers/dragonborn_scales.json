@@ -1,0 +1,17 @@
+{
+  "type": "apoli:attribute",
+  "modifiers": [
+    {
+      "id": "yggdrasil_origins:dragonborn_scales_armor",
+      "attribute": "minecraft:generic.armor",
+      "amount": 8.0,
+      "operation": "add_value"
+    },
+    {
+      "id": "yggdrasil_origins:dragonborn_scales_knockback_resistance",
+      "attribute": "minecraft:generic.knockback_resistance",
+      "amount": 0.65,
+      "operation": "add_value"
+    }
+  ]
+}

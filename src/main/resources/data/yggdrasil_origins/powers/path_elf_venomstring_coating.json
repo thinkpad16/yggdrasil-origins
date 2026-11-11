@@ -1,0 +1,11 @@
+{
+  "type": "apoli:attribute",
+  "modifiers": [
+    {
+      "id": "yggdrasil_origins:path_elf_venomstring_coating_poison_chance",
+      "attribute": "mrpg_lib:poison_chance",
+      "amount": 0.12,
+      "operation": "add_multiplied_base"
+    }
+  ]
+}

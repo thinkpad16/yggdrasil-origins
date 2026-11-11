@@ -1,0 +1,13 @@
+{
+  "icon": {
+    "id": "minecraft:spyglass"
+  },
+  "order": 4,
+  "impact": 1,
+  "powers": [
+    "yggdrasil_origins:path_elf_cold_head_timer",
+    "yggdrasil_origins:path_elf_cold_head_trigger",
+    "yggdrasil_origins:path_elf_cold_head_steady",
+    "yggdrasil_origins:path_elf_cold_head_shaken"
+  ]
+}

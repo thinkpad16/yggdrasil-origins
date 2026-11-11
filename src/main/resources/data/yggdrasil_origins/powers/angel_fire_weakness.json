@@ -1,0 +1,9 @@
+{
+  "type": "apoli:attribute",
+  "modifier": {
+    "id": "yggdrasil_origins:angel_fire_weakness_fire",
+    "attribute": "spell_power:fire",
+    "amount": -0.18,
+    "operation": "add_multiplied_total"
+  }
+}

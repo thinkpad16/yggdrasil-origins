@@ -1,0 +1,18 @@
+{
+  "type": "apoli:modify_food",
+  "item_condition": {
+    "type": "apoli:ingredient",
+    "ingredient": {
+      "tag": "yggdrasil_origins:carrion"
+    }
+  },
+  "prevent_effects": true,
+  "food_modifier": {
+    "operation": "multiply_base_additive",
+    "amount": 0.5
+  },
+  "saturation_modifier": {
+    "operation": "multiply_base_additive",
+    "amount": 1.0
+  }
+}

@@ -1,0 +1,34 @@
+{
+  "type": "apoli:conditioned_attribute",
+  "tick_rate": 20,
+  "condition": {
+    "type": "apoli:block_in_radius",
+    "radius": 5,
+    "comparison": ">=",
+    "compare_to": 16,
+    "block_condition": {
+      "type": "apoli:in_tag",
+      "tag": "minecraft:leaves"
+    }
+  },
+  "modifiers": [
+    {
+      "id": "yggdrasil_origins:path_lisovyk_greenwhisper_grove_tenacity",
+      "attribute": "mrpg_lib:tenacity",
+      "amount": 0.08,
+      "operation": "add_multiplied_base"
+    },
+    {
+      "id": "yggdrasil_origins:path_lisovyk_greenwhisper_grove_speed",
+      "attribute": "minecraft:generic.movement_speed",
+      "amount": 0.06,
+      "operation": "add_multiplied_base"
+    },
+    {
+      "id": "yggdrasil_origins:path_lisovyk_greenwhisper_grove_earth",
+      "attribute": "spell_power:earth",
+      "amount": 0.05,
+      "operation": "add_multiplied_base"
+    }
+  ]
+}

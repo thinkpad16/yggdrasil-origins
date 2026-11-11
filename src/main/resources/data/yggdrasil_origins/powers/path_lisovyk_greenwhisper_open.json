@@ -1,0 +1,35 @@
+{
+  "type": "apoli:conditioned_attribute",
+  "tick_rate": 20,
+  "condition": {
+    "type": "apoli:block_in_radius",
+    "radius": 6,
+    "comparison": ">=",
+    "compare_to": 4,
+    "block_condition": {
+      "type": "apoli:in_tag",
+      "tag": "minecraft:leaves"
+    },
+    "inverted": true
+  },
+  "modifiers": [
+    {
+      "id": "yggdrasil_origins:path_lisovyk_greenwhisper_open_armor",
+      "attribute": "minecraft:generic.armor",
+      "amount": -2.0,
+      "operation": "add_value"
+    },
+    {
+      "id": "yggdrasil_origins:path_lisovyk_greenwhisper_open_taken",
+      "attribute": "spell_engine:damage_taken",
+      "amount": 0.05,
+      "operation": "add_multiplied_base"
+    },
+    {
+      "id": "yggdrasil_origins:path_lisovyk_greenwhisper_open_recharge",
+      "attribute": "combat_roll:recharge",
+      "amount": 0.1,
+      "operation": "add_multiplied_base"
+    }
+  ]
+}

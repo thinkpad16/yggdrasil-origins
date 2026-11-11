@@ -1,0 +1,13 @@
+{
+  "icon": {
+    "id": "minecraft:bone_meal"
+  },
+  "order": 21,
+  "impact": 1,
+  "powers": [
+    "yggdrasil_origins:path_werewolf_packleader_tier1",
+    "yggdrasil_origins:path_werewolf_packleader_tier2",
+    "yggdrasil_origins:path_werewolf_packleader_tier3",
+    "yggdrasil_origins:path_werewolf_packleader_alone"
+  ]
+}

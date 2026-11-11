@@ -1,0 +1,50 @@
+{
+  "type": "apoli:multiple",
+  "slow_magic": {
+    "type": "apoli:attribute",
+    "modifiers": [
+      {
+        "id": "yggdrasil_origins:amberborn_resin_burns_fire",
+        "attribute": "spell_power:fire",
+        "amount": -0.4,
+        "operation": "add_multiplied_total"
+      }
+    ]
+  },
+  "catches_fire": {
+    "type": "apoli:conditioned_attribute",
+    "tick_rate": 20,
+    "condition": {
+      "type": "apoli:all_of",
+      "conditions": [
+        {
+          "type": "apoli:any_of",
+          "conditions": [
+            {
+              "type": "apoli:status_effect",
+              "effect": "yggdrasil_origins:warded"
+            },
+            {
+              "type": "apoli:inventory_item",
+              "item_condition": {
+                "type": "apoli:ingredient",
+                "ingredient": {
+                  "item": "yggdrasil_origins:ward_gem"
+                }
+              }
+            }
+          ],
+          "inverted": true
+        }
+      ]
+    },
+    "modifiers": [
+      {
+        "id": "yggdrasil_origins:amberborn_resin_burns_burning",
+        "attribute": "minecraft:generic.burning_time",
+        "amount": 0.6,
+        "operation": "add_multiplied_base"
+      }
+    ]
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "type": "apoli:conditioned_attribute",
+  "tick_rate": 20,
+  "condition": {
+    "type": "apoli:exposed_to_sun",
+    "inverted": true
+  },
+  "modifiers": [
+    {
+      "id": "yggdrasil_origins:lunaris_night_blessing_healing",
+      "attribute": "spell_power:healing",
+      "amount": 0.14,
+      "operation": "add_multiplied_total"
+    },
+    {
+      "id": "yggdrasil_origins:lunaris_night_blessing_haste",
+      "attribute": "spell_power:haste",
+      "amount": 0.07,
+      "operation": "add_multiplied_base"
+    }
+  ]
+}

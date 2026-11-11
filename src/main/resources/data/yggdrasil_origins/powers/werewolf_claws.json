@@ -1,0 +1,11 @@
+{
+  "type": "apoli:attribute",
+  "modifiers": [
+    {
+      "id": "yggdrasil_origins:werewolf_claws_dagger_damage",
+      "attribute": "attributes_ld:dagger_damage",
+      "amount": 0.32,
+      "operation": "add_multiplied_base"
+    }
+  ]
+}

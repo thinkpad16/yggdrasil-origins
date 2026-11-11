@@ -1,0 +1,17 @@
+{
+  "type": "apoli:attribute",
+  "modifiers": [
+    {
+      "id": "yggdrasil_origins:geonite_stonefist_hammer_damage",
+      "attribute": "attributes_ld:hammer_damage",
+      "amount": 0.23,
+      "operation": "add_multiplied_base"
+    },
+    {
+      "id": "yggdrasil_origins:geonite_stonefist_warrior_weapon_damage",
+      "attribute": "attributes_ld:warrior_weapon_damage",
+      "amount": 0.19,
+      "operation": "add_multiplied_base"
+    }
+  ]
+}

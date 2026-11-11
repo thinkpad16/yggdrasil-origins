@@ -1,0 +1,17 @@
+{
+  "icon": {
+    "id": "minecraft:fire_charge"
+  },
+  "order": 41,
+  "impact": 1,
+  "powers": [
+    "yggdrasil_origins:path_blazing_crown_burn",
+    "yggdrasil_origins:path_blazing_crown_spent"
+  ],
+  "visual": {
+    "parts": [
+      "flame_crown"
+    ],
+    "tint": "#FF9A3C"
+  }
+}

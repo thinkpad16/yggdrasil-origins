@@ -1,0 +1,17 @@
+{
+  "type": "apoli:attribute",
+  "modifiers": [
+    {
+      "id": "yggdrasil_origins:dwarf_sturdy_armor",
+      "attribute": "minecraft:generic.armor",
+      "amount": 2.0,
+      "operation": "add_value"
+    },
+    {
+      "id": "yggdrasil_origins:dwarf_sturdy_knockback_resistance",
+      "attribute": "minecraft:generic.knockback_resistance",
+      "amount": 0.25,
+      "operation": "add_value"
+    }
+  ]
+}

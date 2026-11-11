@@ -1,0 +1,11 @@
+{
+  "icon": {
+    "id": "minecraft:fire_charge"
+  },
+  "order": 7,
+  "impact": 1,
+  "powers": [
+    "yggdrasil_origins:path_blazing_pyromancer_whitehot",
+    "yggdrasil_origins:path_blazing_pyromancer_kindling"
+  ]
+}

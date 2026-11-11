@@ -1,0 +1,11 @@
+{
+  "icon": {
+    "id": "minecraft:glowstone_dust"
+  },
+  "order": 46,
+  "impact": 1,
+  "powers": [
+    "yggdrasil_origins:path_angel_dawnsong_dawn",
+    "yggdrasil_origins:path_angel_dawnsong_dusk"
+  ]
+}

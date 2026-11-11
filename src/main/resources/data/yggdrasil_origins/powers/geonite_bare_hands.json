@@ -1,0 +1,8 @@
+{
+  "type": "apoli:modify_harvest",
+  "allow": true,
+  "block_condition": {
+    "type": "apoli:in_tag",
+    "tag": "yggdrasil_origins:bare_hand_stone"
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "icon": {
+    "id": "minecraft:oak_leaves"
+  },
+  "order": 53,
+  "impact": 1,
+  "powers": [
+    "yggdrasil_origins:path_lisovyk_greenwhisper_grove",
+    "yggdrasil_origins:path_lisovyk_greenwhisper_open"
+  ]
+}

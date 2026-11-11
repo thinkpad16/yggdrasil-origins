@@ -1,0 +1,17 @@
+{
+  "type": "apoli:attribute",
+  "modifiers": [
+    {
+      "id": "yggdrasil_origins:path_mara_shroud_drink_0",
+      "attribute": "mrpg_lib:spell_vampire",
+      "amount": 0.1,
+      "operation": "add_multiplied_base"
+    },
+    {
+      "id": "yggdrasil_origins:path_mara_shroud_drink_1",
+      "attribute": "spell_power:soul",
+      "amount": 0.04,
+      "operation": "add_multiplied_total"
+    }
+  ]
+}

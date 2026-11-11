@@ -1,0 +1,23 @@
+{
+  "type": "apoli:attribute",
+  "modifiers": [
+    {
+      "id": "yggdrasil_origins:path_cantharis_second_voice_strain_max_health",
+      "attribute": "minecraft:generic.max_health",
+      "amount": -2.0,
+      "operation": "add_value"
+    },
+    {
+      "id": "yggdrasil_origins:path_cantharis_second_voice_strain_damage_taken",
+      "attribute": "spell_engine:damage_taken",
+      "amount": 0.08,
+      "operation": "add_multiplied_base"
+    },
+    {
+      "id": "yggdrasil_origins:path_cantharis_second_voice_strain_wand_damage",
+      "attribute": "attributes_ld:wand_damage",
+      "amount": -0.15,
+      "operation": "add_multiplied_base"
+    }
+  ]
+}

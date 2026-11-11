@@ -1,0 +1,11 @@
+{
+  "icon": {
+    "id": "minecraft:bone"
+  },
+  "order": 3,
+  "impact": 1,
+  "powers": [
+    "yggdrasil_origins:path_undead_bonecage_hollow",
+    "yggdrasil_origins:path_undead_bonecage_brittle"
+  ]
+}

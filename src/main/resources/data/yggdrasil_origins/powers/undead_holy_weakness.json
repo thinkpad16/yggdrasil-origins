@@ -1,0 +1,17 @@
+{
+  "type": "apoli:attribute",
+  "modifiers": [
+    {
+      "id": "yggdrasil_origins:undead_holy_weakness_healing",
+      "attribute": "spell_power:healing",
+      "amount": -0.6,
+      "operation": "add_multiplied_total"
+    },
+    {
+      "id": "yggdrasil_origins:undead_holy_weakness_fire",
+      "attribute": "spell_power:fire",
+      "amount": -0.24,
+      "operation": "add_multiplied_total"
+    }
+  ]
+}

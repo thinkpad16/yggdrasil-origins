@@ -1,0 +1,21 @@
+{
+  "type": "apoli:modify_status_effect_duration",
+  "status_effects": [
+    "minecraft:strength",
+    "minecraft:speed",
+    "minecraft:regeneration",
+    "minecraft:resistance",
+    "minecraft:absorption",
+    "minecraft:jump_boost",
+    "minecraft:haste",
+    "minecraft:night_vision",
+    "minecraft:invisibility",
+    "minecraft:water_breathing",
+    "minecraft:luck",
+    "minecraft:health_boost"
+  ],
+  "modifier": {
+    "operation": "multiply_base_additive",
+    "amount": -0.35
+  }
+}

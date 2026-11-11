@@ -1,0 +1,11 @@
+{
+  "type": "apoli:attribute",
+  "modifiers": [
+    {
+      "id": "yggdrasil_origins:half_giant_deep_reserves_max_health",
+      "attribute": "minecraft:generic.max_health",
+      "amount": 10.0,
+      "operation": "add_value"
+    }
+  ]
+}

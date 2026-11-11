@@ -1,0 +1,17 @@
+{
+  "icon": {
+    "id": "minecraft:totem_of_undying"
+  },
+  "order": 24,
+  "impact": 1,
+  "powers": [
+    "yggdrasil_origins:path_half_giant_second_wind_timer",
+    "yggdrasil_origins:path_half_giant_second_wind_save",
+    "yggdrasil_origins:path_half_giant_second_wind_no_roll"
+  ],
+  "visual": {
+    "parts": [
+      "mane"
+    ]
+  }
+}

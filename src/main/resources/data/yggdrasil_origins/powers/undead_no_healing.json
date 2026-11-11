@@ -1,0 +1,9 @@
+{
+  "type": "apoli:attribute",
+  "modifier": {
+    "id": "yggdrasil_origins:undead_no_healing_healing_taken",
+    "attribute": "spell_engine:healing_taken",
+    "amount": -0.49,
+    "operation": "add_multiplied_base"
+  }
+}

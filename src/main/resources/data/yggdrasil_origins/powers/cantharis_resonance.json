@@ -1,0 +1,17 @@
+{
+  "type": "apoli:attribute",
+  "modifiers": [
+    {
+      "id": "yggdrasil_origins:cantharis_resonance_arcane",
+      "attribute": "spell_power:arcane",
+      "amount": 0.03,
+      "operation": "add_multiplied_total"
+    },
+    {
+      "id": "yggdrasil_origins:cantharis_resonance_healing",
+      "attribute": "spell_power:healing",
+      "amount": 0.14,
+      "operation": "add_multiplied_total"
+    }
+  ]
+}

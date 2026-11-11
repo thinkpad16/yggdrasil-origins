@@ -1,0 +1,9 @@
+{
+  "type": "apoli:attribute",
+  "modifier": {
+    "id": "yggdrasil_origins:half_giant_size_scale",
+    "attribute": "minecraft:generic.scale",
+    "amount": 0.11,
+    "operation": "add_multiplied_base"
+  }
+}

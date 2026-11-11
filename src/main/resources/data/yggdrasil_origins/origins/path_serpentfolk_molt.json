@@ -1,0 +1,16 @@
+{
+  "icon": {
+    "id": "minecraft:phantom_membrane"
+  },
+  "order": 22,
+  "impact": 1,
+  "powers": [
+    "yggdrasil_origins:path_serpentfolk_molt_renew",
+    "yggdrasil_origins:path_serpentfolk_molt_skin"
+  ],
+  "visual": {
+    "parts": [
+      "arm_scales"
+    ]
+  }
+}

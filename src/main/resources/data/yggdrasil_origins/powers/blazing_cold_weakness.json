@@ -1,0 +1,17 @@
+{
+  "type": "apoli:attribute",
+  "modifiers": [
+    {
+      "id": "yggdrasil_origins:blazing_cold_weakness_frost",
+      "attribute": "spell_power:frost",
+      "amount": -0.5,
+      "operation": "add_multiplied_total"
+    },
+    {
+      "id": "yggdrasil_origins:blazing_cold_weakness_water",
+      "attribute": "spell_power:water",
+      "amount": -0.5,
+      "operation": "add_multiplied_total"
+    }
+  ]
+}

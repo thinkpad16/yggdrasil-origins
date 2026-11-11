@@ -1,0 +1,17 @@
+{
+  "type": "apoli:attribute",
+  "modifiers": [
+    {
+      "id": "yggdrasil_origins:serpentfolk_venom_rogue_weapon_damage",
+      "attribute": "attributes_ld:rogue_weapon_damage",
+      "amount": 0.11,
+      "operation": "add_multiplied_base"
+    },
+    {
+      "id": "yggdrasil_origins:serpentfolk_venom_dagger_damage",
+      "attribute": "attributes_ld:dagger_damage",
+      "amount": 0.11,
+      "operation": "add_multiplied_base"
+    }
+  ]
+}

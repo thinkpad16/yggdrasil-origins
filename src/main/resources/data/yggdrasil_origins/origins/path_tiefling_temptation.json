@@ -1,0 +1,16 @@
+{
+  "icon": {
+    "id": "minecraft:golden_apple"
+  },
+  "order": 37,
+  "impact": 1,
+  "powers": [
+    "yggdrasil_origins:path_tiefling_temptation_rival",
+    "yggdrasil_origins:path_tiefling_temptation_bored"
+  ],
+  "visual": {
+    "parts": [
+      "torc"
+    ]
+  }
+}

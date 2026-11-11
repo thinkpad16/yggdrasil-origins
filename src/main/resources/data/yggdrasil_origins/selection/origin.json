@@ -1,0 +1,81 @@
+{
+  "order": 0,
+  "required": true,
+  "entries": [
+    {
+      "id": "yggdrasil_origins:human"
+    },
+    {
+      "id": "yggdrasil_origins:dwarf"
+    },
+    {
+      "id": "yggdrasil_origins:elf"
+    },
+    {
+      "id": "yggdrasil_origins:blazing"
+    },
+    {
+      "id": "yggdrasil_origins:half_giant"
+    },
+    {
+      "id": "yggdrasil_origins:undead"
+    },
+    {
+      "id": "yggdrasil_origins:angel"
+    },
+    {
+      "id": "yggdrasil_origins:hydroletilus"
+    },
+    {
+      "id": "yggdrasil_origins:tiefling"
+    },
+    {
+      "id": "yggdrasil_origins:cantharis"
+    },
+    {
+      "id": "yggdrasil_origins:undine"
+    },
+    {
+      "id": "yggdrasil_origins:geonite"
+    },
+    {
+      "id": "yggdrasil_origins:sylph"
+    },
+    {
+      "id": "yggdrasil_origins:aurelite"
+    },
+    {
+      "id": "yggdrasil_origins:ferrine"
+    },
+    {
+      "id": "yggdrasil_origins:vortan"
+    },
+    {
+      "id": "yggdrasil_origins:lunaris"
+    },
+    {
+      "id": "yggdrasil_origins:orc"
+    },
+    {
+      "id": "yggdrasil_origins:halfling"
+    },
+    {
+      "id": "yggdrasil_origins:dragonborn"
+    },
+    {
+      "id": "yggdrasil_origins:werewolf"
+    },
+    {
+      "id": "yggdrasil_origins:serpentfolk"
+    },
+    {
+      "id": "yggdrasil_origins:amberborn"
+    },
+    {
+      "id": "yggdrasil_origins:lisovyk"
+    },
+    {
+      "id": "yggdrasil_origins:mara"
+    }
+  ]
+}

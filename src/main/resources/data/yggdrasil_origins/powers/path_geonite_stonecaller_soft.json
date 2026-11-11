@@ -1,0 +1,17 @@
+{
+  "type": "apoli:attribute",
+  "modifiers": [
+    {
+      "id": "yggdrasil_origins:path_geonite_stonecaller_soft_armor",
+      "attribute": "minecraft:generic.armor",
+      "amount": -4.0,
+      "operation": "add_value"
+    },
+    {
+      "id": "yggdrasil_origins:path_geonite_stonecaller_soft_warrior_weapon_damage",
+      "attribute": "attributes_ld:warrior_weapon_damage",
+      "amount": -0.3,
+      "operation": "add_multiplied_base"
+    }
+  ]
+}

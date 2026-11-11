@@ -1,0 +1,11 @@
+{
+  "type": "apoli:attribute",
+  "modifiers": [
+    {
+      "id": "yggdrasil_origins:lunaris_moonlight_healing",
+      "attribute": "spell_power:healing",
+      "amount": 0.16,
+      "operation": "add_multiplied_total"
+    }
+  ]
+}

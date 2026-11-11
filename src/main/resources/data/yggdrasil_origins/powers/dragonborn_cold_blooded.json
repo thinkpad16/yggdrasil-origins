@@ -1,0 +1,27 @@
+{
+  "type": "apoli:conditioned_attribute",
+  "tick_rate": 20,
+  "condition": {
+    "type": "apoli:in_snow"
+  },
+  "modifiers": [
+    {
+      "id": "yggdrasil_origins:dragonborn_cold_blooded_movement_speed",
+      "attribute": "minecraft:generic.movement_speed",
+      "amount": -0.27,
+      "operation": "add_multiplied_base"
+    },
+    {
+      "id": "yggdrasil_origins:dragonborn_cold_blooded_haste",
+      "attribute": "spell_power:haste",
+      "amount": -0.34,
+      "operation": "add_multiplied_base"
+    },
+    {
+      "id": "yggdrasil_origins:dragonborn_cold_blooded_attack_speed",
+      "attribute": "minecraft:generic.attack_speed",
+      "amount": -0.18,
+      "operation": "add_multiplied_base"
+    }
+  ]
+}

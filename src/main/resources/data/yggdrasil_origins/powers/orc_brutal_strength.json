@@ -1,0 +1,17 @@
+{
+  "type": "apoli:attribute",
+  "modifiers": [
+    {
+      "id": "yggdrasil_origins:orc_brutal_strength_warrior_weapon_damage",
+      "attribute": "attributes_ld:warrior_weapon_damage",
+      "amount": 0.37,
+      "operation": "add_multiplied_base"
+    },
+    {
+      "id": "yggdrasil_origins:orc_brutal_strength_axe_damage",
+      "attribute": "attributes_ld:axe_damage",
+      "amount": 0.12,
+      "operation": "add_multiplied_base"
+    }
+  ]
+}

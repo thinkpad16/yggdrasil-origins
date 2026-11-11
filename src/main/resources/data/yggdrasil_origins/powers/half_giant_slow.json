@@ -1,0 +1,17 @@
+{
+  "type": "apoli:attribute",
+  "modifiers": [
+    {
+      "id": "yggdrasil_origins:half_giant_slow_movement_speed",
+      "attribute": "minecraft:generic.movement_speed",
+      "amount": -0.17,
+      "operation": "add_multiplied_base"
+    },
+    {
+      "id": "yggdrasil_origins:half_giant_slow_attack_speed",
+      "attribute": "minecraft:generic.attack_speed",
+      "amount": -0.09,
+      "operation": "add_multiplied_base"
+    }
+  ]
+}

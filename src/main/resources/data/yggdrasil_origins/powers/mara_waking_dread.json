@@ -1,0 +1,17 @@
+{
+  "type": "apoli:attribute",
+  "modifiers": [
+    {
+      "id": "yggdrasil_origins:mara_waking_dread_0",
+      "attribute": "attributes_ld:dagger_damage",
+      "amount": 0.12,
+      "operation": "add_multiplied_base"
+    },
+    {
+      "id": "yggdrasil_origins:mara_waking_dread_1",
+      "attribute": "critical_strike:chance",
+      "amount": 0.04,
+      "operation": "add_multiplied_base"
+    }
+  ]
+}

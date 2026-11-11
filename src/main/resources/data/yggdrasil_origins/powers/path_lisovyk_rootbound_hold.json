@@ -1,0 +1,28 @@
+{
+  "type": "apoli:conditioned_attribute",
+  "tick_rate": 5,
+  "condition": {
+    "type": "apoli:moving",
+    "inverted": true
+  },
+  "modifiers": [
+    {
+      "id": "yggdrasil_origins:path_lisovyk_rootbound_hold_0",
+      "attribute": "minecraft:generic.armor",
+      "amount": 3.0,
+      "operation": "add_value"
+    },
+    {
+      "id": "yggdrasil_origins:path_lisovyk_rootbound_hold_1",
+      "attribute": "minecraft:generic.knockback_resistance",
+      "amount": 0.4,
+      "operation": "add_value"
+    },
+    {
+      "id": "yggdrasil_origins:path_lisovyk_rootbound_hold_2",
+      "attribute": "mrpg_lib:tenacity",
+      "amount": 0.1,
+      "operation": "add_multiplied_base"
+    }
+  ]
+}

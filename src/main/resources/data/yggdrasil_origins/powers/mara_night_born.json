@@ -1,0 +1,22 @@
+{
+  "type": "apoli:conditioned_attribute",
+  "tick_rate": 20,
+  "condition": {
+    "type": "apoli:exposed_to_sun",
+    "inverted": true
+  },
+  "modifiers": [
+    {
+      "id": "yggdrasil_origins:mara_night_born_0",
+      "attribute": "spell_power:arcane",
+      "amount": 0.02,
+      "operation": "add_multiplied_total"
+    },
+    {
+      "id": "yggdrasil_origins:mara_night_born_1",
+      "attribute": "minecraft:generic.movement_speed",
+      "amount": 0.06,
+      "operation": "add_multiplied_base"
+    }
+  ]
+}

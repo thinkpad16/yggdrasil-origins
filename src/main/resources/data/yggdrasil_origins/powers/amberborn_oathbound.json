@@ -1,0 +1,17 @@
+{
+  "type": "apoli:attribute",
+  "modifiers": [
+    {
+      "id": "yggdrasil_origins:amberborn_oathbound_paladin",
+      "attribute": "attributes_ld:paladin_weapon_damage",
+      "amount": 0.16,
+      "operation": "add_multiplied_base"
+    },
+    {
+      "id": "yggdrasil_origins:amberborn_oathbound_mace",
+      "attribute": "attributes_ld:mace_damage",
+      "amount": 0.14,
+      "operation": "add_multiplied_base"
+    }
+  ]
+}

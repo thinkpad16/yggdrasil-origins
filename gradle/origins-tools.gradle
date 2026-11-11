@@ -1,0 +1,625 @@
+// ---------------------------------------------------------------------------
+// Content tooling: a scaffolder for new classes/powers and a data validator.
+//   ./gradlew newOrigin -Pid=paladin -Ppowers=vitality,smite
+//   ./gradlew newPower  -Pid=paladin_smite -Ptype=apoli:active_self -Porigin=paladin
+//   ./gradlew checkOrigins        (runs automatically as part of build)
+// ---------------------------------------------------------------------------
+
+import groovy.json.JsonSlurper
+
+ext.modNamespace = 'yggdrasil_origins'
+
+ext.dataDir = file("src/main/resources/data/${modNamespace}")
+ext.langDir = file("src/main/resources/assets/${modNamespace}/lang")
+ext.layerFile = file("src/main/resources/data/${modNamespace}/selection/class.json")
+ext.layerDir = file("src/main/resources/data/${modNamespace}/selection")
+
+// All selection layers (class.json is the main one, path.json holds class variations).
+ext.layerFiles = { ->
+    return (layerDir.listFiles() ?: new File[0]).findAll { it.name.endsWith('.json') }.sort { it.name }
+}
+
+// Our own layer format: {"entries": [{"id": "...", "requires": "..."}]}
+ext.layerOriginRefs = { File f ->
+    List<String> refs = []
+    def json = Json.read(f)
+    (json.entries ?: []).each { entry ->
+        if (entry instanceof Map && entry.id != null) refs << (entry.id as String)
+    }
+    // compatibility with the old Origins layer format
+    (json.origins ?: []).each { entry ->
+        if (entry instanceof Map) (entry.origins ?: []).each { refs << (it as String) }
+        else refs << (entry as String)
+    }
+    return refs
+}
+
+// "requires" must point at an existing class
+ext.layerRequires = { File f ->
+    List<String> out = []
+    (Json.read(f).entries ?: []).each { entry ->
+        if (entry instanceof Map && entry.requires != null) out << (entry.requires as String)
+    }
+    return out
+}
+
+// JSON-writer: 2 spaces, UTF-8, non-ASCII is not escaped, key order is preserved.
+class Json {
+
+    static String escape(String s) {
+        StringBuilder sb = new StringBuilder()
+        s.each { String c ->
+            switch (c) {
+                case '"': sb.append('\\"'); break
+                case '\\': sb.append('\\\\'); break
+                case '\n': sb.append('\\n'); break
+                case '\r': sb.append('\\r'); break
+                case '\t': sb.append('\\t'); break
+                default:
+                    if (c.charAt(0) < 0x20) {
+                        sb.append(String.format('\\u%04x', (int) c.charAt(0)))
+                    } else {
+                        sb.append(c)
+                    }
+            }
+        }
+        return sb.toString()
+    }
+
+    static String render(Object value, int level) {
+        String pad = '  ' * level
+        String padInner = '  ' * (level + 1)
+        if (value instanceof Map) {
+            if (value.isEmpty()) return '{}'
+            return '{\n' + value.collect { k, v ->
+                padInner + '"' + escape(k as String) + '": ' + render(v, level + 1)
+            }.join(',\n') + '\n' + pad + '}'
+        }
+        if (value instanceof List) {
+            if (value.isEmpty()) return '[]'
+            return '[\n' + value.collect { padInner + render(it, level + 1) }.join(',\n') + '\n' + pad + ']'
+        }
+        if (value instanceof CharSequence) return '"' + escape(value.toString()) + '"'
+        if (value == null) return 'null'
+        return value.toString()
+    }
+
+    static void write(File file, Object value) {
+        file.parentFile.mkdirs()
+        file.setText(render(value, 0) + '\n', 'UTF-8')
+    }
+
+    static Object read(File file) {
+        return new JsonSlurper().parse(file, 'UTF-8')
+    }
+}
+
+ext.langFiles = { ->
+    def files = langDir.listFiles()?.findAll { it.name.endsWith('.json') }?.sort { it.name } ?: []
+    if (files.isEmpty()) {
+        throw new GradleException("No lang file found in ${langDir}")
+    }
+    return files
+}
+
+// Adds keys to EVERY lang file at once, so no language falls behind.
+ext.addLangKeys = { Map<String, String> keys ->
+    langFiles().each { File file ->
+        def data = Json.read(file)
+        boolean changed = false
+        keys.each { key, fallback ->
+            if (!data.containsKey(key)) {
+                data[key] = fallback
+                changed = true
+            }
+        }
+        if (changed) {
+            Json.write(file, data)
+            logger.lifecycle("  + ${file.name}: ${keys.keySet().findAll { !it.isEmpty() }.size()} key(s)")
+        }
+    }
+}
+
+tasks.register('newOrigin') {
+    group = 'yggdrasil'
+    description = 'Creates an origin stub: -Pid=<id> [-Picon=minecraft:...] [-Pimpact=0..3] [-Ppowers=a,b]'
+    doLast {
+
+        String id = project.findProperty('id')
+        if (!id) throw new GradleException('Pass an id: ./gradlew newOrigin -Pid=paladin')
+        if (!(id ==~ /[a-z0-9_]+/)) throw new GradleException("Invalid id \"${id}\": allowed: a-z, 0-9, _")
+
+        File originFile = new File(dataDir, "classes/${id}.json")
+        if (originFile.exists()) throw new GradleException("Origin already exists: ${originFile}")
+
+        String icon = project.findProperty('icon') ?: 'minecraft:player_head'
+        int impact = (project.findProperty('impact') ?: '1') as int
+        List<String> powerNames = ((project.findProperty('powers') ?: '') as String)
+            .split(',').collect { it.trim() }.findAll { it }
+
+        // order = next after the largest existing one
+        int order = 0
+        new File(dataDir, 'origins').listFiles()?.findAll { it.name.endsWith('.json') }?.each {
+            def existing = Json.read(it)
+            if (existing.order != null && (existing.order as int) >= order) order = (existing.order as int) + 1
+        }
+
+        List<String> powerIds = []
+        powerNames.each { String name ->
+            String powerId = "${id}_${name}"
+            File powerFile = new File(dataDir, "powers/${powerId}.json")
+            if (!powerFile.exists()) {
+                Json.write(powerFile, [type: 'apoli:simple'])
+                logger.lifecycle("  + powers/${powerId}.json")
+            }
+            powerIds << "${modNamespace}:${powerId}".toString()
+        }
+
+        Json.write(originFile, [
+            icon   : [id: icon],
+            order  : order,
+            impact : impact,
+            powers : powerIds
+        ])
+        logger.lifecycle("  + classes/${id}.json")
+
+        def layer = Json.read(layerFile)
+        String fullId = "${modNamespace}:${id}"
+        if (!layer.origins.contains(fullId)) {
+            layer.origins << fullId
+            Json.write(layerFile, layer)
+            logger.lifecycle("  + ${layerFile.name}: added ${fullId}")
+        }
+
+        Map<String, String> keys = [:]
+        keys["origin.${modNamespace}.${id}.name".toString()] = "TODO: name (${id})"
+        keys["origin.${modNamespace}.${id}.description".toString()] = "TODO: description (${id})"
+        powerIds.each { String pid ->
+            String path = pid.substring(pid.indexOf(':') + 1)
+            keys["power.${modNamespace}.${path}.name".toString()] = "TODO: name (${path})"
+            keys["power.${modNamespace}.${path}.description".toString()] = "TODO: description (${path})"
+        }
+        addLangKeys(keys)
+
+        logger.lifecycle("\nDone. Remaining: describe the powers in powers/ and replace the TODOs in the lang files.")
+        logger.lifecycle("Verify with: ./gradlew checkOrigins")
+
+    }
+}
+
+tasks.register('newPower') {
+    group = 'yggdrasil'
+    description = 'Creates a power stub: -Pid=<id> [-Ptype=apoli:...] [-Porigin=<origin>]'
+    doLast {
+
+        String id = project.findProperty('id')
+        if (!id) throw new GradleException('Pass an id: ./gradlew newPower -Pid=paladin_smite')
+        if (!(id ==~ /[a-z0-9_]+/)) throw new GradleException("Invalid id \"${id}\": allowed: a-z, 0-9, _")
+
+        File powerFile = new File(dataDir, "powers/${id}.json")
+        if (powerFile.exists()) throw new GradleException("Power already exists: ${powerFile}")
+
+        String type = project.findProperty('type') ?: 'apoli:simple'
+        Json.write(powerFile, [type: type])
+        logger.lifecycle("  + powers/${id}.json")
+
+        String originId = project.findProperty('origin')
+        if (originId) {
+            File originFile = new File(dataDir, "classes/${originId}.json")
+            if (!originFile.exists()) throw new GradleException("No such origin: ${originFile}")
+            def origin = Json.read(originFile)
+            if (origin.powers == null) origin.powers = []
+            String fullId = "${modNamespace}:${id}"
+            if (!origin.powers.contains(fullId)) {
+                origin.powers << fullId
+                Json.write(originFile, origin)
+                logger.lifecycle("  + classes/${originId}.json: added ${fullId}")
+            }
+        }
+
+        addLangKeys([
+            ("power.${modNamespace}.${id}.name".toString())       : "TODO: name (${id})".toString(),
+            ("power.${modNamespace}.${id}.description".toString()): "TODO: description (${id})".toString()
+        ])
+
+    }
+}
+
+tasks.register('removeOrigin') {
+    group = 'yggdrasil'
+    description = 'Removes an origin together with its powers and translation keys: -Pid=<id>'
+    doLast {
+
+        String id = project.findProperty('id')
+        if (!id) throw new GradleException('Pass an id: ./gradlew removeOrigin -Pid=paladin')
+
+        File originFile = new File(dataDir, "classes/${id}.json")
+        if (!originFile.exists()) throw new GradleException("No such origin: ${originFile}")
+
+        // Powers of this origin that nobody else needs any more
+        def origin = Json.read(originFile)
+        List<String> ownPowers = (origin.powers ?: [])
+            .collect { it as String }
+            .findAll { it.startsWith("${modNamespace}:") }
+            .collect { it.substring(modNamespace.length() + 1) }
+
+        Set<String> usedElsewhere = [] as Set
+        (new File(dataDir, 'origins').listFiles() ?: [] as File[]).each { File f ->
+            if (f.name == originFile.name || !f.name.endsWith('.json')) return
+            (Json.read(f).powers ?: []).each { ref ->
+                String s = ref as String
+                if (s.startsWith("${modNamespace}:")) usedElsewhere << s.substring(modNamespace.length() + 1)
+            }
+        }
+
+        List<String> removedPowers = []
+        ownPowers.each { String pid ->
+            if (usedElsewhere.contains(pid)) {
+                logger.lifecycle("  ~ powers/${pid}.json kept - still used by another origin")
+                return
+            }
+            File pf = new File(dataDir, "powers/${pid}.json")
+            if (pf.delete()) {
+                removedPowers << pid
+                logger.lifecycle("  - powers/${pid}.json")
+            }
+        }
+
+        originFile.delete()
+        logger.lifecycle("  - classes/${id}.json")
+
+        def layer = Json.read(layerFile)
+        if (layer.origins.remove("${modNamespace}:${id}".toString())) {
+            Json.write(layerFile, layer)
+            logger.lifecycle("  - ${layerFile.name}: removed ${modNamespace}:${id}")
+        }
+
+        Set<String> dropKeys = ["origin.${modNamespace}.${id}.name".toString(),
+                                "origin.${modNamespace}.${id}.description".toString()] as Set
+        removedPowers.each {
+            dropKeys << "power.${modNamespace}.${it}.name".toString()
+            dropKeys << "power.${modNamespace}.${it}.description".toString()
+        }
+
+        langFiles().each { File f ->
+            def data = Json.read(f)
+            int before = data.size()
+            dropKeys.each { data.remove(it) }
+            if (data.size() != before) {
+                Json.write(f, data)
+                logger.lifecycle("  - ${f.name}: ${before - data.size()} key(s)")
+            }
+        }
+
+    }
+}
+
+ext.knownAttributesFile = file('gradle/known_attributes.txt')
+
+ext.knownAttributes = { ->
+    if (!knownAttributesFile.exists()) return null
+    return knownAttributesFile.readLines('UTF-8')
+        .collect { it.trim() }
+        .findAll { it && !it.startsWith('#') } as Set
+}
+
+// Regenerates the attribute id reference from the real server mod set.
+//   ./gradlew scanAttributes -PmodsDir=/path/to/mods
+tasks.register('scanAttributes') {
+    group = 'yggdrasil'
+    description = 'Re-reads attribute ids from the pack jars: -PmodsDir=<path>'
+    doLast {
+
+        String dir = project.findProperty('modsDir')
+        if (!dir) throw new GradleException('Pass the mods folder: ./gradlew scanAttributes -PmodsDir=/path/to/mods')
+        File modsDir = file(dir)
+        if (!modsDir.isDirectory()) throw new GradleException("No such folder: ${modsDir}")
+
+        Set<String> found = [] as Set
+        def collect = { File jar ->
+            try {
+                zipTree(jar).matching { include 'assets/*/lang/en_us.json' }.each { File lang ->
+                    lang.getText('UTF-8').findAll(/"attribute\.name\.([^"]*)"/) { full, key ->
+                        if (!key.endsWith('.desc')) {
+                            int dot = key.indexOf('.')
+                            if (dot > 0) found << (key.substring(0, dot) + ':' + key.substring(dot + 1))
+                        }
+                    }
+                }
+            } catch (Exception ignored) {
+            }
+        }
+
+        (modsDir.listFiles() ?: new File[0]).findAll { it.name.endsWith('.jar') }.each(collect)
+        // vanilla ones and those nested inside Origins come from build/nested-mods
+        File nested = file("build/nested-mods")
+        if (nested.exists()) nested.eachFileRecurse { if (it.name.endsWith('.jar')) collect(it) }
+
+        if (found.isEmpty()) throw new GradleException("No attributes found in ${modsDir}")
+
+        Set<String> vanilla = (knownAttributes() ?: [] as Set).findAll { it.startsWith('minecraft:') }
+        List<String> all = ((found + vanilla) as List).sort()
+
+        knownAttributesFile.setText(
+            "# Known attribute ids: vanilla 1.21.1 plus the mods of the FallenEden pack.\n" +
+            "# Regenerate with:  ./gradlew scanAttributes -PmodsDir=/path/to/mods\n" +
+            "# checkOrigins fails when a power refers to an attribute outside this list.\n" +
+            all.join('\n') + '\n', 'UTF-8')
+
+        logger.lifecycle("scanAttributes: ${all.size()} attributes -> ${knownAttributesFile}")
+
+    }
+}
+
+tasks.register('checkOrigins') {
+    group = 'yggdrasil'
+    description = 'Validates origins, powers, layers and translations'
+
+    doLast {
+
+        List<String> errors = []
+        List<String> warnings = []
+
+        // 1. Syntax of every JSON in the mod resources
+        file('src/main/resources').eachFileRecurse { File f ->
+            if (f.isFile() && f.name.endsWith('.json')) {
+                try {
+                    Json.read(f)
+                } catch (Exception e) {
+                    errors << "Broken JSON: ${f} — ${e.message}"
+                }
+            }
+        }
+        if (!errors.isEmpty()) throw new GradleException("Errors:\n  " + errors.join('\n  '))
+
+        def originFiles = (new File(dataDir, 'origins').listFiles() ?: [] as File[])
+            .findAll { it.name.endsWith('.json') }
+        def powerFiles = (new File(dataDir, 'powers').listFiles() ?: [] as File[])
+            .findAll { it.name.endsWith('.json') }
+
+        Set<String> originIds = originFiles.collect { it.name - '.json' } as Set
+        Set<String> powerIds = powerFiles.collect { it.name - '.json' } as Set
+
+        // 2. Layers <-> origins (every layer in selection/)
+        Set<String> layerOrigins = [] as Set
+        layerFiles().each { File lf ->
+            List<String> refs = layerOriginRefs(lf)
+            if (refs.isEmpty()) {
+                warnings << "Layer ${lf.name} contains no origins at all"
+            }
+            refs.each { String ref ->
+                layerOrigins << ref
+                if (ref.startsWith("${modNamespace}:")) {
+                    String path = ref.substring(modNamespace.length() + 1)
+                    if (!originIds.contains(path)) {
+                        errors << "${lf.name}: layer refers to a missing origin ${ref}"
+                    }
+                }
+            }
+        }
+        layerFiles().each { File lf ->
+            layerRequires(lf).each { String req ->
+                if (req.startsWith("${modNamespace}:")) {
+                    String path = req.substring(modNamespace.length() + 1)
+                    if (!originIds.contains(path)) {
+                        errors << "${lf.name}: \"requires\" points at a missing class ${req}"
+                    }
+                }
+            }
+        }
+        originIds.each { String oid ->
+            if (!layerOrigins.contains("${modNamespace}:${oid}".toString())) {
+                warnings << "Origin ${oid} is in no layer - players will never see it"
+            }
+        }
+
+        // 3. Origins <-> powers
+        Set<String> usedPowers = [] as Set
+        originFiles.each { File f ->
+            def origin = Json.read(f)
+            (origin.powers ?: []).each { ref ->
+                String s = ref as String
+                if (s.startsWith("${modNamespace}:")) {
+                    String path = s.substring(modNamespace.length() + 1)
+                    usedPowers << path
+                    if (!powerIds.contains(path)) {
+                        errors << "${f.name}: missing power ${s}"
+                    }
+                }
+            }
+        }
+        // Powers can be granted by other powers (apoli:grant_power) - that counts as usage too.
+        powerFiles.each { File f ->
+            String text = f.getText('UTF-8')
+            powerIds.each { String pid ->
+                if (f.name != "${pid}.json" && text.contains("${modNamespace}:${pid}")) {
+                    usedPowers << pid
+                }
+            }
+        }
+        powerIds.each { String pid ->
+            if (!usedPowers.contains(pid)) {
+                warnings << "Power ${pid} is used by no origin"
+            }
+        }
+
+        // 3b. Attribute ids - checked against the reference built from real server mods
+        Set<String> known = knownAttributes()
+        if (known == null) {
+            warnings << "Missing ${knownAttributesFile.name} - attribute ids not checked (./gradlew scanAttributes -PmodsDir=...)"
+        } else {
+            powerFiles.each { File f ->
+                f.getText('UTF-8').findAll(/"attribute"\s*:\s*"([^"]+)"/) { full, id ->
+                    if (!known.contains(id)) {
+                        errors << "${f.name}: unknown attribute \"${id}\" - no mod in the pack provides it"
+                    }
+                }
+            }
+        }
+
+        // 3c. Formats sensitive to the Apoli version, plus our own tags
+        Set<String> ownTags = [] as Set
+        File tagsDir = new File(dataDir, 'tags')
+        if (tagsDir.exists()) {
+            tagsDir.eachFileRecurse { File tf ->
+                if (tf.name.endsWith('.json')) ownTags << "${modNamespace}:${tf.name - '.json'}".toString()
+            }
+        }
+
+        def checkEffectObject = { Object e, String fname ->
+            if (e instanceof Map && !(e.containsKey('id') && e.containsKey('effect'))) {
+                errors << ("${fname}: apoli:apply_effect - the effect must carry BOTH keys " +
+                           "\"id\" (Apoli 2.12.0-pre.3) and \"effect\" (pre.2), or one of the versions fails to read the power")
+            }
+        }
+
+        def visitNode
+        visitNode = { Object node, String fname ->
+            if (node instanceof Map) {
+                String t = (node.get('type') instanceof String) ? node.get('type') : null
+                if (t == 'apoli:apply_effect' || t == 'origins:apply_effect') {
+                    if (node.get('effect') != null) checkEffectObject(node.get('effect'), fname)
+                    if (node.get('effects') instanceof List) node.get('effects').each { checkEffectObject(it, fname) }
+                }
+                if ((t == 'apoli:give' || t == 'origins:give') && node.get('stack') instanceof Map
+                        && !node.get('stack').containsKey('id')) {
+                    errors << "${fname}: apoli:give - the stack is set by the key \"id\", not \"item\""
+                }
+                if (node.get('sound') instanceof String) {
+                    String id = node.get('sound')
+                    String path = id.contains(':') ? id.substring(id.indexOf(':') + 1) : id
+                    if (path.contains('_') && !path.contains('.')) {
+                        errors << "${fname}: sound id \"${id}\" is in registry form - a dotted one is required (e.g. minecraft:item.totem.use)"
+                    }
+                }
+                if (node.get('tag') instanceof String && ((String) node.get('tag')).startsWith("${modNamespace}:")) {
+                    if (!ownTags.contains(node.get('tag'))) {
+                        errors << "${fname}: missing own tag ${node.get('tag')} in data/${modNamespace}/tags/"
+                    }
+                }
+                node.each { k, v -> visitNode(v, fname) }
+            } else if (node instanceof List) {
+                node.each { visitNode(it, fname) }
+            }
+        }
+
+        powerFiles.each { File f -> visitNode(Json.read(f), f.name) }
+
+        // 4. Translations - in EVERY lang file
+        Map<String, Map> langs = [:]
+        langFiles().each { langs[it.name] = Json.read(it) as Map }
+
+        Set<String> required = [] as Set
+        layerFiles().each { File lf ->
+            required << "layer.${modNamespace}.${lf.name - '.json'}.name".toString()
+        }
+        originIds.each {
+            required << "origin.${modNamespace}.${it}.name".toString()
+            required << "origin.${modNamespace}.${it}.description".toString()
+            // the picker paints these two apart from the rest, so neither may go missing
+            required << "origin.${modNamespace}.${it}.gives".toString()
+            required << "origin.${modNamespace}.${it}.pays".toString()
+        }
+        powerFiles.each { File f ->
+            def power = Json.read(f)
+            String pid = f.name - '.json'
+            // hidden powers and those carrying text inline in JSON are not shown in the GUI
+            boolean hidden = (power.hidden == true)
+            boolean inlineText = (power.name != null && power.description != null)
+            boolean onHud = (power.hud_render != null)
+            if (!hidden && !inlineText) {
+                required << "power.${modNamespace}.${pid}.name".toString()
+                required << "power.${modNamespace}.${pid}.description".toString()
+            } else if (onHud) {
+                // a hidden power with a HUD bar is still seen by the player, so it needs a name
+                required << "power.${modNamespace}.${pid}.name".toString()
+            }
+        }
+
+        langs.each { String name, Map data ->
+            required.each { String key ->
+                if (!data.containsKey(key)) {
+                    errors << "${name}: missing key ${key}"
+                }
+            }
+            data.each { String key, value ->
+                if ((value as String).startsWith('TODO')) {
+                    warnings << "${name}: empty value for ${key}"
+                }
+            }
+        }
+
+        // 5. Orphan keys
+        langs.each { String name, Map data ->
+            data.keySet().each { String key ->
+                // an orphan is a key whose origin/power does not exist at all,
+                // not merely one that is optional (hidden powers)
+                if (key.startsWith("power.${modNamespace}.") || key.startsWith("origin.${modNamespace}.")) {
+                    String id = key.split('\\.')[2]
+                    boolean exists = key.startsWith("power.") ? powerIds.contains(id) : originIds.contains(id)
+                    if (!exists) {
+                        warnings << "${name}: stray key ${key} (no such origin or power)"
+                    }
+                }
+            }
+        }
+
+        warnings.each { logger.warn("  ! ${it}") }
+
+        if (!errors.isEmpty()) {
+            throw new GradleException("Found ${errors.size()} errors:\n  " + errors.join('\n  '))
+        }
+
+        warnings.each { logger.lifecycle("  warning: " + it) }
+
+        logger.lifecycle("checkOrigins: ${originIds.size()} origins, ${layerFiles().size()} layers, ${powerIds.size()} powers, " +
+            "${langs.size()} languages, ${known == null ? 0 : known.size()} known attributes - no errors" + (warnings.isEmpty() ? '' : ", warnings: ${warnings.size()}"))
+
+    }
+}
+
+// The python checks guard what Groovy cannot see: where an element sits on the body, what
+// its texture does, and whether a description still matches the numbers it describes. They
+// are skipped - loudly - where python is missing, so the build still works without it.
+tasks.register('checkData') {
+    group = 'yggdrasil'
+    description = 'Runs the element, texture and description checks'
+
+    doLast {
+        def scripts = ['tools/check_fit.py', 'tools/check_uv.py', 'tools/check_numbers.py',
+                       'tools/check_symmetry.py']
+        def python = ['python3', 'python'].find { name ->
+            try {
+                def probe = new ProcessBuilder(name, '--version').redirectErrorStream(true).start()
+                probe.waitFor() == 0
+            } catch (Exception ignored) {
+                false
+            }
+        }
+        if (python == null) {
+            logger.lifecycle('checkData: no python on this machine - skipped')
+            return
+        }
+        List<String> failures = []
+        scripts.each { script ->
+            def process = new ProcessBuilder(python, script)
+                .directory(project.projectDir).redirectErrorStream(true).start()
+            String output = process.inputStream.text.trim()
+            process.waitFor()
+            String last = output.readLines().last()
+            logger.lifecycle("checkData: ${script - 'tools/'} - ${last}")
+            if (process.exitValue() != 0 || output.contains('PROBLEM')
+                || output.contains('out of step') || output.contains('problems')) {
+                failures << "${script}:\n${output}"
+            }
+        }
+        if (!failures.isEmpty()) {
+            throw new GradleException("checkData found problems:\n" + failures.join('\n'))
+        }
+    }
+}
+
+tasks.named('check') {
+    dependsOn 'checkOrigins'
+    dependsOn 'checkData'
+}

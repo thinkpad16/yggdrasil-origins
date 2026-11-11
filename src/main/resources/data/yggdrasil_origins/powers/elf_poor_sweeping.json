@@ -1,0 +1,9 @@
+{
+  "type": "apoli:attribute",
+  "modifier": {
+    "id": "yggdrasil_origins:elf_poor_sweeping_sweeping_damage_ratio",
+    "attribute": "minecraft:player.sweeping_damage_ratio",
+    "amount": -0.5,
+    "operation": "add_value"
+  }
+}

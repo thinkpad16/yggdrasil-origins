@@ -1,0 +1,63 @@
+{
+  "icon": {
+    "id": "minecraft:spider_eye"
+  },
+  "order": 24,
+  "impact": 1,
+  "powers": [
+    "yggdrasil_origins:serpentfolk_venom",
+    "yggdrasil_origins:serpentfolk_immune_blood",
+    "yggdrasil_origins:serpentfolk_coils",
+    "yggdrasil_origins:serpentfolk_swimmer",
+    "yggdrasil_origins:serpentfolk_cold_blooded",
+    "yggdrasil_origins:serpentfolk_thin_bones"
+  ],
+  "visual": {
+    "parts": [
+      "serpent_tail",
+      "frill"
+    ],
+    "width": 0.9,
+    "tint": "#86C06A",
+    "palette": [
+      "#6FA86B",
+      "#C9B072",
+      "#4A6B55",
+      "#9B5B3F",
+      "#D4D9C4",
+      "#2F4038"
+    ],
+    "looks": [
+      {
+        "id": "serpentfolk_viper",
+        "tint": "#6FA86B",
+        "size": 1.0,
+        "shapes": {
+          "arm_scales": 0,
+          "serpent_tail": 0,
+          "frill": 0
+        }
+      },
+      {
+        "id": "serpentfolk_sand",
+        "tint": "#C9B072",
+        "size": 1.08,
+        "shapes": {
+          "arm_scales": 1,
+          "serpent_tail": 1,
+          "frill": 1
+        }
+      },
+      {
+        "id": "serpentfolk_marsh",
+        "tint": "#4A6B55",
+        "size": 0.92,
+        "shapes": {
+          "arm_scales": 2,
+          "serpent_tail": 2,
+          "frill": 2
+        }
+      }
+    ]
+  }
+}

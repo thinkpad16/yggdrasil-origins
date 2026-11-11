@@ -1,0 +1,9 @@
+{
+  "type": "apoli:attribute",
+  "modifier": {
+    "id": "yggdrasil_origins:angel_blessed_healing_healing_taken",
+    "attribute": "spell_engine:healing_taken",
+    "amount": 0.1,
+    "operation": "add_multiplied_base"
+  }
+}

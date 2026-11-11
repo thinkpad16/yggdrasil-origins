@@ -1,0 +1,17 @@
+{
+  "type": "apoli:attribute",
+  "modifiers": [
+    {
+      "id": "yggdrasil_origins:path_sylph_windlens_grounded_max_health",
+      "attribute": "minecraft:generic.max_health",
+      "amount": -4.0,
+      "operation": "add_value"
+    },
+    {
+      "id": "yggdrasil_origins:path_sylph_windlens_grounded_air",
+      "attribute": "spell_power:air",
+      "amount": -0.18,
+      "operation": "add_multiplied_total"
+    }
+  ]
+}

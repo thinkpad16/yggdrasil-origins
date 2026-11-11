@@ -1,0 +1,17 @@
+{
+  "type": "apoli:attribute",
+  "modifiers": [
+    {
+      "id": "yggdrasil_origins:path_sylph_storm_heart_calm_max_health",
+      "attribute": "minecraft:generic.max_health",
+      "amount": -2.0,
+      "operation": "add_value"
+    },
+    {
+      "id": "yggdrasil_origins:path_sylph_storm_heart_calm_damage_taken",
+      "attribute": "spell_engine:damage_taken",
+      "amount": 0.08,
+      "operation": "add_multiplied_base"
+    }
+  ]
+}

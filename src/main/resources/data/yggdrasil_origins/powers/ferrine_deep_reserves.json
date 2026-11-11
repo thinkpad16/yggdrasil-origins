@@ -1,0 +1,11 @@
+{
+  "type": "apoli:attribute",
+  "modifiers": [
+    {
+      "id": "yggdrasil_origins:ferrine_deep_reserves_max_health",
+      "attribute": "minecraft:generic.max_health",
+      "amount": 9.0,
+      "operation": "add_value"
+    }
+  ]
+}

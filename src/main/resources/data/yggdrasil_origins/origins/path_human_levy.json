@@ -1,0 +1,16 @@
+{
+  "icon": {
+    "id": "minecraft:iron_sword"
+  },
+  "order": 43,
+  "impact": 1,
+  "powers": [
+    "yggdrasil_origins:path_human_levy_shoulder",
+    "yggdrasil_origins:path_human_levy_alone"
+  ],
+  "visual": {
+    "parts": [
+      "armband"
+    ]
+  }
+}

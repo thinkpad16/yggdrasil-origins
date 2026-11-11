@@ -1,0 +1,17 @@
+{
+  "type": "apoli:attribute",
+  "modifiers": [
+    {
+      "id": "yggdrasil_origins:dwarf_air_weakness_generic",
+      "attribute": "spell_power:generic",
+      "amount": -0.13,
+      "operation": "add_multiplied_base"
+    },
+    {
+      "id": "yggdrasil_origins:dwarf_air_weakness_air",
+      "attribute": "spell_power:air",
+      "amount": -0.25,
+      "operation": "add_multiplied_total"
+    }
+  ]
+}

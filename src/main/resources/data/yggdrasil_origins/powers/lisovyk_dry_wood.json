@@ -1,0 +1,17 @@
+{
+  "type": "apoli:attribute",
+  "modifiers": [
+    {
+      "id": "yggdrasil_origins:lisovyk_dry_wood_0",
+      "attribute": "minecraft:generic.burning_time",
+      "amount": 0.7,
+      "operation": "add_multiplied_base"
+    },
+    {
+      "id": "yggdrasil_origins:lisovyk_dry_wood_1",
+      "attribute": "spell_power:fire",
+      "amount": -0.6,
+      "operation": "add_multiplied_total"
+    }
+  ]
+}

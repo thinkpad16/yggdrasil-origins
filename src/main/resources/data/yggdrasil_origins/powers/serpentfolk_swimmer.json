@@ -1,0 +1,17 @@
+{
+  "type": "apoli:attribute",
+  "modifiers": [
+    {
+      "id": "yggdrasil_origins:serpentfolk_swimmer_water_speed",
+      "attribute": "yggdrasil_origins:swim_speed",
+      "amount": 0.21,
+      "operation": "add_multiplied_base"
+    },
+    {
+      "id": "yggdrasil_origins:serpentfolk_swimmer_oxygen_bonus",
+      "attribute": "minecraft:generic.oxygen_bonus",
+      "amount": 4.0,
+      "operation": "add_value"
+    }
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "icon": {
+    "id": "minecraft:bone"
+  },
+  "order": 35,
+  "impact": 1,
+  "powers": [
+    "yggdrasil_origins:path_werewolf_pack_run",
+    "yggdrasil_origins:path_werewolf_pack_follower"
+  ]
+}

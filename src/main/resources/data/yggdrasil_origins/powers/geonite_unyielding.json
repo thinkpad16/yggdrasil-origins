@@ -1,0 +1,17 @@
+{
+  "type": "apoli:attribute",
+  "modifiers": [
+    {
+      "id": "yggdrasil_origins:geonite_unyielding_tenacity",
+      "attribute": "mrpg_lib:tenacity",
+      "amount": 0.25,
+      "operation": "add_multiplied_base"
+    },
+    {
+      "id": "yggdrasil_origins:geonite_unyielding_damage_reflect_modifier",
+      "attribute": "mrpg_lib:damage_reflect_modifier",
+      "amount": 0.13,
+      "operation": "add_multiplied_base"
+    }
+  ]
+}

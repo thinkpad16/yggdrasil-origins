@@ -1,0 +1,29 @@
+{
+  "type": "apoli:attribute",
+  "modifiers": [
+    {
+      "id": "yggdrasil_origins:half_giant_might_max_health",
+      "attribute": "minecraft:generic.max_health",
+      "amount": 7.0,
+      "operation": "add_value"
+    },
+    {
+      "id": "yggdrasil_origins:half_giant_might_knockback_resistance",
+      "attribute": "minecraft:generic.knockback_resistance",
+      "amount": 0.5,
+      "operation": "add_value"
+    },
+    {
+      "id": "yggdrasil_origins:half_giant_might_attack_knockback",
+      "attribute": "minecraft:generic.attack_knockback",
+      "amount": 0.0,
+      "operation": "add_value"
+    },
+    {
+      "id": "yggdrasil_origins:half_giant_might_knuckles_damage",
+      "attribute": "attributes_ld:knuckles_damage",
+      "amount": 0.16,
+      "operation": "add_multiplied_base"
+    }
+  ]
+}

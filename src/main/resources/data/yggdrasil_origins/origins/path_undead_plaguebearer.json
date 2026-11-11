@@ -1,0 +1,11 @@
+{
+  "icon": {
+    "id": "minecraft:fermented_spider_eye"
+  },
+  "order": 2,
+  "impact": 1,
+  "powers": [
+    "yggdrasil_origins:path_undead_plaguebearer_touch",
+    "yggdrasil_origins:path_undead_plaguebearer_arms"
+  ]
+}

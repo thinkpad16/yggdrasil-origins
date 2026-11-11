@@ -1,0 +1,17 @@
+{
+  "type": "apoli:modify_status_effect_duration",
+  "status_effects": [
+    "minecraft:poison",
+    "minecraft:slowness",
+    "minecraft:weakness",
+    "minecraft:wither",
+    "minecraft:mining_fatigue",
+    "minecraft:blindness",
+    "minecraft:nausea",
+    "minecraft:hunger"
+  ],
+  "modifier": {
+    "operation": "multiply_base_additive",
+    "amount": 0.4
+  }
+}

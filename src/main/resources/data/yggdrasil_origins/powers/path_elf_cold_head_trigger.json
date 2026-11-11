@@ -1,0 +1,12 @@
+{
+  "type": "apoli:action_when_hit",
+  "cooldown": 10,
+  "bientity_action": {
+    "type": "apoli:target_action",
+    "action": {
+      "type": "apoli:trigger_cooldown",
+      "power": "yggdrasil_origins:path_elf_cold_head_timer"
+    }
+  },
+  "hidden": true
+}

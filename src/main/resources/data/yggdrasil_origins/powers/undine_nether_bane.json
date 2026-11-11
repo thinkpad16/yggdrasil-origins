@@ -1,0 +1,47 @@
+{
+  "type": "apoli:action_over_time",
+  "interval": 80,
+  "condition": {
+    "type": "apoli:all_of",
+    "conditions": [
+      {
+        "type": "apoli:all_of",
+        "conditions": [
+          {
+            "type": "apoli:dimension",
+            "dimension": "minecraft:the_nether"
+          },
+          {
+            "type": "apoli:submerged_in",
+            "fluid": "minecraft:water",
+            "inverted": true
+          }
+        ]
+      },
+      {
+        "type": "apoli:any_of",
+        "conditions": [
+          {
+            "type": "apoli:status_effect",
+            "effect": "yggdrasil_origins:warded"
+          },
+          {
+            "type": "apoli:inventory_item",
+            "item_condition": {
+              "type": "apoli:ingredient",
+              "ingredient": {
+                "item": "yggdrasil_origins:ward_gem"
+              }
+            }
+          }
+        ],
+        "inverted": true
+      }
+    ]
+  },
+  "entity_action": {
+    "type": "apoli:damage",
+    "damage_type": "minecraft:dry_out",
+    "amount": 2.0
+  }
+}

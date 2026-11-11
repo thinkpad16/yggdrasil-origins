@@ -1,0 +1,9 @@
+{
+  "type": "apoli:attribute",
+  "modifier": {
+    "id": "yggdrasil_origins:half_giant_heavy_fall_fall_damage_multiplier",
+    "attribute": "minecraft:generic.fall_damage_multiplier",
+    "amount": 0.43,
+    "operation": "add_multiplied_base"
+  }
+}

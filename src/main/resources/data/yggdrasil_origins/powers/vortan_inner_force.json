@@ -1,0 +1,11 @@
+{
+  "type": "apoli:attribute",
+  "modifiers": [
+    {
+      "id": "yggdrasil_origins:vortan_inner_force_arcane",
+      "attribute": "spell_power:arcane",
+      "amount": 0.06,
+      "operation": "add_multiplied_total"
+    }
+  ]
+}

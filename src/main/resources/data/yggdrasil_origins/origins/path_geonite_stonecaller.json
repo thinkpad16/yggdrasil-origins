@@ -1,0 +1,11 @@
+{
+  "icon": {
+    "id": "minecraft:amethyst_block"
+  },
+  "order": 11,
+  "impact": 1,
+  "powers": [
+    "yggdrasil_origins:path_geonite_stonecaller_core",
+    "yggdrasil_origins:path_geonite_stonecaller_soft"
+  ]
+}

@@ -1,0 +1,57 @@
+{
+  "type": "apoli:multiple",
+  "iron": {
+    "type": "apoli:action_on_block_break",
+    "only_when_harvested": true,
+    "block_condition": {
+      "type": "apoli:in_tag",
+      "tag": "yggdrasil_origins:palm_forge_iron"
+    },
+    "entity_action": {
+      "type": "apoli:random_chance",
+      "chance": 0.3,
+      "action": {
+        "type": "apoli:give",
+        "stack": {
+          "id": "minecraft:iron_ingot"
+        }
+      }
+    }
+  },
+  "gold": {
+    "type": "apoli:action_on_block_break",
+    "only_when_harvested": true,
+    "block_condition": {
+      "type": "apoli:in_tag",
+      "tag": "yggdrasil_origins:palm_forge_gold"
+    },
+    "entity_action": {
+      "type": "apoli:random_chance",
+      "chance": 0.3,
+      "action": {
+        "type": "apoli:give",
+        "stack": {
+          "id": "minecraft:gold_ingot"
+        }
+      }
+    }
+  },
+  "copper": {
+    "type": "apoli:action_on_block_break",
+    "only_when_harvested": true,
+    "block_condition": {
+      "type": "apoli:in_tag",
+      "tag": "yggdrasil_origins:palm_forge_copper"
+    },
+    "entity_action": {
+      "type": "apoli:random_chance",
+      "chance": 0.3,
+      "action": {
+        "type": "apoli:give",
+        "stack": {
+          "id": "minecraft:copper_ingot"
+        }
+      }
+    }
+  }
+}

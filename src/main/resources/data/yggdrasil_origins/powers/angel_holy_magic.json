@@ -1,0 +1,29 @@
+{
+  "type": "apoli:attribute",
+  "modifiers": [
+    {
+      "id": "yggdrasil_origins:angel_holy_magic_healing",
+      "attribute": "spell_power:healing",
+      "amount": 0.31,
+      "operation": "add_multiplied_total"
+    },
+    {
+      "id": "yggdrasil_origins:angel_holy_magic_soul",
+      "attribute": "spell_power:soul",
+      "amount": 0.05,
+      "operation": "add_multiplied_total"
+    },
+    {
+      "id": "yggdrasil_origins:angel_holy_magic_wand_damage",
+      "attribute": "attributes_ld:wand_damage",
+      "amount": 0.19,
+      "operation": "add_multiplied_base"
+    },
+    {
+      "id": "yggdrasil_origins:angel_holy_magic_stave_damage",
+      "attribute": "attributes_ld:stave_damage",
+      "amount": 0.15,
+      "operation": "add_multiplied_base"
+    }
+  ]
+}

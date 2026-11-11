@@ -1,0 +1,11 @@
+{
+  "icon": {
+    "id": "minecraft:tipped_arrow"
+  },
+  "order": 6,
+  "impact": 1,
+  "powers": [
+    "yggdrasil_origins:path_elf_venomstring_coating",
+    "yggdrasil_origins:path_elf_venomstring_hands"
+  ]
+}

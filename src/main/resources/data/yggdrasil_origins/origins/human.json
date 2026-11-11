@@ -1,0 +1,56 @@
+{
+  "icon": {
+    "id": "minecraft:player_head"
+  },
+  "order": 0,
+  "impact": 0,
+  "powers": [],
+  "visual": {
+    "parts": [
+      "headband"
+    ],
+    "optional": [
+      "headband"
+    ],
+    "palette": [
+      "#E5DCC6",
+      "#8C7B64",
+      "#6E7A8C",
+      "#9B4A3F",
+      "#C9B57B",
+      "#3F4652"
+    ],
+    "looks": [
+      {
+        "id": "human_linen",
+        "tint": "#E5DCC6",
+        "size": 1.0,
+        "shapes": {
+          "headband": 0,
+          "armband": 0,
+          "travel_pack": 0
+        }
+      },
+      {
+        "id": "human_dust",
+        "tint": "#8C7B64",
+        "size": 1.08,
+        "shapes": {
+          "headband": 1,
+          "armband": 1,
+          "travel_pack": 1
+        }
+      },
+      {
+        "id": "human_dye",
+        "tint": "#6E7A8C",
+        "size": 0.92,
+        "shapes": {
+          "headband": 2,
+          "armband": 2,
+          "travel_pack": 2
+        }
+      }
+    ]
+  }
+}

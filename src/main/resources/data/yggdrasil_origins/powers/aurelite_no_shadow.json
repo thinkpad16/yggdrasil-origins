@@ -1,0 +1,9 @@
+{
+  "type": "apoli:attribute",
+  "modifier": {
+    "id": "yggdrasil_origins:aurelite_no_shadow_soul",
+    "attribute": "spell_power:soul",
+    "amount": -0.55,
+    "operation": "add_multiplied_total"
+  }
+}

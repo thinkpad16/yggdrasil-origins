@@ -1,0 +1,29 @@
+{
+  "type": "apoli:attribute",
+  "modifiers": [
+    {
+      "id": "yggdrasil_origins:elf_heavy_weapon_weakness_warrior_weapon_damage",
+      "attribute": "attributes_ld:warrior_weapon_damage",
+      "amount": -0.34,
+      "operation": "add_multiplied_base"
+    },
+    {
+      "id": "yggdrasil_origins:elf_heavy_weapon_weakness_paladin_weapon_damage",
+      "attribute": "attributes_ld:paladin_weapon_damage",
+      "amount": -0.34,
+      "operation": "add_multiplied_base"
+    },
+    {
+      "id": "yggdrasil_origins:elf_heavy_weapon_weakness_claymore_damage",
+      "attribute": "attributes_ld:claymore_damage",
+      "amount": -0.45,
+      "operation": "add_multiplied_base"
+    },
+    {
+      "id": "yggdrasil_origins:elf_heavy_weapon_weakness_hammer_damage",
+      "attribute": "attributes_ld:hammer_damage",
+      "amount": -0.45,
+      "operation": "add_multiplied_base"
+    }
+  ]
+}

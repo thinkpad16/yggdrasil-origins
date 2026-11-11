@@ -1,0 +1,17 @@
+{
+  "type": "apoli:attribute",
+  "modifiers": [
+    {
+      "id": "yggdrasil_origins:path_amberborn_wall_rooted_speed",
+      "attribute": "minecraft:generic.movement_speed",
+      "amount": -0.1,
+      "operation": "add_multiplied_base"
+    },
+    {
+      "id": "yggdrasil_origins:path_amberborn_wall_rooted_count",
+      "attribute": "combat_roll:count",
+      "amount": -1.0,
+      "operation": "add_value"
+    }
+  ]
+}

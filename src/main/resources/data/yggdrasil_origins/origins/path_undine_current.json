@@ -1,0 +1,11 @@
+{
+  "icon": {
+    "id": "minecraft:heart_of_the_sea"
+  },
+  "order": 33,
+  "impact": 1,
+  "powers": [
+    "yggdrasil_origins:path_undine_current_flow",
+    "yggdrasil_origins:path_undine_current_thin"
+  ]
+}

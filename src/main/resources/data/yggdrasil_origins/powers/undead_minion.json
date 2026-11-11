@@ -1,0 +1,48 @@
+{
+  "type": "apoli:target_action_on_hit",
+  "cooldown": 40,
+  "entity_action": {
+    "type": "apoli:random_chance",
+    "chance": 0.08,
+    "action": {
+      "type": "apoli:sequence",
+      "actions": [
+        {
+          "type": "apoli:spawn_entity",
+          "entity_type": "minecraft:silverfish",
+          "attributes": [
+            {
+              "attribute": "minecraft:generic.max_health",
+              "amount": 10.0,
+              "operation": "add_value"
+            },
+            {
+              "attribute": "minecraft:generic.attack_damage",
+              "amount": 1.5,
+              "operation": "add_value"
+            },
+            {
+              "attribute": "minecraft:generic.movement_speed",
+              "amount": 0.15,
+              "operation": "add_multiplied_base"
+            }
+          ],
+          "entity_action": {
+            "type": "apoli:apply_effect",
+            "effect": {
+              "id": "minecraft:wither",
+              "effect": "minecraft:wither",
+              "duration": 400,
+              "amplifier": 1
+            }
+          }
+        },
+        {
+          "type": "apoli:damage",
+          "damage_type": "minecraft:generic",
+          "amount": 1.0
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "type": "apoli:attribute",
+  "modifier": {
+    "id": "yggdrasil_origins:dwarf_tenacity_tenacity",
+    "attribute": "mrpg_lib:tenacity",
+    "amount": 0.24,
+    "operation": "add_multiplied_base"
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "type": "apoli:attribute",
+  "modifiers": [
+    {
+      "id": "yggdrasil_origins:dragonborn_draconic_blood_fire",
+      "attribute": "spell_power:fire",
+      "amount": 0.05,
+      "operation": "add_multiplied_total"
+    }
+  ]
+}

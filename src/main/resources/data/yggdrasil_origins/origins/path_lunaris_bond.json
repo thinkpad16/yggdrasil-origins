@@ -1,0 +1,16 @@
+{
+  "icon": {
+    "id": "minecraft:golden_apple"
+  },
+  "order": 25,
+  "impact": 1,
+  "powers": [
+    "yggdrasil_origins:path_lunaris_bond_together",
+    "yggdrasil_origins:path_lunaris_bond_alone"
+  ],
+  "visual": {
+    "parts": [
+      "wisps"
+    ]
+  }
+}

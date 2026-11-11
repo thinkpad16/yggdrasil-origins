@@ -1,0 +1,16 @@
+{
+  "icon": {
+    "id": "minecraft:glowstone"
+  },
+  "order": 20,
+  "impact": 1,
+  "powers": [
+    "yggdrasil_origins:path_aurelite_lightbearer_drink",
+    "yggdrasil_origins:path_aurelite_lightbearer_dark"
+  ],
+  "visual": {
+    "parts": [
+      "motes"
+    ]
+  }
+}

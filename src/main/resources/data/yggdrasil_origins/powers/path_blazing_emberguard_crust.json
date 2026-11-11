@@ -1,0 +1,27 @@
+{
+  "type": "apoli:conditioned_attribute",
+  "tick_rate": 10,
+  "condition": {
+    "type": "apoli:on_fire"
+  },
+  "modifiers": [
+    {
+      "id": "yggdrasil_origins:path_blazing_emberguard_crust_armor",
+      "attribute": "minecraft:generic.armor",
+      "amount": 3.0,
+      "operation": "add_value"
+    },
+    {
+      "id": "yggdrasil_origins:path_blazing_emberguard_crust_knockback_resistance",
+      "attribute": "minecraft:generic.knockback_resistance",
+      "amount": 0.2,
+      "operation": "add_value"
+    },
+    {
+      "id": "yggdrasil_origins:path_blazing_emberguard_crust_warrior_weapon_damage",
+      "attribute": "attributes_ld:warrior_weapon_damage",
+      "amount": 0.12,
+      "operation": "add_multiplied_base"
+    }
+  ]
+}

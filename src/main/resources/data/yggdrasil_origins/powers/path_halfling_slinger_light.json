@@ -1,0 +1,17 @@
+{
+  "type": "apoli:attribute",
+  "modifiers": [
+    {
+      "id": "yggdrasil_origins:path_halfling_slinger_light_max_health",
+      "attribute": "minecraft:generic.max_health",
+      "amount": -2.0,
+      "operation": "add_value"
+    },
+    {
+      "id": "yggdrasil_origins:path_halfling_slinger_light_warrior_weapon_damage",
+      "attribute": "attributes_ld:warrior_weapon_damage",
+      "amount": -0.2,
+      "operation": "add_multiplied_base"
+    }
+  ]
+}

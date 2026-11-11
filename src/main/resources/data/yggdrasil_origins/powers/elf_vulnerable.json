@@ -1,0 +1,9 @@
+{
+  "type": "apoli:attribute",
+  "modifier": {
+    "id": "yggdrasil_origins:elf_vulnerable_damage_taken",
+    "attribute": "spell_engine:damage_taken",
+    "amount": 0.34,
+    "operation": "add_multiplied_base"
+  }
+}

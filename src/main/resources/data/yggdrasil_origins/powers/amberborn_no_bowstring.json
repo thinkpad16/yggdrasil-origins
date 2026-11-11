@@ -1,0 +1,17 @@
+{
+  "type": "apoli:attribute",
+  "modifiers": [
+    {
+      "id": "yggdrasil_origins:amberborn_no_bowstring_ranged",
+      "attribute": "ranged_weapon:damage",
+      "amount": -0.45,
+      "operation": "add_multiplied_total"
+    },
+    {
+      "id": "yggdrasil_origins:amberborn_no_bowstring_rogue",
+      "attribute": "attributes_ld:rogue_weapon_damage",
+      "amount": -0.3,
+      "operation": "add_multiplied_base"
+    }
+  ]
+}

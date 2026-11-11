@@ -1,0 +1,17 @@
+{
+  "type": "apoli:attribute",
+  "modifiers": [
+    {
+      "id": "yggdrasil_origins:path_aurelite_lightbearer_drink_healing",
+      "attribute": "spell_power:healing",
+      "amount": 0.18,
+      "operation": "add_multiplied_total"
+    },
+    {
+      "id": "yggdrasil_origins:path_aurelite_lightbearer_drink_healing_taken",
+      "attribute": "spell_engine:healing_taken",
+      "amount": 0.1,
+      "operation": "add_multiplied_base"
+    }
+  ]
+}

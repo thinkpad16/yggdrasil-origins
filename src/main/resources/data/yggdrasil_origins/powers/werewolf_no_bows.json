@@ -1,0 +1,44 @@
+{
+  "type": "apoli:prevent_item_use",
+  "item_condition": {
+    "type": "apoli:any_of",
+    "conditions": [
+      {
+        "type": "apoli:ingredient",
+        "ingredient": {
+          "tag": "minecraft:enchantable/bow"
+        }
+      },
+      {
+        "type": "apoli:ingredient",
+        "ingredient": {
+          "tag": "minecraft:enchantable/crossbow"
+        }
+      },
+      {
+        "type": "apoli:ingredient",
+        "ingredient": {
+          "tag": "rpg_series:weapon_type/short_bow"
+        }
+      },
+      {
+        "type": "apoli:ingredient",
+        "ingredient": {
+          "tag": "rpg_series:weapon_type/long_bow"
+        }
+      },
+      {
+        "type": "apoli:ingredient",
+        "ingredient": {
+          "tag": "rpg_series:weapon_type/heavy_crossbow"
+        }
+      },
+      {
+        "type": "apoli:ingredient",
+        "ingredient": {
+          "tag": "rpg_series:weapon_type/rapid_crossbow"
+        }
+      }
+    ]
+  }
+}

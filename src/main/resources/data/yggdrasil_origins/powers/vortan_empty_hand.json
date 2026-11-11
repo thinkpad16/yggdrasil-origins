@@ -1,0 +1,25 @@
+{
+  "type": "apoli:conditioned_attribute",
+  "tick_rate": 5,
+  "condition": {
+    "type": "apoli:equipped_item",
+    "equipment_slot": "mainhand",
+    "item_condition": {
+      "type": "apoli:empty"
+    }
+  },
+  "modifiers": [
+    {
+      "id": "yggdrasil_origins:vortan_empty_hand_attack_damage",
+      "attribute": "minecraft:generic.attack_damage",
+      "amount": 4.5,
+      "operation": "add_value"
+    },
+    {
+      "id": "yggdrasil_origins:vortan_empty_hand_movement_speed",
+      "attribute": "minecraft:generic.movement_speed",
+      "amount": 0.1,
+      "operation": "add_multiplied_base"
+    }
+  ]
+}

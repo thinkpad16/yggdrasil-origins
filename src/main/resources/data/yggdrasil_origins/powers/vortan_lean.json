@@ -1,0 +1,23 @@
+{
+  "type": "apoli:attribute",
+  "modifiers": [
+    {
+      "id": "yggdrasil_origins:vortan_lean_max_health",
+      "attribute": "minecraft:generic.max_health",
+      "amount": -2.0,
+      "operation": "add_value"
+    },
+    {
+      "id": "yggdrasil_origins:vortan_lean_damage_taken",
+      "attribute": "spell_engine:damage_taken",
+      "amount": 0.02,
+      "operation": "add_multiplied_base"
+    },
+    {
+      "id": "yggdrasil_origins:vortan_lean_shield_bonus",
+      "attribute": "attributes_ld:shield_bonus",
+      "amount": -0.33,
+      "operation": "add_multiplied_base"
+    }
+  ]
+}
