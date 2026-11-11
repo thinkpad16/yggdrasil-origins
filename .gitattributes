@@ -1,0 +1,9 @@
+# Keep line endings consistent: the repository stores LF, checkouts use whatever the
+# platform wants. Without this a Windows clone rewrites every file it touches.
+* text=auto eol=lf
+
+*.bat text eol=crlf
+gradlew text eol=lf
+
+*.png binary
+*.jar binary
