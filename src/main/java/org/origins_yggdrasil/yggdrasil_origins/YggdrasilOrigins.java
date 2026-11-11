@@ -40,7 +40,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * A standalone class mod for the Minestar Yggdrasil (FallenEden) pack.
+ * A standalone class mod.
  * <p>
  * Origins is not required: the choice, its storage, the picker screen and the commands are ours.
  * Powers keep the Apoli JSON shape (RPG Series attributes, conditions, procs): they live in

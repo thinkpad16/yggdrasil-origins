@@ -1,13 +1,12 @@
 # Yggdrasil Origins
 
-A standalone class system for the **Minestar Yggdrasil (FallenEden)** RPG pack.
-Minecraft **1.21.1**, Fabric.
+A class and origin system for Minecraft **1.21.1**, Fabric.
 
 Origins is **not required**: the choice, its storage, the picker screen, the commands and the
 power engine are all ours. Abilities are plain JSON data; the mod reads them, grants them and
 runs them itself.
 
-## What the pack needs
+## What it needs
 
 | Mod | What for |
 |---|---|
@@ -20,8 +19,8 @@ and a built-in datapack silences its default origins.
 There is no external attribute the mod breaks without. Swim speed
 (`yggdrasil_origins:swim_speed`) is **deliberately not a real attribute**: the player attribute
 supplier is built once at startup, and if another mod touches it before our registration runs,
-the attribute simply would not exist on the player (which is exactly what happened in a pack
-with the RPG stack — the value vanished because of load order). The engine computes the
+the attribute simply would not exist on the player (which is exactly what happened next to the
+RPG stack — the value vanished because of load order). The engine computes the
 multiplier itself and `SwimSpeedMixin` applies it: from the engine on the server, from a synced
 number on the client so movement does not stutter. The data format is unchanged — powers still
 use the same id.
@@ -248,8 +247,8 @@ comparison would silently fail.
 
 ## RPG stack attributes
 
-Most abilities are attribute modifiers that **do not exist in vanilla**. The pack mods provide
-them, and all of them are declared as `suggests` in `fabric.mod.json`: a missing mod costs you
+Most abilities are attribute modifiers that **do not exist in vanilla**. The RPG Series mods
+provide them, and all of them are declared as `suggests` in `fabric.mod.json`: a missing mod costs you
 its modifiers, not the whole class.
 
 | mod id | attribute namespace | what it gives |
@@ -274,7 +273,7 @@ Our own attribute (nothing to install, it is inside the mod):
 ### Operation rule (otherwise a modifier does nothing)
 
 `add_multiplied_base` means `amount x base_value`, so the right operation depends on the base
-the attribute has in the pack:
+the attribute has in those mods:
 
 | attributes | base | operation for "+/-X%" |
 |---|---|---|
@@ -295,8 +294,8 @@ Separately: a negative on an attribute whose `min == base` **does nothing**. Tha
 
 ### RPG Series item tags
 
-For item conditions (`apoli:ingredient`, `restrict_armor`, `prevent_item_use`) the pack provides
-ready tags in the `rpg_series` namespace:
+For item conditions (`apoli:ingredient`, `restrict_armor`, `prevent_item_use`) the RPG Series
+mods provide ready tags in the `rpg_series` namespace:
 
 * `rpg_series:weapon_type/<type>` — `claymore`, `dagger`, `glaive`, `hammer`, `mace`, `spear`,
   `sickle`, `sword`, `double_axe`, `short_bow`, `long_bow`, `heavy_crossbow`, `rapid_crossbow`,
@@ -307,7 +306,7 @@ ready tags in the `rpg_series` namespace:
 
 ### Apoli version compatibility
 
-`apoli:apply_effect` in **Apoli 2.12.0-pre.2** (the version in FallenEden) reads the effect as
+`apoli:apply_effect` in **Apoli 2.12.0-pre.2** reads the effect as
 `{"effect": "...", "duration": N}`, while **pre.3** reads `{"id": "...", "duration": N}`. The
 data therefore carries **both keys at once**, so the files load on either version, and
 `checkOrigins` fails if someone leaves only one. The validator also enforces: `apoli:give` takes
@@ -511,13 +510,13 @@ What it checks:
    a missing class, an origin that is in no layer at all;
 3. origins against powers: a missing power, a power no origin uses (powers granted by other
    powers count as used);
-4. attribute ids against `known_attributes.txt`, which is generated from the real pack jars:
+4. attribute ids against `known_attributes.txt`, which is generated from the real mod jars:
 
    ```
    ./gradlew scanAttributes -PmodsDir=/path/to/pack/mods
    ```
 
-   Any attribute that no mod in the pack provides fails the build — this is what catches a
+   Any attribute that no installed mod provides fails the build — this is what catches a
    renamed namespace such as the dead `more_rpg_classes`;
 5. version-sensitive formats: the dual `apply_effect` keys, `apoli:give` using `"id"`, dotted
    sound ids, and references to tags that must exist under `data/yggdrasil_origins/tags/`;
@@ -597,9 +596,8 @@ line to the log — everything else is logged only when something is wrong.
 ./gradlew runClient -PquickName=Tester       a fixed player name, handy for command tests
 ```
 
-The RPG stack mods are not pulled by Gradle; for a dev run drop them into `run/mods/` from the
-pack (`~/.local/share/ua.com.minestar.launcher/packs/falleneden/mods/`). Without them the mod
-still starts — the affected modifiers are skipped and `/ygg doctor` lists them.
+The RPG stack mods are not pulled by Gradle; for a dev run drop them into `run/mods/` from your
+own install. Without them the mod still starts — the affected modifiers are skipped and `/ygg doctor` lists them.
 
 If a dependency change ever produces `AbstractMethodError` or `NoSuchMethodError`, clear the
 Loom remap cache and run again:

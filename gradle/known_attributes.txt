@@ -1,4 +1,4 @@
-# Known attribute ids: vanilla 1.21.1 plus the mods of the FallenEden pack.
+# Known attribute ids: vanilla 1.21.1 plus the RPG Series mods.
 # Regenerate with:  ./gradlew scanAttributes -PmodsDir=/path/to/mods
 # checkOrigins fails when a power refers to an attribute outside this list.
 additionalentityattributes:generic.lava_speed

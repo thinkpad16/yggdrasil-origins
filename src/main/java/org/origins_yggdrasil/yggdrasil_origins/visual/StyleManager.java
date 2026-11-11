@@ -11,7 +11,7 @@ import java.util.Map;
 
 /**
  * Where a player's own customisation lives. Separate from the origin choice on purpose: an
- * admin may rewrite every origin in the pack without wiping what players did to their horns.
+ * admin may rewrite every origin in the mod without wiping what players did to their horns.
  */
 public final class StyleManager {
 

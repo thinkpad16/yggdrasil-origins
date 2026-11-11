@@ -3,11 +3,15 @@
   "id": "yggdrasil_origins",
   "version": "${version}",
   "name": "Yggdrasil Origins",
-  "description": "A standalone class system for the Minestar Yggdrasil (FallenEden) pack: its own picker screen, storage and commands, its own power engine, and per-class looks with matching hitboxes. Abilities are plain JSON data and lean on RPG Series attributes as soft dependencies.",
+  "description": "A standalone class system: its own picker screen, storage and commands, its own power engine, and per-class looks with matching hitboxes. Abilities are plain JSON data and lean on RPG Series attributes as soft dependencies.",
   "authors": [
     "Tend1tnuy"
   ],
-  "contact": {},
+  "contact": {
+    "homepage": "https://github.com/thinkpad16/yggdrasil-origins",
+    "sources": "https://github.com/thinkpad16/yggdrasil-origins",
+    "issues": "https://github.com/thinkpad16/yggdrasil-origins/issues"
+  },
   "license": "All-Rights-Reserved",
   "icon": "assets/yggdrasil_origins/icon.png",
   "environment": "*",

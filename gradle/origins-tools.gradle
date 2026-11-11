@@ -307,7 +307,7 @@ ext.knownAttributes = { ->
 //   ./gradlew scanAttributes -PmodsDir=/path/to/mods
 tasks.register('scanAttributes') {
     group = 'yggdrasil'
-    description = 'Re-reads attribute ids from the pack jars: -PmodsDir=<path>'
+    description = 'Re-reads attribute ids from the installed mod jars: -PmodsDir=<path>'
     doLast {
 
         String dir = project.findProperty('modsDir')
@@ -341,7 +341,7 @@ tasks.register('scanAttributes') {
         List<String> all = ((found + vanilla) as List).sort()
 
         knownAttributesFile.setText(
-            "# Known attribute ids: vanilla 1.21.1 plus the mods of the FallenEden pack.\n" +
+            "# Known attribute ids: vanilla 1.21.1 plus the RPG Series mods.\n" +
             "# Regenerate with:  ./gradlew scanAttributes -PmodsDir=/path/to/mods\n" +
             "# checkOrigins fails when a power refers to an attribute outside this list.\n" +
             all.join('\n') + '\n', 'UTF-8')
@@ -451,7 +451,7 @@ tasks.register('checkOrigins') {
             powerFiles.each { File f ->
                 f.getText('UTF-8').findAll(/"attribute"\s*:\s*"([^"]+)"/) { full, id ->
                     if (!known.contains(id)) {
-                        errors << "${f.name}: unknown attribute \"${id}\" - no mod in the pack provides it"
+                        errors << "${f.name}: unknown attribute \"${id}\" - no installed mod provides it"
                     }
                 }
             }

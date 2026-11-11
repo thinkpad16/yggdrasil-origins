@@ -172,7 +172,7 @@ public final class PowerEngine {
     /** Who was already swept fully this session (leftovers from older versions). */
     private final Set<UUID> deepSwept = new HashSet<>();
     private final Set<ResourceLocation> missingAttributes = new HashSet<>();
-    /** An attribute missing from the pack -> the powers that refer to it. */
+    /** An attribute no installed mod provides -> the powers that refer to it. */
     private final Map<ResourceLocation, Set<ResourceLocation>> missingUsers = new LinkedHashMap<>();
     /** Power -> the type the engine did not recognise. */
     private final Map<ResourceLocation, String> unsupportedPowers = new LinkedHashMap<>();
