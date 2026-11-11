@@ -20,6 +20,7 @@ run/
 .DS_Store
 Thumbs.db
 
-# python leftovers from the tools
+# the checkers and generators: a working-copy tool, kept out of what is published
+tools/
 __pycache__/
 *.pyc

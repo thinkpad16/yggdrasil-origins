@@ -586,8 +586,14 @@ tasks.register('checkData') {
     description = 'Runs the element, texture and description checks'
 
     doLast {
+        // The checkers are a working-copy tool, not part of what ships: a clone without
+        // them still builds, it just has nothing to check here.
         def scripts = ['tools/check_fit.py', 'tools/check_uv.py', 'tools/check_numbers.py',
-                       'tools/check_symmetry.py']
+                       'tools/check_symmetry.py'].findAll { new File(project.projectDir, it).exists() }
+        if (scripts.isEmpty()) {
+            logger.lifecycle('checkData: no checkers in this copy - skipped')
+            return
+        }
         def python = ['python3', 'python'].find { name ->
             try {
                 def probe = new ProcessBuilder(name, '--version').redirectErrorStream(true).start()

@@ -1,8 +1,7 @@
 # Builds the mod and runs the data checks on every push and pull request.
 #
 # The checks are the point: checkOrigins reads every origin, path and ability and fails on a
-# missing translation or an unknown attribute, and checkData runs the element, texture,
-# description and symmetry checks under tools/.
+# missing translation, an unknown attribute or a number a description does not match.
 name: build
 
 on:
@@ -25,14 +24,6 @@ jobs:
         with:
           java-version: '21'
           distribution: 'temurin'
-
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: '3.12'
-
-      - name: Install Pillow
-        run: python -m pip install --upgrade pillow
 
       - uses: gradle/actions/setup-gradle@v4
 
