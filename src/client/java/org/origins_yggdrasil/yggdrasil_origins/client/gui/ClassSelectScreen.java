@@ -579,9 +579,12 @@ public class ClassSelectScreen extends Screen {
         ClientVisuals.preview(previewProfile(info));
         try {
             float spin = portraitSpin;
+            // the camera looks down a little, then the figure spins under it: the tilt goes
+            // first in the chain so it stays the viewer's. The other way round, the tilt spun
+            // with the body and read as a sideways lean whenever the figure was side-on.
             org.joml.Quaternionf spinQ = new org.joml.Quaternionf()
-                .rotateY((float) Math.toRadians(spin))
-                .rotateX((float) Math.toRadians(8.0));
+                .rotateX((float) Math.toRadians(8.0))
+                .rotateY((float) Math.toRadians(spin));
             org.joml.Quaternionf tilt = new org.joml.Quaternionf().rotateZ((float) Math.PI);
             tilt.mul(spinQ);
             // the stand is not the camera owner, so the game would hang its name over the
