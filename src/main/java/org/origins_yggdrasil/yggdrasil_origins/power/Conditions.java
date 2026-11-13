@@ -124,6 +124,14 @@ public final class Conditions {
                 boolean lava = fluid.getPath().contains("lava");
                 return player -> player.isEyeInFluid(lava ? FluidTags.LAVA : FluidTags.WATER);
             }
+            case "fluid_height": {
+                // how deep the player stands in the fluid: 0 is dry, above 0 is wet
+                ResourceLocation fluid = ResourceLocation.parse(json.get("fluid").getAsString());
+                TagKey<net.minecraft.world.level.material.Fluid> tag =
+                    fluid.getPath().contains("lava") ? FluidTags.LAVA : FluidTags.WATER;
+                Compare compare = Compare.of(json);
+                return player -> compare.test(player.getFluidHeight(tag));
+            }
             case "dimension": {
                 ResourceLocation dimension = ResourceLocation.parse(json.get("dimension").getAsString());
                 return player -> player.level().dimension().location().equals(dimension);
@@ -452,7 +460,10 @@ public final class Conditions {
     }
 
     /** Comparison from JSON: {"comparison": ">=", "compare_to": 0.3}. */
-    private record Compare(String op, double value) {
+    private record Compare(Op op, double value) {
+
+        /** Read once, so a check that runs every few ticks does not compare strings. */
+        enum Op { LT, LE, GT, GE, NE, EQ }
 
         static Compare of(JsonObject json) {
             return of(json, "==", 0);
@@ -461,17 +472,24 @@ public final class Conditions {
         static Compare of(JsonObject json, String defaultOp, double defaultValue) {
             String op = json.has("comparison") ? json.get("comparison").getAsString() : defaultOp;
             double value = json.has("compare_to") ? json.get("compare_to").getAsDouble() : defaultValue;
-            return new Compare(op, value);
+            return new Compare(switch (op) {
+                case "<" -> Op.LT;
+                case "<=" -> Op.LE;
+                case ">" -> Op.GT;
+                case ">=" -> Op.GE;
+                case "!=" -> Op.NE;
+                default -> Op.EQ;
+            }, value);
         }
 
         boolean test(double actual) {
             return switch (op) {
-                case "<" -> actual < value;
-                case "<=" -> actual <= value;
-                case ">" -> actual > value;
-                case ">=" -> actual >= value;
-                case "!=" -> actual != value;
-                default -> actual == value;
+                case LT -> actual < value;
+                case LE -> actual <= value;
+                case GT -> actual > value;
+                case GE -> actual >= value;
+                case NE -> actual != value;
+                case EQ -> actual == value;
             };
         }
     }

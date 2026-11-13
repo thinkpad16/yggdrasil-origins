@@ -53,12 +53,14 @@ public final class Scans {
      * Says that some power compares this question's count against {@code value}.
      * <p>
      * Called while the data is read, before anything is counted. Three tiers of one path ask
-     * about six, eighteen and thirty-six blocks: counting stops at thirty-six, and every
-     * comparison below it still answers the same - a count that reached the ceiling is "at
-     * least that many", which settles "&gt;= 6" and "&lt; 6" alike.
+     * about six, eighteen and thirty-six blocks: counting stops at thirty-seven, one past the
+     * largest number asked about. A count that reached the ceiling means "more than every
+     * number anyone compares against", which settles every comparison - "&gt;=", "&gt;",
+     * "&lt;", "&lt;=", "==" and "!=" alike. Stopping at the number itself would not: "&gt; 36"
+     * and "&lt;= 36" cannot tell 36 from 50.
      */
     public static void expect(String question, double value) {
-        int needed = (int) Math.ceil(value);
+        int needed = (int) Math.floor(value) + 1;
         CEILINGS.merge(question, Math.max(1, needed), Math::max);
     }
 

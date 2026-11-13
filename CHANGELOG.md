@@ -73,10 +73,32 @@ Work since 1.0.0. Minecraft 1.21.1, Fabric.
 - **A power that throws is switched off**, loudly, instead of costing the server its tick -
   while ticking, on a hit, on a kill saved from death and on a broken block. `/ygg perf` says
   how many were put aside, and what looking around costs.
-- **The bar packet goes out once per tick** per player, however many powers moved together.
+- **The bar packet goes out once per tick** per player, however many powers moved together -
+  a cooldown or resource change now waits for the end of the tick too.
+- **Every player ticks on their own phase**: once-a-second work, scans included, no longer
+  lands on the same tick for the whole server.
+- **A class is granted in one go**, and the picker's class list is written once per set of
+  choices, not for every player on every join, respawn and reload. A player's looks packet is
+  written once, not for every pair of eyes that sees them.
+- **No modifier trace that grows forever**: a conditional attribute switching on again no longer
+  records itself a second time.
 
 ### Fixes
 
+- **`modify_food` changes nutrition and saturation for players.** The hunger bar was fed before
+  the change reached the food, so only `prevent_effects` worked. A stew still leaves its bowl.
+- **Scans stop counting early again**: the numbers they count to were wiped right after loading.
+  They now stop one past the largest number asked about, which answers every comparison.
+- **Milk does not wash off an origin.** The endless effects a class gives pass through milk,
+  `/effect clear` and a `clear_effect` action untouched, with no flicker; a potion of the same
+  effect still washes off. The method is wrapped rather than cancelled, so other mods that keep
+  their own effects through milk (Potions_LD's potion sickness) keep working beside it. Anything
+  that removes one of them by name gets it back within a second.
+- **Attribute powers with Apoli's wildcard or missing modifier id run.** `"id": "*:*"` threw
+  while reading, so the whole power was reported as an unknown type - 71 of the Fallen Eden
+  RPG pack's stat powers among them. Such a modifier now gets an id of our own.
+- **`modify_harvest` with `"allow": false` forbids harvesting**, and wins over a power that
+  allows it.
 - **Marks that did not read.** Every origin was drawn with its real texture colours over a
   grey body and looked at one by one. Six came out too faint to tell apart from the skin at
   playing distance and were strengthened: blazing's embers are coals rather than specks and
@@ -97,6 +119,14 @@ Work since 1.0.0. Minecraft 1.21.1, Fabric.
   see-through. `check_uv` now fails the build on any skin-mesh piece whose UV leaves the
   skin, or any prop whose UV leaves the atlas.
 - The werewolf's teeth are gone; it keeps its ears and its tail. 56 elements.
+
+### Engine
+
+- **`fluid_height`** condition: how deep the player stands in water or lava.
+- **`invulnerability`** power: damage matching its `damage_condition` does not land at all.
+- **`damage_over_time`** power: `interval`, `onset_delay`, `damage` and `damage_easy`. A
+  `damage_type` that is not registered (Origins' own leave with Origins) falls back to plain
+  damage; `protection_enchantment` is not read.
 
 ### Checks
 

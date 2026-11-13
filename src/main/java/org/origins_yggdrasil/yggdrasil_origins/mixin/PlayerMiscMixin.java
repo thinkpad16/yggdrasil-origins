@@ -23,11 +23,11 @@ public abstract class PlayerMiscMixin {
     }
 
     @Inject(method = "hasCorrectToolForDrops", at = @At("RETURN"), cancellable = true)
-    private void yggdrasil$allowHarvest(BlockState state, CallbackInfoReturnable<Boolean> info) {
-        if (info.getReturnValue()) return;
+    private void yggdrasil$modifyHarvest(BlockState state, CallbackInfoReturnable<Boolean> info) {
         Player self = (Player) (Object) this;
-        if (self instanceof ServerPlayer player && PowerEngine.INSTANCE.allowsHarvest(player, state)) {
-            info.setReturnValue(true);
-        }
+        if (!(self instanceof ServerPlayer player)) return;
+        int verdict = PowerEngine.INSTANCE.harvestVerdict(player, state);
+        if (verdict > 0 && !info.getReturnValue()) info.setReturnValue(true);
+        else if (verdict < 0 && info.getReturnValue()) info.setReturnValue(false);
     }
 }

@@ -4,6 +4,7 @@
   "package": "org.origins_yggdrasil.yggdrasil_origins.mixin",
   "compatibilityLevel": "JAVA_21",
   "mixins": [
+    "EffectClearMixin",
     "EffectImmunityMixin",
     "EffectMixin",
     "FluidWalkMixin",

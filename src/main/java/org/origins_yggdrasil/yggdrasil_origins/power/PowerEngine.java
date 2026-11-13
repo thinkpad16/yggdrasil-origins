@@ -87,6 +87,15 @@ public final class PowerEngine {
     private record Harvest(Predicate<BlockState> block, boolean allow) implements B { }
     private record NoRegen() implements B { }
     private record Fluid(boolean lava, Predicate<ServerPlayer> cond) implements B { }
+    /** Damage of a kind that simply does not land on this player. */
+    private record Invuln(Predicate<DamageSource> damage) implements B { }
+    /**
+     * Damage every {@code interval} ticks while the condition holds, starting once it has held
+     * for {@code onset} ticks. {@code type} is null when the pack's damage type is not
+     * registered (Origins' own types leave with Origins) - plain damage is dealt instead.
+     */
+    private record Dot(int interval, int onset, float damage, float damageEasy,
+                       ResourceLocation type, Predicate<ServerPlayer> cond) implements B { }
     private record Glow(Predicate<LivingEntity> target) implements B { }
     private record NoWaterPush(Predicate<ServerPlayer> cond) implements B { }
     /** Moves through lava as if it were water, and sees through it. */
@@ -133,6 +142,9 @@ public final class PowerEngine {
         private final List<Timed> timed = new ArrayList<>();
         private final List<CondAttr> condAttrs = new ArrayList<>();
         private final List<Immune> immunes = new ArrayList<>();
+        private final List<Invuln> invulns = new ArrayList<>();
+        /** Effects the powers keep on the player - kept through milk and "clear everything". */
+        private final List<Holder<MobEffect>> powerEffects = new ArrayList<>();
         private final List<NoUse> noUse = new ArrayList<>();
         private final List<Food> foods = new ArrayList<>();
         private final List<EffectTime> effectTimes = new ArrayList<>();
@@ -167,8 +179,12 @@ public final class PowerEngine {
     private Map<ResourceLocation, List<B>> supported = Map.of();
     private final Map<UUID, Set<ResourceLocation>> granted = new HashMap<>();
     private final Map<UUID, Cache> caches = new HashMap<>();
-    /** Exactly which modifiers we applied to this player, so they come off without a registry walk. */
-    private final Map<UUID, List<Mod>> appliedMods = new HashMap<>();
+    /**
+     * Exactly which modifiers we applied to this player, so they come off without a registry walk.
+     * A set: a conditional attribute switching on again must not add itself a second time, or a
+     * player walking along a forest edge grows this for the whole session.
+     */
+    private final Map<UUID, Set<Mod>> appliedMods = new HashMap<>();
     /** Who was already swept fully this session (leftovers from older versions). */
     private final Set<UUID> deepSwept = new HashSet<>();
     private final Set<ResourceLocation> missingAttributes = new HashSet<>();
@@ -183,10 +199,14 @@ public final class PowerEngine {
      */
     private final Map<ResourceLocation, Integer> attributeStarvedPowers = new LinkedHashMap<>();
     private int skippedForCurrentPower;
+    /** How many modifiers of the current power were given an id of our own. */
+    private int generatedIds;
     private ResourceLocation parsing;
     private record HitKey(UUID player, ResourceLocation power) { }
 
     private final Map<HitKey, Long> hitCooldowns = new HashMap<>();
+    /** When a damage-over-time condition started holding, per player and power. */
+    private final Map<HitKey, Long> dotSince = new HashMap<>();
     private Set<ResourceLocation> knownPowers = Set.of();
     private int unsupported;
     private long ticks;
@@ -203,6 +223,9 @@ public final class PowerEngine {
 
     public void load(Map<ResourceLocation, JsonObject> powers) {
         Map<ResourceLocation, List<B>> parsed = new LinkedHashMap<>();
+        // before parsing, not after: parsing is what records how far each scan has to count,
+        // and wiping that afterwards left every scan counting to the end
+        Scans.forgetAll();
         missingAttributes.clear();
         missingUsers.clear();
         unsupportedPowers.clear();
@@ -212,6 +235,7 @@ public final class PowerEngine {
             List<B> behaviours;
             parsing = entry.getKey();
             skippedForCurrentPower = 0;
+            generatedIds = 0;
             try {
                 behaviours = parse(entry.getValue());
             } catch (Exception e) {
@@ -236,8 +260,8 @@ public final class PowerEngine {
         // a reload is a fresh start for anything that broke, and for the answers kept about
         // ground and neighbours: the questions themselves may have changed
         broken.clear();
+        dotSince.clear();
         complained.clear();
-        Scans.forgetAll();
         // appliedMods is deliberately kept: it records the modifiers physically written onto
         // players, and a reload does not undo those. Dropping it here would leave the old
         // numbers on everyone who is online - an edit would appear to do nothing.
@@ -440,6 +464,21 @@ public final class PowerEngine {
             }
             case "disable_regen":
                 return List.of(new NoRegen());
+            case "invulnerability": {
+                Predicate<DamageSource> damage = DamageConditions.parse(json.get("damage_condition"));
+                return damage == null ? null : List.of(new Invuln(damage));
+            }
+            case "damage_over_time": {
+                int interval = json.has("interval") ? Math.max(1, json.get("interval").getAsInt()) : 20;
+                int onset = json.has("onset_delay") ? Math.max(0, json.get("onset_delay").getAsInt()) : interval;
+                float damage = json.get("damage").getAsFloat();
+                float easy = json.has("damage_easy") ? json.get("damage_easy").getAsFloat() : damage;
+                ResourceLocation damageType = json.has("damage_type")
+                    ? ResourceLocation.tryParse(json.get("damage_type").getAsString()) : null;
+                // "protection_enchantment" is not read: the one the packs name is Origins' own
+                // and is gone without it
+                return List.of(new Dot(interval, onset, damage, easy, damageType, cond));
+            }
             case "ignore_water":
                 return List.of(new NoWaterPush(cond));
             case "action_on_block_break": {
@@ -538,7 +577,7 @@ public final class PowerEngine {
     }
 
     private void add(List<Mod> mods, JsonObject json) {
-        if (!json.has("attribute") || !json.has("id")) return;
+        if (!json.has("attribute")) return;
         ResourceLocation attributeId = ResourceLocation.parse(json.get("attribute").getAsString());
         if (SWIM_SPEED.equals(attributeId)) return;
         Optional<Holder.Reference<Attribute>> attribute = BuiltInRegistries.ATTRIBUTE.getHolder(attributeId);
@@ -553,13 +592,30 @@ public final class PowerEngine {
             return;
         }
         mods.add(new Mod(attribute.get(),
-            ResourceLocation.parse(json.get("id").getAsString()),
+            modifierId(json),
             json.get("amount").getAsDouble(),
-            switch (json.get("operation").getAsString()) {
+            switch (json.has("operation") ? json.get("operation").getAsString() : "add_value") {
                 case "add_multiplied_base" -> AttributeModifier.Operation.ADD_MULTIPLIED_BASE;
                 case "add_multiplied_total" -> AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL;
                 default -> AttributeModifier.Operation.ADD_VALUE;
             }));
+    }
+
+    /**
+     * The modifier id. Apoli lets a pack leave it out or write a wildcard ({@code "*:*"}) and
+     * makes one up from the power; such an id is not even a valid location, so reading it
+     * threw and the whole power was reported as an unknown type. We make one up too, in our
+     * own namespace, so the leftovers sweep still recognises it.
+     */
+    private ResourceLocation modifierId(JsonObject json) {
+        String raw = json.has("id") ? json.get("id").getAsString() : "";
+        if (!raw.isEmpty() && raw.indexOf('*') < 0) {
+            ResourceLocation id = ResourceLocation.tryParse(raw);
+            if (id != null) return id;
+        }
+        String owner = parsing == null ? "unknown" : parsing.getNamespace() + "/" + parsing.getPath();
+        return ResourceLocation.fromNamespaceAndPath(YggdrasilOrigins.MOD_ID,
+            "power/" + owner + "/" + generatedIds++);
     }
 
     // ------------------------------------------------------------------ reports
@@ -678,7 +734,11 @@ public final class PowerEngine {
             return;
         }
         if (behaviour instanceof Eff eff) {
-            if (eff.cond() != null) cache.timed.add(new Cache.Timed(id, eff, 5));
+            // a permanent effect is re-checked too, more slowly. Milk and "clear everything"
+            // pass it by (EffectClearMixin); this catches anything that removes it by name,
+            // which would otherwise take it away until the next respawn
+            cache.timed.add(new Cache.Timed(id, eff, eff.cond() != null ? 5 : 20));
+            if (!cache.powerEffects.contains(eff.effect())) cache.powerEffects.add(eff.effect());
             return;
         }
         if (behaviour instanceof Immune immune) {
@@ -732,6 +792,14 @@ public final class PowerEngine {
         }
         if (behaviour instanceof NoRegen) {
             cache.noRegen = true;
+            return;
+        }
+        if (behaviour instanceof Invuln invuln) {
+            cache.invulns.add(invuln);
+            return;
+        }
+        if (behaviour instanceof Dot dot) {
+            cache.timed.add(new Cache.Timed(id, dot, dot.interval()));
             return;
         }
         if (behaviour instanceof LavaBorn lava) {
@@ -810,6 +878,39 @@ public final class PowerEngine {
         return false;
     }
 
+    /**
+     * Takes the effects this player's powers keep out of the effect map, so a "clear
+     * everything" (milk, {@code /effect clear}, a clear_effect action) passes them by; the
+     * caller puts them back afterwards. Only the endless ones are ours - a potion of the same
+     * effect is fair game for milk.
+     * <p>
+     * Taken out of the map directly, not removed: nothing is told they left, so the client
+     * sees no flicker and the effect's own attribute modifiers stay where they are.
+     */
+    public List<MobEffectInstance> liftPowerEffects(ServerPlayer player,
+                                                    Map<Holder<MobEffect>, MobEffectInstance> active) {
+        List<Holder<MobEffect>> effects = cache(player).powerEffects;
+        if (effects.isEmpty() || active.isEmpty()) return List.of();
+        List<MobEffectInstance> lifted = null;
+        for (int i = 0; i < effects.size(); i++) {
+            MobEffectInstance instance = active.get(effects.get(i));
+            if (instance == null || !instance.isInfiniteDuration()) continue;
+            active.remove(effects.get(i));
+            if (lifted == null) lifted = new ArrayList<>(effects.size());
+            lifted.add(instance);
+        }
+        return lifted == null ? List.of() : lifted;
+    }
+
+    /** true - a power makes this damage not land at all. */
+    public boolean invulnerableTo(ServerPlayer player, DamageSource source) {
+        List<Invuln> list = cache(player).invulns;
+        for (int i = 0; i < list.size(); i++) {
+            if (list.get(i).damage().test(source)) return true;
+        }
+        return false;
+    }
+
     public boolean fireImmune(ServerPlayer player) {
         return cache(player).fireImmune;
     }
@@ -825,12 +926,23 @@ public final class PowerEngine {
     // ------------------------------------------------------------------ granting
 
     public void grant(ServerPlayer player, ResourceLocation powerId) {
-        if (!supported.containsKey(powerId)) return;
-        granted.computeIfAbsent(player.getUUID(), uuid -> new HashSet<>()).add(powerId);
-        for (B behaviour : supported.get(powerId)) {
-            if (behaviour instanceof Attr attr && attr.cond() == null) apply(player, attr.mods(), true);
-            if (behaviour instanceof Eff eff && eff.cond() == null) addEffect(player, eff);
+        grantAll(player, List.of(powerId));
+    }
+
+    /** Grants several powers and rebuilds the player layout once, not once per power. */
+    public void grantAll(ServerPlayer player, java.util.Collection<ResourceLocation> powerIds) {
+        boolean any = false;
+        for (ResourceLocation powerId : powerIds) {
+            List<B> behaviours = supported.get(powerId);
+            if (behaviours == null) continue;
+            granted.computeIfAbsent(player.getUUID(), uuid -> new HashSet<>()).add(powerId);
+            for (B behaviour : behaviours) {
+                if (behaviour instanceof Attr attr && attr.cond() == null) apply(player, attr.mods(), true);
+                if (behaviour instanceof Eff eff && eff.cond() == null) addEffect(player, eff);
+            }
+            any = true;
         }
+        if (!any) return;
         rebuild(player);
         clampHealth(player);
     }
@@ -848,7 +960,7 @@ public final class PowerEngine {
         caches.remove(player.getUUID());
 
         // remove exactly what we applied ourselves
-        List<Mod> mine = appliedMods.remove(player.getUUID());
+        Set<Mod> mine = appliedMods.remove(player.getUUID());
         if (mine != null) {
             for (Mod mod : mine) {
                 AttributeInstance instance = player.getAttribute(mod.attribute());
@@ -889,6 +1001,7 @@ public final class PowerEngine {
         appliedMods.remove(uuid);
         deepSwept.remove(uuid);
         hitCooldowns.keySet().removeIf(key -> key.player().equals(uuid));
+        dotSince.keySet().removeIf(key -> key.player().equals(uuid));
         PowerState.forget(uuid);
     }
 
@@ -902,7 +1015,7 @@ public final class PowerEngine {
                     instance.addOrUpdateTransientModifier(
                         new AttributeModifier(mod.id(), mod.amount(), mod.operation()));
                 }
-                appliedMods.computeIfAbsent(player.getUUID(), uuid -> new ArrayList<>()).add(mod);
+                appliedMods.computeIfAbsent(player.getUUID(), uuid -> new LinkedHashSet<>()).add(mod);
             } else {
                 instance.removeModifier(mod.id());
             }
@@ -1083,24 +1196,38 @@ public final class PowerEngine {
     public FoodProperties modifyFood(ServerPlayer player, ItemStack stack, FoodProperties props) {
         List<Food> list = cache(player).foods;
         if (list.isEmpty()) return props;
-        List<VMod> nutrition = new ArrayList<>();
-        List<VMod> saturation = new ArrayList<>();
+        List<VMod> nutrition = null;
+        List<VMod> saturation = null;
         boolean prevent = false;
-        for (Food food : list) {
+        for (int i = 0; i < list.size(); i++) {
+            Food food = list.get(i);
             if (!food.item().test(stack)) continue;
-            nutrition.addAll(food.nutrition());
-            saturation.addAll(food.saturation());
+            if (!food.nutrition().isEmpty()) {
+                if (nutrition == null) nutrition = new ArrayList<>(2);
+                nutrition.addAll(food.nutrition());
+            }
+            if (!food.saturation().isEmpty()) {
+                if (saturation == null) saturation = new ArrayList<>(2);
+                saturation.addAll(food.saturation());
+            }
             prevent |= food.preventEffects();
-            if (food.action() != null) food.action().accept(player, player);
+            if (food.action() != null) {
+                try {
+                    food.action().accept(player, player);
+                } catch (Exception | LinkageError failed) {
+                    complain("food actions", failed);
+                }
+            }
         }
-        if (nutrition.isEmpty() && saturation.isEmpty() && !prevent) return props;
-        FoodProperties.Builder builder = new FoodProperties.Builder()
-            .nutrition(Math.round(applyMods(nutrition, props.nutrition())))
-            .saturationModifier(applyMods(saturation, props.saturation()));
-        if (props.canAlwaysEat()) builder.alwaysEdible();
-        if (!prevent) props.effects().forEach(effect -> builder.effect(
-            new MobEffectInstance(effect.effect()), effect.probability()));
-        return builder.build();
+        if (nutrition == null && saturation == null && !prevent) return props;
+        // the record itself, not the builder: the builder would turn saturation into a
+        // "modifier" and drop the eating time and the bowl a stew leaves behind
+        int newNutrition = nutrition == null ? props.nutrition()
+            : Math.round(applyMods(nutrition, props.nutrition()));
+        float newSaturation = saturation == null ? props.saturation()
+            : applyMods(saturation, props.saturation());
+        return new FoodProperties(newNutrition, newSaturation, props.canAlwaysEat(), props.eatSeconds(),
+            props.usingConvertsTo(), prevent ? List.of() : props.effects());
     }
 
     /** Changes the duration or amplifier of an effect applied to the player. */
@@ -1135,13 +1262,20 @@ public final class PowerEngine {
         return applyMods(mods, amount);
     }
 
-    public boolean allowsHarvest(ServerPlayer player, BlockState state) {
+    /**
+     * What the powers say about harvesting this block: 1 - allowed, -1 - forbidden, 0 - no say.
+     * A power that forbids wins over one that allows.
+     */
+    public int harvestVerdict(ServerPlayer player, BlockState state) {
         List<Harvest> list = cache(player).harvests;
+        int verdict = 0;
         for (int i = 0; i < list.size(); i++) {
             Harvest harvest = list.get(i);
-            if (harvest.allow() && harvest.block().test(state)) return true;
+            if (!harvest.block().test(state)) continue;
+            if (!harvest.allow()) return -1;
+            verdict = 1;
         }
-        return false;
+        return verdict;
     }
 
     public boolean regenDisabled(ServerPlayer player) {
@@ -1222,7 +1356,10 @@ public final class PowerEngine {
 
     public void tick(MinecraftServer server) {
         ticks++;
-        if (caches.isEmpty()) return;
+        if (caches.isEmpty()) {
+            HudSync.flush(server);
+            return;
+        }
         long started = System.nanoTime();
         for (ServerPlayer player : server.getPlayerList().getPlayers()) {
             tickPlayer(player);
@@ -1239,13 +1376,16 @@ public final class PowerEngine {
         Cache cache = caches.get(player.getUUID());
         if (cache == null) return;
 
+        // each player runs on their own phase: with one shared clock every player's
+        // once-a-second work (scans included) landed on the same tick
+        long clock = ticks + player.getId();
         List<Cache.Timed> timed = cache.timed;
         for (int i = 0; i < timed.size(); i++) {
             Cache.Timed entry = timed.get(i);
-            if (entry.interval() > 1 && ticks % entry.interval() != 0) continue;
+            if (entry.interval() > 1 && clock % entry.interval() != 0) continue;
             if (!broken.isEmpty() && broken.contains(entry.power())) continue;
             try {
-                tickBehaviour(player, entry.behaviour());
+                tickBehaviour(player, entry.power(), entry.behaviour());
             } catch (Exception | LinkageError failed) {
                 // one power must never cost the server its tick: it is put aside, loudly,
                 // and everything else keeps running
@@ -1323,7 +1463,11 @@ public final class PowerEngine {
         actionsRun = 0;
     }
 
-    private void tickBehaviour(ServerPlayer player, B behaviour) {
+    private void tickBehaviour(ServerPlayer player, ResourceLocation power, B behaviour) {
+        if (behaviour instanceof Dot dot) {
+            tickDot(player, power, dot);
+            return;
+        }
         if (behaviour instanceof Attr attr) {
             if (attr.cond() == null) return;
             boolean on = attr.cond().test(player);
@@ -1341,8 +1485,7 @@ public final class PowerEngine {
             return;
         }
         if (behaviour instanceof Eff eff) {
-            if (eff.cond() == null) return;
-            if (eff.cond().test(player)) addEffect(player, eff);
+            if (eff.cond() == null || eff.cond().test(player)) addEffect(player, eff);
             else removeEffect(player, eff);
             return;
         }
@@ -1372,5 +1515,33 @@ public final class PowerEngine {
                 player.getInventory().placeItemBackInInventory(stack);
             });
         }
+    }
+
+    private void tickDot(ServerPlayer player, ResourceLocation power, Dot dot) {
+        HitKey key = new HitKey(player.getUUID(), power);
+        if (dot.cond() != null && !dot.cond().test(player)) {
+            dotSince.remove(key);
+            return;
+        }
+        long now = player.level().getGameTime();
+        // checked once per interval, so the condition is taken to have held since the last
+        // check: an onset shorter than the interval does not cost a whole extra interval
+        long since = dotSince.computeIfAbsent(key, k -> now - dot.interval());
+        if (now - since < dot.onset()) return;
+        float amount = player.level().getDifficulty() == net.minecraft.world.Difficulty.EASY
+            ? dot.damageEasy() : dot.damage();
+        if (amount <= 0.0F) return;
+        player.hurt(damageSource(player, dot.type()), amount);
+    }
+
+    private static DamageSource damageSource(ServerPlayer player, ResourceLocation type) {
+        if (type != null) {
+            var registry = player.level().registryAccess()
+                .registryOrThrow(net.minecraft.core.registries.Registries.DAMAGE_TYPE);
+            var holder = registry.getHolder(net.minecraft.resources.ResourceKey.create(
+                net.minecraft.core.registries.Registries.DAMAGE_TYPE, type));
+            if (holder.isPresent()) return new DamageSource(holder.get());
+        }
+        return player.damageSources().generic();
     }
 }
