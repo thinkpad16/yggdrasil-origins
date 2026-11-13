@@ -208,6 +208,8 @@ public final class VisualParts {
         root.addOrReplaceChild(BROW,
             CubeListBuilder.create()
                 .texOffs(9, 176).addBox(-4.0F, -1.0F, -0.5F, 8.0F, 1.0F, 1.0F)
+                .texOffs(9, 176).addBox(-4.3F, -1.1F, -0.6F, 2.4F, 1.0F, 1.1F, new CubeDeformation(-0.15F))
+                .texOffs(9, 176).addBox(1.9F, -1.1F, -0.6F, 2.4F, 1.0F, 1.1F, new CubeDeformation(-0.15F))
                 .texOffs(9, 176).addBox(-1.0F, -0.5F, -0.6F, 2.0F, 1.0F, 1.0F, new CubeDeformation(-0.2F)),
             PartPose.offset(0.0F, -4.5F, -4.2F));
 
@@ -456,7 +458,11 @@ public final class VisualParts {
         root.addOrReplaceChild(FRILL,
             CubeListBuilder.create()
                 .texOffs(55, 0).addBox(-5.0F, -2.0F, 0.0F, 3.0F, 4.0F, 1.0F, none)
-                .texOffs(55, 0).addBox(2.0F, -2.0F, 0.0F, 3.0F, 4.0F, 1.0F, none),
+                .texOffs(55, 0).addBox(2.0F, -2.0F, 0.0F, 3.0F, 4.0F, 1.0F, none)
+                .texOffs(55, 0).addBox(-5.4F, -1.6F, 0.15F, 0.9F, 3.4F, 0.8F, new CubeDeformation(-0.2F))
+                .texOffs(55, 0).addBox(4.5F, -1.6F, 0.15F, 0.9F, 3.4F, 0.8F, new CubeDeformation(-0.2F))
+                .texOffs(55, 0).addBox(-5.0F, 1.9F, 0.2F, 2.4F, 0.9F, 0.8F, new CubeDeformation(-0.25F))
+                .texOffs(55, 0).addBox(2.6F, 1.9F, 0.2F, 2.4F, 0.9F, 0.8F, new CubeDeformation(-0.25F)),
             PartPose.offsetAndRotation(0.0F, -2.0F, 3.0F, 0.0F, 0.0F, 0.0F));
 
         return LayerDefinition.create(mesh, 128, 256);
@@ -488,7 +494,9 @@ public final class VisualParts {
             CubeListBuilder.create()
                 .texOffs(69, 0).addBox(-1.0F, -4.0F, -1.0F, 2.0F, 4.0F, 2.0F, none)
                 .texOffs(69, 0).addBox(-0.5F, -5.6F, -0.5F, 1.0F, 2.0F, 1.0F, new CubeDeformation(-0.15F))
-                .texOffs(69, 0).addBox(-0.5F, -2.6F, 1.0F, 1.0F, 2.0F, 1.0F, new CubeDeformation(-0.2F)),
+                .texOffs(69, 0).addBox(-0.5F, -2.6F, 1.0F, 1.0F, 2.0F, 1.0F, new CubeDeformation(-0.2F))
+                .texOffs(69, 0).addBox(-0.5F, -2.2F, -1.5F, 1.0F, 1.8F, 1.0F, new CubeDeformation(-0.25F))
+                .texOffs(69, 0).addBox(-1.5F, -3.4F, -0.4F, 1.0F, 1.6F, 0.9F, new CubeDeformation(-0.3F)),
             PartPose.offsetAndRotation(-4.0F, 1.5F, 0.0F, 0.0F, 0.0F, -0.45F));
 
         // a scarf trailing behind the back (vortan)
@@ -550,9 +558,11 @@ public final class VisualParts {
         // a row of iron studs down the spine
         root.addOrReplaceChild(IRON_SPINE,
             CubeListBuilder.create()
+                .texOffs(104, 131).addBox(-0.9F, -0.4F, 0.0F, 1.8F, 11.0F, 0.8F, new CubeDeformation(-0.1F))
                 .texOffs(104, 131).addBox(-1.4F, 0.0F, 0.0F, 2.8F, 3.6F, 1.2F, new CubeDeformation(-0.1F))
                 .texOffs(104, 131).addBox(-1.2F, 3.8F, 0.0F, 2.4F, 3.2F, 1.1F, new CubeDeformation(-0.15F))
-                .texOffs(104, 131).addBox(-1.0F, 7.2F, 0.0F, 2.0F, 2.8F, 1.0F, new CubeDeformation(-0.2F)),
+                .texOffs(104, 131).addBox(-1.0F, 7.2F, 0.0F, 2.0F, 2.8F, 1.0F, new CubeDeformation(-0.2F))
+                .texOffs(104, 131).addBox(-0.7F, 10.2F, 0.0F, 1.4F, 1.6F, 0.9F, new CubeDeformation(-0.25F)),
             PartPose.offset(0.0F, 1.0F, 1.8F));
 
         // two vanes off the shoulder blades, set to catch the air

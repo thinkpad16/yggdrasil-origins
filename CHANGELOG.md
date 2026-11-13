@@ -47,6 +47,17 @@ Work since 1.0.0. Minecraft 1.21.1, Fabric.
   embroiders. Three marks that borrowed another origin's texture - a half-giant's brow, a
   halfling's hair, a werewolf's fangs - were given regions of their own, so nothing a class
   wears looks like anything another class wears.
+- **Every element moves its own way too.** Four tails used to share one wave with different
+  numbers; now a wolf wags on its own clock and lifts the tail as the stride lengthens, a
+  devil's whip hangs still and snaps from root to tip, a serpent's never stops and rolls as
+  each bend passes, and a dragon's answers the stride late and heavy. The three rings of
+  light were one orbit; now fire climbs where it stands, aurelite's dust drifts on its own
+  ellipses and ice holds a rigid formation that turns as one. A halfling's curls bounce on
+  the stride and a cantharis lifts its shell when it runs. No two elements share an idle
+  rhythm any more, so two origins standing together never sway in time.
+- **More to look at**: a half-giant's brow grew a boss over each eye, a serpentfolk hood a
+  stiff rib and a scalloped edge, an undead spur two smaller breaks beside it, and a
+  ferrine's studs now sit on a strap that runs the length of the spine.
 - 57 elements, each belonging to exactly one origin family.
 
 ### Server cost and stability

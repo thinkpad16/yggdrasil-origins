@@ -496,7 +496,15 @@ public class VisualPartsLayer extends RenderLayer<AbstractClientPlayer, PlayerMo
                 draw(skinRoot, pose, out.skin(), light, 0xFFFFFF,
                     VisualParts.WOLF_EARS_LEFT, VisualParts.WOLF_EARS_RIGHT);
             }
-            case HAIR_TUFT -> draw(skinRoot, pose, out.skin(), light, 0xFFFFFF, VisualParts.HAIR_TUFT);
+            case HAIR_TUFT -> {
+                // curls bounce on the stride and settle when their owner stands still
+                ModelPart tuft = child(skinRoot, VisualParts.HAIR_TUFT);
+                if (tuft != null) {
+                    tuft.xRot = -limbSwingAmount * 0.11F + Mth.sin(age * 0.072F) * 0.03F;
+                    tuft.zRot = Mth.cos(limbSwing * 0.33F) * 0.07F * limbSwingAmount;
+                }
+                draw(skinRoot, pose, out.skin(), light, 0xFFFFFF, VisualParts.HAIR_TUFT);
+            }
             case BROW -> draw(skinRoot, pose, out.skin(), light, 0xFFFFFF, VisualParts.BROW);
             case BEARD -> {
                 // three beards rather than one beard at three sizes: full, forked, trimmed
@@ -509,7 +517,7 @@ public class VisualPartsLayer extends RenderLayer<AbstractClientPlayer, PlayerMo
                 ModelPart beard = child(detailRoot, shape);
                 if (beard != null) {
                     beard.xRot = Mth.cos(limbSwing * 0.33F) * 0.05F * limbSwingAmount
-                        + Mth.sin(age * 0.045F) * 0.015F;
+                        + Mth.sin(age * 0.043F) * 0.015F;
                     beard.zRot = Mth.sin(limbSwing * 0.33F) * 0.04F * limbSwingAmount;
                 }
                 detail(pose, out.props(), light, tint, shape);
@@ -554,7 +562,7 @@ public class VisualPartsLayer extends RenderLayer<AbstractClientPlayer, PlayerMo
                 ModelPart frill = child(propRoot, VisualParts.FRILL);
                 if (frill != null) {
                     float flare = player.isSprinting() ? 0.30F : 0.0F;
-                    frill.xRot = -0.10F - flare + Mth.sin(age * 0.07F) * 0.03F;
+                    frill.xRot = -0.10F - flare + Mth.sin(age * 0.084F) * 0.03F;
                 }
                 draw(propRoot, pose, out.props(), light, tint, VisualParts.FRILL);
             }
@@ -589,7 +597,7 @@ public class VisualPartsLayer extends RenderLayer<AbstractClientPlayer, PlayerMo
             case CRESCENT -> {
                 ModelPart crescent = child(propRoot, VisualParts.CRESCENT);
                 if (crescent != null) {
-                    crescent.zRot = Mth.sin(age * 0.04F) * 0.11F + switch (variant) {
+                    crescent.zRot = Mth.sin(age * 0.037F) * 0.11F + switch (variant) {
                         case 1 -> 1.05F;
                         case 2 -> -0.55F;
                         default -> 0.0F;
@@ -629,11 +637,10 @@ public class VisualPartsLayer extends RenderLayer<AbstractClientPlayer, PlayerMo
                 draw(propRoot, pose, out.props(), light, tint, left, right);
             }
             case FLAME_CROWN -> {
-                // four tongues on a slow ring, each breathing out of step with the rest
-                orbit(pose, out.glow(), LightTexture.FULL_BRIGHT, dim(glowTint, pulse), age, propRoot,
-                    new String[] {VisualParts.FLAME_CROWN_A, VisualParts.FLAME_CROWN_B,
-                                  VisualParts.FLAME_CROWN_C, VisualParts.FLAME_CROWN_D},
-                    0.030F, 4.6F, 0.9F, -9.5F);
+                flames(pose, out.glow(), LightTexture.FULL_BRIGHT, dim(glowTint, pulse), age,
+                    propRoot, new String[] {VisualParts.FLAME_CROWN_A, VisualParts.FLAME_CROWN_B,
+                                            VisualParts.FLAME_CROWN_C, VisualParts.FLAME_CROWN_D},
+                    4.6F, -9.5F);
             }
             case MARKINGS -> detail(pose, out.props(), light, tint, switch (variant) {
                 case 1 -> VisualParts.MARK_B;
@@ -642,7 +649,7 @@ public class VisualPartsLayer extends RenderLayer<AbstractClientPlayer, PlayerMo
             });
             case EARRING -> {
                 // an earring swings a little on its own, a beat behind the head
-                float swing = Mth.sin(age * 0.09F) * 0.06F * (1.0F + limbSwingAmount * 2.0F);
+                float swing = Mth.sin(age * 0.095F) * 0.06F * (1.0F + limbSwingAmount * 2.0F);
                 for (String side : new String[] {VisualParts.EARRING_RIGHT, VisualParts.EARRING_LEFT}) {
                     ModelPart ring = child(detailRoot, side);
                     if (ring != null) ring.zRot = swing;
@@ -661,7 +668,7 @@ public class VisualPartsLayer extends RenderLayer<AbstractClientPlayer, PlayerMo
                     // hair trails the stride, and a topknot only nods
                     float sway = variant == 2 ? 0.04F : 0.12F;
                     hair.xRot = Mth.cos(limbSwing * 0.4F) * limbSwingAmount * sway;
-                    hair.zRot = Mth.sin(age * 0.06F) * 0.03F;
+                    hair.zRot = Mth.sin(age * 0.057F) * 0.03F;
                 }
                 draw(propRoot, pose, out.props(), light, tint, braid);
             }
@@ -675,7 +682,7 @@ public class VisualPartsLayer extends RenderLayer<AbstractClientPlayer, PlayerMo
                 // the lock swings behind the step and settles when standing still
                 ModelPart lock = child(propRoot, VisualParts.FORELOCK);
                 if (lock != null) {
-                    lock.zRot = 0.08F + Mth.sin(age * 0.07F) * 0.05F
+                    lock.zRot = 0.08F + Mth.sin(age * 0.065F) * 0.05F
                         + limbSwingAmount * 0.10F;
                     lock.xRot = Mth.cos(limbSwing * 0.33F) * limbSwingAmount * 0.12F;
                 }
@@ -686,7 +693,7 @@ public class VisualPartsLayer extends RenderLayer<AbstractClientPlayer, PlayerMo
                 // the loose ends lift a little when their owner runs
                 ModelPart band = child(propRoot, VisualParts.HEADBAND);
                 if (band != null) {
-                    band.xRot = -limbSwingAmount * 0.06F + Mth.sin(age * 0.05F) * 0.015F;
+                    band.xRot = -limbSwingAmount * 0.06F + Mth.sin(age * 0.058F) * 0.015F;
                 }
                 draw(propRoot, pose, out.props(), light, tint, VisualParts.HEADBAND);
             }
@@ -703,7 +710,7 @@ public class VisualPartsLayer extends RenderLayer<AbstractClientPlayer, PlayerMo
             }
             case EMBERS -> {
                 pose.pushPose();
-                pose.translate(0.0F, Mth.sin(age * 0.09F) * 0.6F / 16.0F, 0.0F);
+                pose.translate(0.0F, Mth.sin(age * 0.145F) * 0.6F / 16.0F, 0.0F);
                 draw(propRoot, pose, out.glow(), LightTexture.FULL_BRIGHT, dim(glowTint, pulse),
                     VisualParts.EMBER_A, VisualParts.EMBER_B, VisualParts.EMBER_C, VisualParts.EMBER_D);
                 pose.popPose();
@@ -781,7 +788,7 @@ public class VisualPartsLayer extends RenderLayer<AbstractClientPlayer, PlayerMo
                 VisualParts.PLATE_LEFT, VisualParts.PLATE_RIGHT);
             case STREAMERS -> {
                 // ribbons of air: they lag behind the step and keep drifting when standing
-                float drift = Mth.sin(age * 0.055F) * 0.14F;
+                float drift = Mth.sin(age * 0.051F) * 0.14F;
                 float lag = Mth.cos(limbSwing * 0.5F) * 0.22F * limbSwingAmount;
                 poseStreamer(VisualParts.STREAMER_RIGHT, VisualParts.STREAMER_TIP_RIGHT,
                     0.22F + lag, -0.30F - drift, drift * 0.5F);
@@ -792,7 +799,15 @@ public class VisualPartsLayer extends RenderLayer<AbstractClientPlayer, PlayerMo
             }
             case BONE_SPUR -> draw(bodyRoot, pose, out.props(), light, 0xFFFFFF, VisualParts.BONE_SPUR);
             case RIBS -> draw(bodyRoot, pose, out.props(), light, 0xFFFFFF, VisualParts.RIBS);
-            case CARAPACE -> detail(pose, out.props(), light, tint, VisualParts.CARAPACE);
+            case CARAPACE -> {
+                // the shell lifts at the back when its owner runs, the way wing cases do
+                ModelPart shell = child(detailRoot, VisualParts.CARAPACE);
+                if (shell != null) {
+                    shell.resetPose();
+                    shell.xRot -= limbSwingAmount * 0.13F + Mth.sin(age * 0.034F) * 0.02F;
+                }
+                detail(pose, out.props(), light, tint, VisualParts.CARAPACE);
+            }
             case WISPS -> {
                 pose.pushPose();
                 pose.translate(0.0F, Mth.sin(age * 0.12F) * 1.5F / 16.0F, 0.0F);
@@ -806,13 +821,13 @@ public class VisualPartsLayer extends RenderLayer<AbstractClientPlayer, PlayerMo
                     // the scarf tail lags while running and sways gently when standing
                     // half the swing of before, and the stride beat is slower than the legs
                     scarf.xRot = -Mth.cos(limbSwing * 0.33F) * 0.12F * limbSwingAmount
-                        + Mth.sin(age * 0.045F) * 0.03F;
+                        + Mth.sin(age * 0.062F) * 0.03F;
                     scarf.zRot = Mth.sin(limbSwing * 0.33F) * 0.05F * limbSwingAmount;
                 }
                 draw(bodyRoot, pose, out.props(), light, tint, VisualParts.SCARF);
             }
             case TENDRILS -> {
-                float sway = Mth.sin(age * 0.06F) * 0.10F;
+                float sway = Mth.sin(age * 0.069F) * 0.10F;
                 setRot(bodyRoot, VisualParts.TENDRIL_RIGHT, 0.25F, 0.2F + sway);
                 setRot(bodyRoot, VisualParts.TENDRIL_LEFT, 0.25F, -0.2F - sway);
                 draw(bodyRoot, pose, out.props(), light, tint,
@@ -842,10 +857,9 @@ public class VisualPartsLayer extends RenderLayer<AbstractClientPlayer, PlayerMo
                     case 2 -> VisualParts.TAIL_BOB_TIP;
                     default -> VisualParts.TAIL_TIP;
                 };
-                // a short tail lashes faster than a long one, so the wave is tuned per shape
-                float swing = variant == 2 ? 0.9F : 0.6F;
-                wave(root, mid, tip, base + limbSwingAmount * 0.18F, -0.06F, 0.12F,
-                    limbSwing, limbSwingAmount, age, swing, 0.35F);
+                // a short tail wags harder than a long one
+                float width = variant == 2 ? 0.52F : 0.38F;
+                wagTail(root, mid, tip, base, limbSwingAmount, age, width);
                 detail(pose, out.props(), light, tint, root);
             }
             case PAULDRONS -> draw(bodyRoot, pose, out.props(), light, tint,
@@ -866,7 +880,7 @@ public class VisualPartsLayer extends RenderLayer<AbstractClientPlayer, PlayerMo
                 // the pack settles with the stride, the way a loaded bag does
                 ModelPart pack = child(bodyRoot, VisualParts.TRAVEL_PACK);
                 if (pack != null) {
-                    pack.xRot = -limbSwingAmount * 0.05F + Mth.sin(age * 0.05F) * 0.015F;
+                    pack.xRot = -limbSwingAmount * 0.05F + Mth.sin(age * 0.047F) * 0.015F;
                 }
                 draw(bodyRoot, pose, out.props(), light, tint, VisualParts.TRAVEL_PACK);
             }
@@ -876,7 +890,7 @@ public class VisualPartsLayer extends RenderLayer<AbstractClientPlayer, PlayerMo
                 ModelPart sash = child(bodyRoot, VisualParts.SASH);
                 if (sash != null) {
                     sash.zRot = Mth.cos(limbSwing * 0.33F) * limbSwingAmount * 0.09F
-                        + Mth.sin(age * 0.05F) * 0.02F;
+                        + Mth.sin(age * 0.066F) * 0.02F;
                 }
                 draw(bodyRoot, pose, out.props(), light, tint, VisualParts.SASH);
             }
@@ -884,7 +898,7 @@ public class VisualPartsLayer extends RenderLayer<AbstractClientPlayer, PlayerMo
                 // vanes open when their owner runs or falls, and fold when they stand still
                 float open = Mth.clamp(limbSwingAmount * 1.4F
                     + (player.getDeltaMovement().y < -0.2 ? 0.5F : 0.0F), 0.0F, 1.0F);
-                float breathe = Mth.sin(age * 0.045F) * 0.04F;
+                float breathe = Mth.sin(age * 0.076F) * 0.04F;
                 ModelPart right = child(bodyRoot, VisualParts.VANE_RIGHT);
                 ModelPart left = child(bodyRoot, VisualParts.VANE_LEFT);
                 if (right != null) {
@@ -907,20 +921,20 @@ public class VisualPartsLayer extends RenderLayer<AbstractClientPlayer, PlayerMo
                 // fur lifts with the stride and settles when standing
                 ModelPart mane = child(bodyRoot, shape);
                 if (mane != null) {
-                    mane.xRot = -limbSwingAmount * 0.10F + Mth.sin(age * 0.05F) * 0.02F;
+                    mane.xRot = -limbSwingAmount * 0.10F + Mth.sin(age * 0.031F) * 0.02F;
                 }
                 draw(bodyRoot, pose, out.props(), light, tint, shape);
             }
             case TORC -> {
                 // metal does not flex: it only swings a hair on the collarbone
                 ModelPart torc = child(bodyRoot, VisualParts.TORC);
-                if (torc != null) torc.zRot = Mth.sin(age * 0.06F) * 0.02F * (1.0F + limbSwingAmount);
+                if (torc != null) torc.zRot = Mth.sin(age * 0.039F) * 0.02F * (1.0F + limbSwingAmount);
                 draw(bodyRoot, pose, out.props(), light, tint, VisualParts.TORC);
             }
             case ROOTS -> {
                 // roots drag: they lag a long way behind the step and recoil afterwards
                 float drag = -Mth.cos(limbSwing * 0.5F) * 0.34F * limbSwingAmount;
-                float creep = Mth.sin(age * 0.04F) * 0.05F;
+                float creep = Mth.sin(age * 0.027F) * 0.05F;
                 setRot(bodyRoot, VisualParts.ROOT_RIGHT, 0.10F + drag + creep, 0.0F);
                 setRot(bodyRoot, VisualParts.ROOT_LEFT, 0.10F + drag - creep, 0.0F);
                 setRot(bodyRoot, VisualParts.ROOT_BACK, 0.22F + drag * 1.3F + creep, 0.0F);
@@ -928,17 +942,14 @@ public class VisualPartsLayer extends RenderLayer<AbstractClientPlayer, PlayerMo
                     VisualParts.ROOT_LEFT, VisualParts.ROOT_RIGHT, VisualParts.ROOT_BACK);
             }
             case MOTES -> {
-                // three motes on one orbit, spaced a third apart
-                orbit(pose, out.glow(), LightTexture.FULL_BRIGHT, dim(glowTint, pulse), age, bodyRoot,
-                    new String[] {VisualParts.MOTE_A, VisualParts.MOTE_B, VisualParts.MOTE_C},
-                    0.055F, 7.0F, 2.5F, 6.0F);
+                drift(pose, out.glow(), LightTexture.FULL_BRIGHT, dim(glowTint, pulse), age,
+                    bodyRoot, new String[] {VisualParts.MOTE_A, VisualParts.MOTE_B,
+                                            VisualParts.MOTE_C}, 7.0F, 6.0F);
             }
             case FROST_SHARDS -> {
-                // ice turns the other way, slower, and barely bobs
-                orbit(pose, out.props(), light, tint, age, bodyRoot,
+                ring(pose, out.props(), light, tint, age, bodyRoot,
                     new String[] {VisualParts.FROST_SHARD_A, VisualParts.FROST_SHARD_B,
-                                  VisualParts.FROST_SHARD_C},
-                    -0.022F, 8.5F, 1.2F, 3.0F);
+                                  VisualParts.FROST_SHARD_C}, 8.5F, 3.0F);
             }
             case DEMON_TAIL -> {
                 // light and whippy: a wider swing than fur or scale, and it keeps moving
@@ -948,24 +959,21 @@ public class VisualPartsLayer extends RenderLayer<AbstractClientPlayer, PlayerMo
                     case 2 -> 0.52F;       // curled up behind the shoulder
                     default -> 0.0F;
                 };
-                wave(VisualParts.DEMON_TAIL, VisualParts.DEMON_TAIL_MID, VisualParts.DEMON_TAIL_TIP,
-                    base + limbSwingAmount * 0.14F, -0.09F, 0.20F,
-                    limbSwing, limbSwingAmount, age, 0.45F, 0.30F);
+                flickTail(VisualParts.DEMON_TAIL, VisualParts.DEMON_TAIL_MID,
+                    VisualParts.DEMON_TAIL_TIP, base, limbSwingAmount, limbSwing, age);
                 detail(pose, out.props(), light, tint, VisualParts.DEMON_TAIL);
             }
             case SERPENT_TAIL -> {
                 // heavy and slow: the wave travels further down before it shows
                 float base = player.isCrouching() ? -0.70F : -0.30F;
-                wave(VisualParts.SERPENT_TAIL, VisualParts.SERPENT_TAIL_MID, VisualParts.SERPENT_TAIL_TIP,
-                    base + limbSwingAmount * 0.10F, -0.04F, 0.07F,
-                    limbSwing, limbSwingAmount, age, 0.35F, 0.22F);
+                slitherTail(VisualParts.SERPENT_TAIL, VisualParts.SERPENT_TAIL_MID,
+                    VisualParts.SERPENT_TAIL_TIP, base, limbSwingAmount, age);
                 detail(pose, out.props(), light, tint, VisualParts.SERPENT_TAIL);
             }
             case DRAGON_TAIL -> {
                 float base = player.isCrouching() ? -0.76F : -0.38F;
-                wave(VisualParts.DRAGON_TAIL, VisualParts.DRAGON_TAIL_MID, VisualParts.DRAGON_TAIL_TIP,
-                    base + limbSwingAmount * 0.14F, -0.05F, 0.10F,
-                    limbSwing, limbSwingAmount, age, 0.5F, 0.30F);
+                swingTail(VisualParts.DRAGON_TAIL, VisualParts.DRAGON_TAIL_MID,
+                    VisualParts.DRAGON_TAIL_TIP, base, limbSwing, limbSwingAmount, age);
                 detail(pose, out.props(), light, tint, VisualParts.DRAGON_TAIL);
             }
             default -> { }
@@ -981,45 +989,167 @@ public class VisualPartsLayer extends RenderLayer<AbstractClientPlayer, PlayerMo
      * @param bob    how far each part rises and falls
      * @param height where the ring sits relative to the anchor
      */
-    private void orbit(PoseStack pose, VertexConsumer buffer, int light, int colour, float age,
-                       ModelPart anchor, String[] names, float speed, float radius,
-                       float bob, float height) {
+    /**
+     * Blazing: fire stands where it stands and climbs. The tongues keep their places round
+     * the head and rise and fall out of step with each other - fire does not circle.
+     */
+    private void flames(PoseStack pose, VertexConsumer buffer, int light, int colour, float age,
+                        ModelPart anchor, String[] names, float radius, float height) {
         for (int i = 0; i < names.length; i++) {
             ModelPart part = child(anchor, names[i]);
             if (part == null) continue;
-            float phase = age * speed + (float) (Math.PI * 2.0 / names.length) * i;
-            part.x = Mth.cos(phase) * radius;
-            part.z = Mth.sin(phase) * radius;
-            part.y = height + Mth.sin(age * 0.09F + i * 1.7F) * bob;
-            part.yRot = -phase;
+            float angle = (float) (Math.PI * 2.0 / names.length) * i;
+            float own = age * (0.17F + 0.025F * i) + i * 2.1F;
+            part.x = Mth.cos(angle) * radius;
+            part.z = Mth.sin(angle) * radius;
+            // +Y points down in model space, so climbing means going negative
+            part.y = height - Math.abs(Mth.sin(own)) * 1.8F;
+            part.yRot = -angle + Mth.sin(own * 0.6F) * 0.22F;
+            part.xRot = Mth.sin(own * 0.9F) * 0.10F;
         }
         draw(anchor, pose, buffer, light, colour, names);
     }
 
     /**
-     * A wave along the chain of segments: each one repeats the previous with a delay,
-     * so the tail bends in an arc instead of turning like one stiff stick.
+     * Aurelite: dust in a sunbeam. Each mote keeps its own lazy ellipse at its own speed,
+     * so they drift apart and together again instead of marching in a ring.
      */
-    private void wave(String rootName, String midName, String tipName,
-                      float basePitch, float midPitch, float tipPitch,
-                      float limbSwing, float limbSwingAmount, float age,
-                      float speed, float swing) {
+    private void drift(PoseStack pose, VertexConsumer buffer, int light, int colour, float age,
+                       ModelPart anchor, String[] names, float radius, float height) {
+        for (int i = 0; i < names.length; i++) {
+            ModelPart part = child(anchor, names[i]);
+            if (part == null) continue;
+            float own = age * (0.028F + 0.011F * i) + i * 2.4F;
+            part.x = Mth.cos(own) * (radius - i * 0.9F);
+            part.z = Mth.sin(own * 0.78F + i) * (radius * 0.72F);
+            part.y = height + Mth.sin(age * 0.05F + i * 1.9F) * 2.4F;
+            part.yRot = -own;
+        }
+        draw(anchor, pose, buffer, light, colour, names);
+    }
+
+    /**
+     * Hydroletilus: ice is solid. The shards hold one rigid formation that turns slowly as a
+     * whole and rises and settles with it - nothing here drifts on its own.
+     */
+    private void ring(PoseStack pose, VertexConsumer buffer, int light, int colour, float age,
+                      ModelPart anchor, String[] names, float radius, float height) {
+        float turn = age * 0.013F;
+        float rise = Mth.sin(turn * 2.6F) * 0.9F;
+        for (int i = 0; i < names.length; i++) {
+            ModelPart part = child(anchor, names[i]);
+            if (part == null) continue;
+            float angle = turn + (float) (Math.PI * 2.0 / names.length) * i;
+            part.x = Mth.cos(angle) * radius;
+            part.z = Mth.sin(angle) * radius;
+            part.y = height + rise;
+            part.yRot = -angle;
+            part.xRot = 0.16F;                 // every shard leans outward, and stays leaning
+        }
+        draw(anchor, pose, buffer, light, colour, names);
+    }
+
+    /**
+     * The three segments of a tail: root, middle, tip. Each origin's tail is posed by its
+     * own method below - a wolf, a devil, a serpent and a dragon do not move alike, and one
+     * shared wave with different numbers made all four read as the same animal.
+     */
+    private ModelPart[] chain(String rootName, String midName, String tipName) {
         ModelPart root = child(detailRoot, rootName);
-        if (root == null) return;
+        if (root == null) return null;
         ModelPart mid = root.hasChild(midName) ? root.getChild(midName) : null;
         ModelPart tip = mid != null && mid.hasChild(tipName) ? mid.getChild(tipName) : null;
+        return new ModelPart[] {root, mid, tip};
+    }
 
-        root.yRot = Mth.cos(limbSwing * speed) * swing * limbSwingAmount;
-        root.xRot = basePitch + Mth.sin(age * 0.06F) * 0.07F;
-        if (mid != null) {
-            mid.yRot = Mth.cos(limbSwing * speed - 0.7F) * swing * 0.8F * limbSwingAmount
-                + Mth.sin(age * 0.08F) * 0.05F;
-            mid.xRot = midPitch + Mth.sin(age * 0.07F + 1.0F) * 0.06F;
+    /**
+     * Werewolf: a wag. It runs on its own clock rather than on the stride, so the tail
+     * moves while its owner stands still, and it goes faster and wider the harder they run.
+     */
+    private void wagTail(String rootName, String midName, String tipName, float base,
+                         float limbSwingAmount, float age, float width) {
+        ModelPart[] parts = chain(rootName, midName, tipName);
+        if (parts == null) return;
+        float beat = age * (0.10F + limbSwingAmount * 0.42F);
+        float swing = 0.10F + limbSwingAmount * width;
+        parts[0].yRot = Mth.sin(beat) * swing;
+        // the faster the stride the higher the tail is carried
+        parts[0].xRot = base - limbSwingAmount * 0.22F;
+        if (parts[1] != null) {
+            parts[1].yRot = Mth.sin(beat - 0.55F) * swing * 0.85F;
+            parts[1].xRot = -0.05F;
         }
-        if (tip != null) {
-            tip.yRot = Mth.cos(limbSwing * speed - 1.4F) * swing * 0.6F * limbSwingAmount
-                + Mth.sin(age * 0.1F) * 0.07F;
-            tip.xRot = tipPitch + Mth.sin(age * 0.09F + 2.0F) * 0.08F;
+        if (parts[2] != null) {
+            parts[2].yRot = Mth.sin(beat - 1.10F) * swing * 0.70F;
+            parts[2].xRot = 0.12F + Mth.sin(beat * 0.5F) * 0.05F;
+        }
+    }
+
+    /**
+     * Tiefling: a whip. It hangs almost still, then snaps once - and the snap travels from
+     * the root to the tip rather than turning the whole tail at once.
+     */
+    private void flickTail(String rootName, String midName, String tipName, float base,
+                           float limbSwingAmount, float limbSwing, float age) {
+        ModelPart[] parts = chain(rootName, midName, tipName);
+        if (parts == null) return;
+        float idle = Mth.sin(age * 0.045F);
+        float walk = Mth.cos(limbSwing * 0.4F) * limbSwingAmount;
+        parts[0].yRot = idle * 0.09F + walk * 0.10F + flick(age, 23.0F) * 0.45F;
+        parts[0].xRot = base;
+        if (parts[1] != null) {
+            parts[1].yRot = idle * 0.13F + walk * 0.12F + flick(age, 21.0F) * 0.70F;
+            parts[1].xRot = -0.09F;
+        }
+        if (parts[2] != null) {
+            parts[2].yRot = idle * 0.17F + walk * 0.14F + flick(age, 19.0F) * 0.95F;
+            parts[2].xRot = 0.20F + flick(age, 19.0F) * 0.35F;
+        }
+    }
+
+    /**
+     * Serpentfolk: a slither. The wave never stops and it grows as it runs down the tail,
+     * and the body rolls a little as each bend passes through it.
+     */
+    private void slitherTail(String rootName, String midName, String tipName, float base,
+                             float limbSwingAmount, float age) {
+        ModelPart[] parts = chain(rootName, midName, tipName);
+        if (parts == null) return;
+        float beat = age * (0.07F + limbSwingAmount * 0.10F);
+        parts[0].yRot = Mth.sin(beat) * (0.16F + limbSwingAmount * 0.14F);
+        parts[0].xRot = base;
+        parts[0].zRot = Mth.cos(beat) * 0.05F;
+        if (parts[1] != null) {
+            parts[1].yRot = Mth.sin(beat - 0.9F) * (0.22F + limbSwingAmount * 0.18F);
+            parts[1].xRot = -0.04F;
+            parts[1].zRot = Mth.cos(beat - 0.9F) * 0.06F;
+        }
+        if (parts[2] != null) {
+            parts[2].yRot = Mth.sin(beat - 1.8F) * (0.28F + limbSwingAmount * 0.22F);
+            parts[2].xRot = 0.07F;
+            parts[2].zRot = Mth.cos(beat - 1.8F) * 0.07F;
+        }
+    }
+
+    /**
+     * Dragonborn: weight. The tail answers the stride late, heaves as the body does, and
+     * the tip is always a step behind the rest of it.
+     */
+    private void swingTail(String rootName, String midName, String tipName, float base,
+                           float limbSwing, float limbSwingAmount, float age) {
+        ModelPart[] parts = chain(rootName, midName, tipName);
+        if (parts == null) return;
+        float beat = limbSwing * 0.26F;
+        float heave = Mth.sin(age * 0.035F);
+        parts[0].yRot = Mth.cos(beat) * 0.20F * limbSwingAmount + heave * 0.04F;
+        parts[0].xRot = base + limbSwingAmount * 0.09F;
+        if (parts[1] != null) {
+            parts[1].yRot = Mth.cos(beat - 1.1F) * 0.19F * limbSwingAmount;
+            parts[1].xRot = -0.05F + heave * 0.03F;
+        }
+        if (parts[2] != null) {
+            parts[2].yRot = Mth.cos(beat - 2.2F) * 0.24F * limbSwingAmount;
+            parts[2].xRot = 0.10F + Mth.sin(age * 0.04F + 1.0F) * 0.05F;
         }
     }
 
