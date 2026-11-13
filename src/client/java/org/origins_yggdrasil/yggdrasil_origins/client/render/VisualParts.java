@@ -44,8 +44,6 @@ public final class VisualParts {
     public static final String WOLF_EARS_RIGHT = "wolf_ear_right";
     public static final String TUSK_LEFT = "tusk_left";
     public static final String TUSK_RIGHT = "tusk_right";
-    public static final String FANG_LEFT = "fang_left";
-    public static final String FANG_RIGHT = "fang_right";
     public static final String HORN_LEFT = "horn_left";
     public static final String HORN_RIGHT = "horn_right";
     public static final String HALO = "halo";
@@ -207,19 +205,19 @@ public final class VisualParts {
         // brow: a ridge above the eyes with a faint bridge of the nose
         root.addOrReplaceChild(BROW,
             CubeListBuilder.create()
-                .texOffs(9, 176).addBox(-4.0F, -1.0F, -0.5F, 8.0F, 1.0F, 1.0F)
-                .texOffs(9, 176).addBox(-4.3F, -1.1F, -0.6F, 2.4F, 1.0F, 1.1F, new CubeDeformation(-0.15F))
-                .texOffs(9, 176).addBox(1.9F, -1.1F, -0.6F, 2.4F, 1.0F, 1.1F, new CubeDeformation(-0.15F))
-                .texOffs(9, 176).addBox(-1.0F, -0.5F, -0.6F, 2.0F, 1.0F, 1.0F, new CubeDeformation(-0.2F)),
+                .texOffs(0, 0).addBox(-4.0F, -1.0F, -0.5F, 8.0F, 1.0F, 1.0F)
+                .texOffs(0, 0).addBox(-4.3F, -1.1F, -0.6F, 2.4F, 1.0F, 1.1F, new CubeDeformation(-0.15F))
+                .texOffs(0, 0).addBox(1.9F, -1.1F, -0.6F, 2.4F, 1.0F, 1.1F, new CubeDeformation(-0.15F))
+                .texOffs(0, 0).addBox(-1.0F, -0.5F, -0.6F, 2.0F, 1.0F, 1.0F, new CubeDeformation(-0.2F)),
             PartPose.offset(0.0F, -4.5F, -4.2F));
 
         // hair tuft: four strands of different height
         root.addOrReplaceChild(HAIR_TUFT,
             CubeListBuilder.create()
-                .texOffs(28, 176).addBox(-3.0F, -1.5F, -3.0F, 3.0F, 2.0F, 3.0F)
-                .texOffs(28, 176).addBox(0.5F, -2.0F, -2.0F, 3.0F, 2.0F, 3.0F)
-                .texOffs(28, 176).addBox(-1.5F, -1.5F, 0.5F, 3.0F, 2.0F, 3.0F)
-                .texOffs(28, 176).addBox(-1.0F, -2.6F, -1.0F, 2.0F, 2.0F, 2.0F, new CubeDeformation(-0.2F)),
+                .texOffs(0, 0).addBox(-3.0F, -1.5F, -3.0F, 3.0F, 2.0F, 3.0F)
+                .texOffs(0, 0).addBox(0.5F, -2.0F, -2.0F, 3.0F, 2.0F, 3.0F)
+                .texOffs(0, 0).addBox(-1.5F, -1.5F, 0.5F, 3.0F, 2.0F, 3.0F)
+                .texOffs(0, 0).addBox(-1.0F, -2.6F, -1.0F, 2.0F, 2.0F, 2.0F, new CubeDeformation(-0.2F)),
             PartPose.offset(0.0F, -8.0F, 0.0F));
 
         return LayerDefinition.create(mesh, 64, 64);
@@ -243,14 +241,6 @@ public final class VisualParts {
                 .texOffs(17, 0).addBox(-0.5F, -1.5F, -0.75F, 1.0F, 1.5F, 1.25F, none)
                 .texOffs(17, 0).addBox(-0.4F, -2.3F, -0.4F, 0.8F, 1.0F, 0.8F, new CubeDeformation(-0.15F)),
             PartPose.offsetAndRotation(1.8F, -1.2F, -4.4F, 0.0F, 0.0F, 0.12F));
-        // serpent fangs go the other way, down from under the upper jaw
-        root.addOrReplaceChild(FANG_RIGHT,
-            CubeListBuilder.create().texOffs(41, 176).addBox(-0.5F, 0.0F, -0.75F, 1.0F, 1.5F, 1.25F, none),
-            PartPose.offset(-1.3F, -2.6F, -4.4F));
-        root.addOrReplaceChild(FANG_LEFT,
-            CubeListBuilder.create().mirror().texOffs(41, 176).addBox(-0.5F, 0.0F, -0.75F, 1.0F, 1.5F, 1.25F, none),
-            PartPose.offset(1.3F, -2.6F, -4.4F));
-
         // horns: two segments leaning backwards
 
         // halo - a thin disc above the head

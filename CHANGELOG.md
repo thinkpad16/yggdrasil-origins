@@ -58,7 +58,7 @@ Work since 1.0.0. Minecraft 1.21.1, Fabric.
 - **More to look at**: a half-giant's brow grew a boss over each eye, a serpentfolk hood a
   stiff rib and a scalloped edge, an undead spur two smaller breaks beside it, and a
   ferrine's studs now sit on a strap that runs the length of the spine.
-- 57 elements, each belonging to exactly one origin family.
+- Every element belongs to exactly one origin family.
 
 ### Server cost and stability
 
@@ -74,6 +74,21 @@ Work since 1.0.0. Minecraft 1.21.1, Fabric.
   while ticking, on a hit, on a kill saved from death and on a broken block. `/ygg perf` says
   how many were put aside, and what looking around costs.
 - **The bar packet goes out once per tick** per player, however many powers moved together.
+
+### Fixes
+
+- **Arm marks sit on slim arms.** A slim skin's arm is three pixels wide, not four, and the
+  whole missing pixel comes off its outer side - so every piece cut for the wide arm hung a
+  pixel off the sleeve. Geonite's stone fists, the dwarf's vambrace, the dragonborn's claws,
+  the human's armband and amberborn's spurs are brought the full pixel in now (they were only
+  brought half of it), in the third-person body and in the hand its owner sees. The ferrine's
+  shoulder plates and the angel's pauldrons rest on the arms rather than the body, so they
+  follow it in too.
+- **The brow and the hair tuft are painted from the player's own skin again.** Giving them
+  regions in the atlas sent their UVs off a 64x64 skin, which is why they came out
+  see-through. `check_uv` now fails the build on any skin-mesh piece whose UV leaves the
+  skin, or any prop whose UV leaves the atlas.
+- The werewolf's teeth are gone; it keeps its ears and its tail. 56 elements.
 
 ### Checks
 

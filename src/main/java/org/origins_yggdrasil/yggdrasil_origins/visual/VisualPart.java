@@ -17,7 +17,6 @@ public enum VisualPart {
     BROW(Anchor.HEAD, true, Hide.HELMET, true, 3),
     BEARD(Anchor.HEAD, false, Hide.NONE, false, 3),
     TUSKS(Anchor.HEAD, true, Hide.NONE, false, 3),
-    FANGS(Anchor.HEAD, true, Hide.NONE, false, 3),
     HORNS(Anchor.HEAD, false, Hide.HELMET, false, 3),
     FINS(Anchor.HEAD, false, Hide.NONE, false, 3),
     GILLS(Anchor.HEAD, true, Hide.NONE, false, 3),
@@ -133,7 +132,6 @@ public enum VisualPart {
 
     private static java.util.EnumSet<VisualPart> tight() {
         java.util.EnumSet<VisualPart> set = java.util.EnumSet.copyOf(HUGGING);
-        set.add(FANGS);
         set.add(TUSKS);
         set.add(VANES);
         set.add(TENDRILS);

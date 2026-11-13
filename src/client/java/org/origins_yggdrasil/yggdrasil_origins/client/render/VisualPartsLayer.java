@@ -156,12 +156,14 @@ public class VisualPartsLayer extends RenderLayer<AbstractClientPlayer, PlayerMo
                     int ownTint = trim.tint() == VisualStyle.NO_TINT ? tint : soften(trim.tint());
                     shaping = part;
                     shapingTrim = trim;
-                    // a slim skin has arms a pixel narrower, so an arm piece cut for the
-                    // wide model would hang half a pixel off the sleeve; armour inflates the
-                    // arm by a pixel, so over a chestplate the piece rides that much further
-                    // out instead of fighting the sleeve for the same pixels
-                    float narrow = (slimArms(player) ? 0.5F : 0.0F)
-                        - (chest ? 1.0F : 0.0F);
+                    // A slim skin's arm is three pixels wide instead of four, and the whole
+                    // pixel comes off the OUTER side: the wide arm reaches x -3, the slim one
+                    // only -2. An arm piece cut for the wide model therefore hangs a full
+                    // pixel off a slim sleeve - which is what made these look detached - so
+                    // it is brought a whole pixel in, not half of one. Armour is always the
+                    // wide shape inflated by a pixel, slim skin or not, so over a chestplate
+                    // the piece rides a pixel further out instead of fighting the sleeve.
+                    float narrow = chest ? -1.0F : (slimArms(player) ? 1.0F : 0.0F);
                     narrow /= 16.0F;
                     pose.pushPose();
                     getParentModel().rightArm.translateAndRotate(pose);
@@ -246,8 +248,6 @@ public class VisualPartsLayer extends RenderLayer<AbstractClientPlayer, PlayerMo
                 {1.00F, 0, 0, 0}, {0.74F, 0, 0, 0}, {1.16F, 0.10F, 0, 0}}),
             java.util.Map.entry(VisualPart.TUSKS, new float[][] {
                 {1.00F, 0, 0, 0}, {1.30F, -0.22F, 0, 0}, {0.74F, 0.18F, 0, 0}}),
-            java.util.Map.entry(VisualPart.FANGS, new float[][] {
-                {1.00F, 0, 0, 0}, {1.35F, 0, 0, 0}, {1.00F, 0, 0, 0}}),
             java.util.Map.entry(VisualPart.FINS, new float[][] {
                 {1.00F, 0, 0, 0}, {1.22F, -0.20F, 0, 0}, {0.80F, 0.16F, 0, 0}}),
             java.util.Map.entry(VisualPart.GILLS, new float[][] {
@@ -357,8 +357,6 @@ public class VisualPartsLayer extends RenderLayer<AbstractClientPlayer, PlayerMo
                 {1.00F, 1.00F, 1.00F}, {1.20F, 0.85F, 1.15F}, {0.85F, 1.30F, 0.90F}}),
             java.util.Map.entry(VisualPart.BROW, new float[][] {
                 {1.00F, 1.00F, 1.00F}, {1.00F, 1.00F, 1.00F}, {1.15F, 0.80F, 1.00F}}),
-            java.util.Map.entry(VisualPart.FANGS, new float[][] {
-                {1.00F, 1.00F, 1.00F}, {1.00F, 1.00F, 1.00F}, {0.85F, 1.40F, 0.90F}}),
             java.util.Map.entry(VisualPart.GILLS, new float[][] {
                 {1.00F, 1.00F, 1.00F}, {1.00F, 1.00F, 1.00F}, {0.90F, 1.30F, 1.00F}}),
             java.util.Map.entry(VisualPart.EMBERS, new float[][] {
@@ -524,8 +522,6 @@ public class VisualPartsLayer extends RenderLayer<AbstractClientPlayer, PlayerMo
             }
             case TUSKS -> draw(propRoot, pose, out.props(), light, 0xFFFFFF,
                 VisualParts.TUSK_LEFT, VisualParts.TUSK_RIGHT);
-            case FANGS -> draw(propRoot, pose, out.props(), light, 0xFFFFFF,
-                VisualParts.FANG_LEFT, VisualParts.FANG_RIGHT);
             case HORNS -> {
                 // three horns that are three different horns: a straight pair, a ram's curl
                 // and a swept-back spike. A stretched copy of one would still read as one.
@@ -784,8 +780,19 @@ public class VisualPartsLayer extends RenderLayer<AbstractClientPlayer, PlayerMo
             }
             case SHARDS -> detail(pose, out.props(), light, tint,
                 VisualParts.SHARD_LEFT, VisualParts.SHARD_RIGHT);
-            case PLATES -> detail(pose, out.props(), light, tint,
-                VisualParts.PLATE_LEFT, VisualParts.PLATE_RIGHT);
+            case PLATES -> {
+                // the plates rest on the tops of the arms rather than on the body, so a slim
+                // skin pulls the arm out from under them unless they follow it in
+                float inset = slimArms(player) ? 1.0F / 16.0F : 0.0F;
+                pose.pushPose();
+                pose.translate(inset, 0.0F, 0.0F);
+                detail(pose, out.props(), light, tint, VisualParts.PLATE_RIGHT);
+                pose.popPose();
+                pose.pushPose();
+                pose.translate(-inset, 0.0F, 0.0F);
+                detail(pose, out.props(), light, tint, VisualParts.PLATE_LEFT);
+                pose.popPose();
+            }
             case STREAMERS -> {
                 // ribbons of air: they lag behind the step and keep drifting when standing
                 float drift = Mth.sin(age * 0.051F) * 0.14F;
@@ -862,8 +869,18 @@ public class VisualPartsLayer extends RenderLayer<AbstractClientPlayer, PlayerMo
                 wagTail(root, mid, tip, base, limbSwingAmount, age, width);
                 detail(pose, out.props(), light, tint, root);
             }
-            case PAULDRONS -> draw(bodyRoot, pose, out.props(), light, tint,
-                VisualParts.PAULDRON_RIGHT, VisualParts.PAULDRON_LEFT);
+            case PAULDRONS -> {
+                // the same: a shoulder piece sits over the arm, and a slim arm is narrower
+                float inset = slimArms(player) ? 1.0F / 16.0F : 0.0F;
+                pose.pushPose();
+                pose.translate(inset, 0.0F, 0.0F);
+                draw(bodyRoot, pose, out.props(), light, tint, VisualParts.PAULDRON_RIGHT);
+                pose.popPose();
+                pose.pushPose();
+                pose.translate(-inset, 0.0F, 0.0F);
+                draw(bodyRoot, pose, out.props(), light, tint, VisualParts.PAULDRON_LEFT);
+                pose.popPose();
+            }
             case AMBER_SPIKES -> {
                 // the shards shift a little with the breath, like something still growing
                 float breath = Mth.sin(age * 0.04F) * 0.02F;
