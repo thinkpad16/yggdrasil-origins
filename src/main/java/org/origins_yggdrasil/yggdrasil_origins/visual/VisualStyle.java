@@ -17,15 +17,15 @@ public record VisualStyle(Map<VisualPart, Trim> trims) {
     public static final VisualStyle EMPTY = new VisualStyle(Map.of());
 
     /**
-     * Whether anything but the colour of an element is in a player's hands.
+     * Whether a player may change anything at all about the marks they wear.
      * <p>
-     * It is off: a player picks colours and nothing else. Everything the full editor could
-     * set - shape, size, seat, tilt, shine, whether an element is worn at all - is dropped
-     * wherever a look is read, so a look written while it was on, or sent by a client that
-     * was changed, cannot move an element either. Turning this back on is the single switch
-     * that brings {@code CustomiseScreen} back into play.
+     * It is off. An origin decides how its people look, and that is the whole of it: colour,
+     * shape, size, seat, tilt, shine and whether an element is worn are all dropped wherever
+     * a look is read, so a look saved while this was on - or sent by a client that was
+     * changed - cannot alter anybody. The two picker screens are kept in the tree and
+     * compiled, but nothing opens them; turning this back on is what brings them into play.
      */
-    public static final boolean TRIM_ENABLED = false;
+    public static final boolean EDITABLE = false;
 
     /**
      * Bounds a player may not cross, so nobody turns their horns into a wall. Growing an
@@ -76,10 +76,8 @@ public record VisualStyle(Map<VisualPart, Trim> trims) {
 
         /** Reins a part's settings in to what that particular part allows. */
         public Trim clamped(VisualPart part) {
-            // colour only: everything else goes back to the way the origin wears it
-            if (!TRIM_ENABLED) {
-                return tint == NO_TINT ? DEFAULT : DEFAULT.withTint(tint);
-            }
+            // the origin's own look, whatever the player may have saved
+            if (!EDITABLE) return DEFAULT;
             return new Trim(
                 tint,
                 Math.max(part.minScale(), Math.min(part.maxScale(), scale)),

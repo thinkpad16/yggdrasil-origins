@@ -58,6 +58,21 @@ public final class ClassManager {
         return new LinkedHashMap<>(player.getAttachedOrElse(CHOSEN, Map.of()));
     }
 
+    /**
+     * Whether this player carries a given class, without copying their choices first.
+     * <p>
+     * Counting a pack asks this of every player in range, several times a second: a copy of
+     * the map per question is garbage nobody needs.
+     */
+    public static boolean wears(ServerPlayer player, String classId) {
+        Map<String, String> chosen = player.getAttachedOrElse(CHOSEN, Map.of());
+        if (chosen.isEmpty()) return false;
+        for (String picked : chosen.values()) {
+            if (classId.equals(picked)) return true;
+        }
+        return false;
+    }
+
     public static void registerPayloads() {
         PayloadTypeRegistry.playS2C().register(YggPackets.Sync.TYPE, YggPackets.Sync.CODEC);
         PayloadTypeRegistry.playS2C().register(YggPackets.Open.TYPE, YggPackets.Open.CODEC);
@@ -117,6 +132,8 @@ public final class ClassManager {
         ServerPlayNetworking.registerGlobalReceiver(YggPackets.Style.TYPE, (payload, context) ->
             context.server().execute(() -> {
                 ServerPlayer player = context.player();
+                // looks are not in a player's hands: a style packet is simply not read
+                if (!org.origins_yggdrasil.yggdrasil_origins.visual.VisualStyle.EDITABLE) return;
                 try {
                     var json = com.google.gson.JsonParser.parseString(payload.json());
                     var style = org.origins_yggdrasil.yggdrasil_origins.visual.VisualStyle
@@ -430,8 +447,12 @@ public final class ClassManager {
         return Optional.empty();
     }
 
-    /** The third step: after the origin and the path, the player trims their own looks. */
+    /**
+     * The third step used to be the player trimming their own looks. It is switched off:
+     * an origin decides how its people look, so nothing is offered and nothing is sent.
+     */
     public static void promptCustomise(ServerPlayer player, boolean forced) {
+        if (!org.origins_yggdrasil.yggdrasil_origins.visual.VisualStyle.EDITABLE) return;
         if (!canTalk(player, YggPackets.Customise.TYPE)) return;
         // an origin that wears nothing has nothing to trim: opening an empty picker on it
         // would read as a bug rather than as a choice

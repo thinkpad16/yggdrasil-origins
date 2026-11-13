@@ -891,8 +891,26 @@ public class ClassSelectScreen extends Screen {
         if (picked >= listScrollTarget + visible) listScrollTarget = picked - visible + 1;
     }
 
+    /**
+     * Escape always closes, even on a layer that has to be chosen eventually.
+     * <p>
+     * A screen that cannot be dismissed is a trap: someone who logs in to answer a question,
+     * or who simply wants to look at the world first, has no way out of it. The choice is
+     * not lost - it is only postponed, and the server offers it again on the next respawn,
+     * reload or class orb.
+     */
     @Override
     public boolean shouldCloseOnEsc() {
-        return readOnly || !layer.required();
+        return true;
+    }
+
+    @Override
+    public void onClose() {
+        if (!readOnly && layer.required() && minecraft != null && minecraft.player != null) {
+            // left without picking: say how to come back rather than leave them wondering
+            minecraft.player.displayClientMessage(
+                Component.translatable("gui.yggdrasil_origins.picker.later"), false);
+        }
+        super.onClose();
     }
 }

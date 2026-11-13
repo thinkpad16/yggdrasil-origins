@@ -360,12 +360,22 @@ public class YggdrasilOrigins implements ModInitializer {
             .then(Commands.literal("look")
                 .executes(context -> {
                     ServerPlayer player = context.getSource().getPlayerOrException();
+                    if (!org.origins_yggdrasil.yggdrasil_origins.visual.VisualStyle.EDITABLE) {
+                        context.getSource().sendFailure(Component.translatable(
+                            "command.yggdrasil_origins.look.off"));
+                        return 0;
+                    }
                     ClassManager.promptCustomise(player, true);
                     return 1;
                 })
                 .then(Commands.argument("targets", EntityArgument.players())
                     .requires(source -> source.hasPermission(2))
                     .executes(context -> {
+                        if (!org.origins_yggdrasil.yggdrasil_origins.visual.VisualStyle.EDITABLE) {
+                            context.getSource().sendFailure(Component.translatable(
+                                "command.yggdrasil_origins.look.off"));
+                            return 0;
+                        }
                         var targets = EntityArgument.getPlayers(context, "targets");
                         targets.forEach(player -> ClassManager.promptCustomise(player, true));
                         return targets.size();

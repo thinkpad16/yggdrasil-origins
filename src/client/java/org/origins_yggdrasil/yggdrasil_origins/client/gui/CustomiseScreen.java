@@ -20,11 +20,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Parked. Nothing opens this screen: players get {@link ColourScreen}, which offers the
- * colour of an element and nothing else, and {@link VisualStyle#TRIM_ENABLED} drops every
- * other setting wherever a look is read - so even if this screen were opened by hand it
- * could not change how anyone looks. It is kept whole, and compiled, so that turning that
- * one switch back on is all it takes to have the full editor again.
+ * Parked. Nothing opens this screen, and {@link VisualStyle#EDITABLE} drops everything a
+ * look holds wherever one is read - so even if it were opened by hand it could not change
+ * how anyone looks. It is kept whole, and compiled, so that turning that one switch back on
+ * is all it takes to have the full editor again.
  *
  * <p>The third step, after the origin and the path: the player trims what they are wearing.
  * <p>

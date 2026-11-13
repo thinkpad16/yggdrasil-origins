@@ -35,10 +35,26 @@ Work since 1.0.0. Minecraft 1.21.1, Fabric.
   at full brightness now.
 - **Element size is reined in** to 0.80-1.10 of the original, because growing one was what
   pushed it off the body in the first place.
-- Amberborn lost its vest and its back slab: what is left is the amber that broke through.
+- Amberborn lost its vest, its back slab and the shards behind the shoulders: what is left is
+  the amber that broke through the collarbone and the forearms.
   Mara's braid, the orc's war paint, the dragonborn's crest and the human's headband are
   elements an origin offers rather than wears.
 - 57 elements, each belonging to exactly one origin family.
+
+### Server cost and stability
+
+- **One look instead of three.** Powers that ask the same question about the ground, the
+  creatures or the players around them now share one answer: it is kept per player while they
+  stand on the same block, and it is a count, so the tiers of one path read a single scan.
+  Counting stops at the largest number any power asks about.
+- **Block scans walk chunk by chunk** - one chunk lookup instead of one per block - and never
+  load a chunk that is not in memory: a bonus is not worth generating terrain for.
+- **Counting the pack reads the level's player list** rather than querying entities in a box,
+  and asks whether a player wears a class without copying their choices first.
+- **A power that throws is switched off**, loudly, instead of costing the server its tick -
+  while ticking, on a hit, on a kill saved from death and on a broken block. `/ygg perf` says
+  how many were put aside, and what looking around costs.
+- **The bar packet goes out once per tick** per player, however many powers moved together.
 
 ### Checks
 

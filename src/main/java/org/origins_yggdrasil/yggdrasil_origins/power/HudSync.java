@@ -16,11 +16,32 @@ import org.origins_yggdrasil.yggdrasil_origins.net.YggPackets;
 public final class HudSync {
 
     private static final java.util.Map<java.util.UUID, Integer> LAST = new java.util.HashMap<>();
+    /** Players whose state moved this tick; the packet goes out once, at the end of it. */
+    private static final java.util.Set<java.util.UUID> DIRTY = new java.util.HashSet<>();
 
     private HudSync() { }
 
     public static void forget(java.util.UUID uuid) {
         LAST.remove(uuid);
+        DIRTY.remove(uuid);
+    }
+
+    /**
+     * Notes that this player's bars may have moved. Several powers can turn on in the same
+     * tick - three tiers of one path do it together - and building the packet for each of
+     * them would be three strings nobody reads.
+     */
+    public static void mark(ServerPlayer player) {
+        DIRTY.add(player.getUUID());
+    }
+
+    /** Sends what the tick changed, one packet per player at most. */
+    public static void flush(net.minecraft.server.MinecraftServer server) {
+        if (DIRTY.isEmpty()) return;
+        for (ServerPlayer player : server.getPlayerList().getPlayers()) {
+            if (DIRTY.contains(player.getUUID())) send(player);
+        }
+        DIRTY.clear();
     }
 
     public static void send(ServerPlayer player) {
@@ -45,7 +66,7 @@ public final class HudSync {
             bars.add(bar);
         }
         JsonArray marks = new JsonArray();
-        for (ResourceLocation power : PowerEngine.INSTANCE.activeConditions(player)) {
+        for (ResourceLocation power : active) {
             marks.add(power.toString());
         }
         JsonObject root = new JsonObject();

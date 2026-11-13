@@ -38,10 +38,11 @@ public class YggdrasilOriginsClient implements ClientModInitializer {
                 ClientVisuals.clear();
             });
 
-        // visuals: accept profiles and hand them to both the renderer and the hitbox
-        ClientPlayNetworking.registerGlobalReceiver(YggPackets.Customise.TYPE, (payload, context) ->
-            context.client().execute(() -> context.client().setScreen(
-                new org.origins_yggdrasil.yggdrasil_origins.client.gui.ColourScreen())));
+        // The look pickers are parked (see VisualStyle#EDITABLE), so this opens nothing. The
+        // receiver stays registered: a server that still sends the packet is answered with
+        // silence rather than with a warning in the log.
+        ClientPlayNetworking.registerGlobalReceiver(YggPackets.Customise.TYPE,
+            (payload, context) -> { });
 
         ClientPlayNetworking.registerGlobalReceiver(YggPackets.Visuals.TYPE, (payload, context) ->
             context.client().execute(() -> ClientVisuals.accept(payload.json())));

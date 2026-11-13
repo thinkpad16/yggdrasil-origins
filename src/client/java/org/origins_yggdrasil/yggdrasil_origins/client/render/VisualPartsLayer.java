@@ -853,18 +853,12 @@ public class VisualPartsLayer extends RenderLayer<AbstractClientPlayer, PlayerMo
             case AMBER_SPIKES -> {
                 // the shards shift a little with the breath, like something still growing
                 float breath = Mth.sin(age * 0.04F) * 0.02F;
-                ModelPart back = child(bodyRoot, VisualParts.SPIKES_BACK);
                 ModelPart chest = child(bodyRoot, VisualParts.SPIKES_CHEST);
-                if (back != null) {
-                    back.resetPose();
-                    back.xRot += breath + limbSwingAmount * 0.05F;
-                }
                 if (chest != null) {
                     chest.resetPose();
                     chest.xRot -= breath;
                 }
-                draw(bodyRoot, pose, out.props(), light, tint,
-                    VisualParts.SPIKES_BACK, VisualParts.SPIKES_CHEST);
+                draw(bodyRoot, pose, out.props(), light, tint, VisualParts.SPIKES_CHEST);
             }
             case IRON_SPINE -> draw(bodyRoot, pose, out.props(), light, tint,
                 VisualParts.IRON_SPINE);

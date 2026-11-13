@@ -154,7 +154,6 @@ public final class VisualParts {
     public static final String ARMBAND_RIGHT = "armband_right";
     public static final String ARMBAND_LEFT = "armband_left";
     public static final String TRAVEL_PACK = "travel_pack";
-    public static final String SPIKES_BACK = "spikes_back";
     public static final String SPIKES_CHEST = "spikes_chest";
     public static final String SPIKES_ARM_RIGHT = "spikes_arm_right";
     public static final String SPIKES_ARM_LEFT = "spikes_arm_left";
@@ -540,23 +539,12 @@ public final class VisualParts {
                 .texOffs(49, 160).addBox(2.2F, -0.8F, -4.6F, 1.2F, 3.0F, 5.0F, new CubeDeformation(-0.3F)),
             PartPose.offset(0.0F, 1.2F, 2.2F));
 
-        // amber grown through the body: single shards breaking out of the back, each
-        // rooted inside it. No slab behind them - what is seen is only what broke through
-        root.addOrReplaceChild(SPIKES_BACK,
-            CubeListBuilder.create()
-                .texOffs(70, 160).addBox(-3.4F, 0.8F, -0.6F, 1.8F, 3.4F, 2.0F, new CubeDeformation(-0.3F))
-                .texOffs(70, 160).addBox(-0.9F, 0.0F, -0.6F, 1.8F, 4.2F, 2.0F, new CubeDeformation(-0.25F))
-                .texOffs(70, 160).addBox(1.6F, 1.2F, -0.6F, 1.8F, 3.0F, 2.0F, new CubeDeformation(-0.3F))
-                .texOffs(70, 160).addBox(-2.4F, 5.2F, -0.6F, 1.6F, 2.6F, 1.8F, new CubeDeformation(-0.35F))
-                .texOffs(70, 160).addBox(0.8F, 5.6F, -0.6F, 1.6F, 2.4F, 1.8F, new CubeDeformation(-0.35F)),
-            PartPose.offsetAndRotation(0.0F, 0.6F, 2.0F, 0.26F, 0.0F, 0.0F));
-
         // and a smaller cluster through the collarbone
         root.addOrReplaceChild(SPIKES_CHEST,
             CubeListBuilder.create()
-                .texOffs(70, 160).addBox(-3.4F, 0.4F, -2.9F, 1.8F, 4.0F, 2.2F, new CubeDeformation(-0.3F))
-                .texOffs(70, 160).addBox(1.6F, 0.8F, -2.9F, 1.8F, 3.6F, 2.2F, new CubeDeformation(-0.3F))
-                .texOffs(70, 160).addBox(-1.0F, 2.6F, -3.0F, 2.0F, 4.4F, 2.2F, new CubeDeformation(-0.25F)),
+                .texOffs(70, 160).addBox(-3.4F, 0.4F, -3.4F, 1.8F, 4.0F, 2.4F, new CubeDeformation(-0.3F))
+                .texOffs(70, 160).addBox(1.6F, 0.8F, -3.4F, 1.8F, 3.6F, 2.4F, new CubeDeformation(-0.3F))
+                .texOffs(70, 160).addBox(-1.0F, 2.6F, -3.5F, 2.0F, 4.4F, 2.4F, new CubeDeformation(-0.25F)),
             PartPose.offsetAndRotation(0.0F, 0.0F, 0.0F, -0.30F, 0.0F, 0.0F));
 
         // a row of iron studs down the spine

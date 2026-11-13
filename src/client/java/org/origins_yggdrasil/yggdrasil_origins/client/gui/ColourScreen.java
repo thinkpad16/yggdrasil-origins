@@ -20,13 +20,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * The step after the origin and the path: the player chooses what colour each of their
- * elements is, and nothing else.
- * <p>
- * Everything else an element could be given - its shape, its size, how it sits, whether it
- * is worn at all - is not in a player's hands at the moment: see {@link VisualStyle}, which
- * drops those settings wherever a look is read. This screen is deliberately the only way
- * into a look, so there is one place where that holds.
+ * Parked, like {@link CustomiseScreen}. It offered the colour of each element and nothing
+ * else; now an origin decides the whole of how its people look, so nothing opens this and
+ * {@link VisualStyle#EDITABLE} drops a colour wherever a look is read. Kept whole and
+ * compiled so that one switch brings it back.
  */
 public final class ColourScreen extends Screen {
 
@@ -94,7 +91,7 @@ public final class ColourScreen extends Screen {
     private static final int ROW = 14;
     private static final int SWATCH = 11;
 
-    public ColourScreen() {
+    private ColourScreen() {
         super(Component.translatable("gui.yggdrasil_origins.customise.title"));
     }
 

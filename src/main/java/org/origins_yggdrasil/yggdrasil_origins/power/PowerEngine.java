@@ -233,6 +233,11 @@ public final class PowerEngine {
         knownPowers = Set.copyOf(powers.keySet());
         granted.clear();
         caches.clear();
+        // a reload is a fresh start for anything that broke, and for the answers kept about
+        // ground and neighbours: the questions themselves may have changed
+        broken.clear();
+        complained.clear();
+        Scans.forgetAll();
         // appliedMods is deliberately kept: it records the modifiers physically written onto
         // players, and a reload does not undo those. Dropping it here would leave the old
         // numbers on everyone who is online - an edit would appear to do nothing.
@@ -949,7 +954,11 @@ public final class PowerEngine {
                 if (hit.toAttacker() && attacker == null) continue;
                 if (rateLimited(player, id, hit.cooldown())) continue;
                 actionsRun++;
-                hit.action().accept(player, hit.toAttacker() ? attacker : player);
+                try {
+                    hit.action().accept(player, hit.toAttacker() ? attacker : player);
+                } catch (Exception | LinkageError failed) {
+                    breakPower(id, failed);
+                }
             }
         } finally {
             Actions.hitDamage = outerDamage;
@@ -965,7 +974,11 @@ public final class PowerEngine {
             if (!hit.target().test(target)) continue;
             if (rateLimited(player, id, hit.cooldown())) continue;
             actionsRun++;
-            hit.action().accept(player, target);
+            try {
+                hit.action().accept(player, target);
+            } catch (Exception | LinkageError failed) {
+                breakPower(id, failed);
+            }
         }
     }
 
@@ -977,7 +990,12 @@ public final class PowerEngine {
             if (!noDeath.damage().test(source)) continue;
             if (noDeath.self() != null && !noDeath.self().test(player)) continue;
             player.setHealth(1.0F);
-            noDeath.action().accept(player, player);
+            try {
+                noDeath.action().accept(player, player);
+            } catch (Exception | LinkageError failed) {
+                // the player is saved either way: the action is the part that failed
+                complain("prevent_death", failed);
+            }
             return true;
         }
         return false;
@@ -1050,8 +1068,12 @@ public final class PowerEngine {
             ModDmg mod = list.get(i);
             if (mod.selfAction() == null && mod.targetAction() == null) continue;
             if (!matches(mod, player, target, source, projectile)) continue;
-            if (mod.selfAction() != null) mod.selfAction().accept(player, player);
-            if (mod.targetAction() != null) mod.targetAction().accept(player, target);
+            try {
+                if (mod.selfAction() != null) mod.selfAction().accept(player, player);
+                if (mod.targetAction() != null) mod.targetAction().accept(player, target);
+            } catch (Exception | LinkageError failed) {
+                complain("damage actions", failed);
+            }
         }
     }
 
@@ -1184,7 +1206,11 @@ public final class PowerEngine {
             OnBlockBreak hit = list.get(i).getValue();
             if (!hit.block().test(state)) continue;
             if (hit.onlyHarvested() && !player.hasCorrectToolForDrops(state)) continue;
-            hit.action().accept(player, player);
+            try {
+                hit.action().accept(player, player);
+            } catch (Exception | LinkageError failed) {
+                breakPower(list.get(i).getKey(), failed);
+            }
         }
     }
 
@@ -1201,6 +1227,7 @@ public final class PowerEngine {
         for (ServerPlayer player : server.getPlayerList().getPlayers()) {
             tickPlayer(player);
         }
+        HudSync.flush(server);
         long spent = System.nanoTime() - started;
         tickNanos += spent;
         tickSamples++;
@@ -1216,11 +1243,42 @@ public final class PowerEngine {
         for (int i = 0; i < timed.size(); i++) {
             Cache.Timed entry = timed.get(i);
             if (entry.interval() > 1 && ticks % entry.interval() != 0) continue;
-            tickBehaviour(player, entry.behaviour());
+            if (!broken.isEmpty() && broken.contains(entry.power())) continue;
+            try {
+                tickBehaviour(player, entry.behaviour());
+            } catch (Exception | LinkageError failed) {
+                // one power must never cost the server its tick: it is put aside, loudly,
+                // and everything else keeps running
+                breakPower(entry.power(), failed);
+            }
         }
 
         // clamping health only matters for someone whose powers change it
         if (cache.healthMod) clampHealth(player);
+    }
+
+    /** Powers that threw while ticking: they are skipped until the data is reloaded. */
+    private final Set<ResourceLocation> broken = new java.util.HashSet<>();
+
+    /** Failures with no power behind them, said once rather than every hit. */
+    private final Set<String> complained = new java.util.HashSet<>();
+
+    private void complain(String what, Throwable failed) {
+        if (!complained.add(what)) return;
+        org.origins_yggdrasil.yggdrasil_origins.YggdrasilOrigins.LOGGER.error(
+            "a power threw while running {} - it is reported once, the rest are swallowed",
+            what, failed);
+    }
+
+    private void breakPower(ResourceLocation power, Throwable failed) {
+        if (!broken.add(power)) return;
+        org.origins_yggdrasil.yggdrasil_origins.YggdrasilOrigins.LOGGER.error(
+            "{} threw while ticking and was switched off until the next reload", power, failed);
+    }
+
+    /** What {@code /ygg doctor} should say about powers that broke at runtime. */
+    public Set<ResourceLocation> brokenPowers() {
+        return Set.copyOf(broken);
     }
 
     /** How many powers the engine can actually execute. */
@@ -1252,12 +1310,13 @@ public final class PowerEngine {
         return String.format(
             "engine tick: average %.1f us, peak %.1f us over %d ticks (50000 us = a whole server tick)"
                 + " | players %d, caches %d, ticking entries %d, actions fired %d"
-                + " | hit cooldowns %d, modifier traces %d",
+                + " | hit cooldowns %d, modifier traces %d, powers switched off %d%n%s",
             avgMicros, peakNanos / 1000.0, tickSamples, players, caches.size(), timed, actionsRun,
-            hitCooldowns.size(), appliedMods.size());
+            hitCooldowns.size(), appliedMods.size(), broken.size(), Scans.report());
     }
 
     public void resetPerformance() {
+        Scans.reset();
         tickNanos = 0;
         tickSamples = 0;
         peakNanos = 0;
@@ -1275,8 +1334,9 @@ public final class PowerEngine {
             if (state != null) {
                 state.applied = on;
                 // the screen says which conditional powers are in force, so it has to hear
-                // about it the moment one turns on or off
-                HudSync.send(player);
+                // about it the moment one turns on or off - once per tick, however many
+                // of them moved together
+                HudSync.mark(player);
             }
             return;
         }

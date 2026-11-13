@@ -176,20 +176,11 @@ public final class Conditions {
                 boolean sphere = isSphere(json);
                 // a scent in the air is somebody else's: a power may ask not to smell itself
                 boolean countSelf = !json.has("count_self") || json.get("count_self").getAsBoolean();
-                double radiusSqr = radius * radius;
-                return player -> {
-                    AABB box = new AABB(player.blockPosition()).inflate(radius);
-                    List<LivingEntity> found = player.level().getEntitiesOfClass(LivingEntity.class, box,
-                        entity -> (countSelf || entity != player) && target.test(entity));
-                    int count = found.size();
-                    if (sphere) {
-                        count = 0;
-                        for (int i = 0; i < found.size(); i++) {
-                            if (found.get(i).distanceToSqr(player) <= radiusSqr) count++;
-                        }
-                    }
-                    return compare.test(count);
-                };
+                // powers that look for the same thing at the same distance share one look
+                String question = "entities|" + radius + "|" + sphere + "|" + countSelf + "|"
+                    + json.get("bientity_condition");
+                return player -> compare.test(
+                    Scans.entities(player, question, radius, sphere, countSelf, target));
             }
             case "inventory_item": {
                 // anywhere the player can reach without opening a chest: hotbar, backpack,
@@ -212,17 +203,11 @@ public final class Conditions {
                 double radius = json.get("radius").getAsDouble();
                 Compare compare = Compare.of(json, ">=", 1);
                 boolean countSelf = !json.has("count_self") || json.get("count_self").getAsBoolean();
-                double radiusSqr = radius * radius;
-                return player -> {
-                    AABB box = new AABB(player.blockPosition()).inflate(radius);
-                    List<ServerPlayer> found = player.level()
-                        .getEntitiesOfClass(ServerPlayer.class, box, other ->
-                            (countSelf || other != player)
-                                && other.distanceToSqr(player) <= radiusSqr
-                                && org.origins_yggdrasil.yggdrasil_origins.clazz.ClassManager
-                                    .chosen(other).containsValue(wanted.toString()));
-                    return compare.test(found.size());
-                };
+                String question = "classmates|" + radius + "|" + countSelf + "|" + wanted;
+                Scans.expect(question, compare.value());
+                String id = wanted.toString();
+                return player -> compare.test(
+                    Scans.classmates(player, question, radius, countSelf, id));
             }
             case "block_in_radius": {
                 double radius = json.get("radius").getAsDouble();
@@ -231,39 +216,11 @@ public final class Conditions {
                 if (block == null) return null;
                 int r = (int) Math.ceil(radius);
                 boolean sphere = isSphere(json);
-                double radiusSqr = radius * radius;
-                // for ">=" and ">" there is no point counting further once the condition holds:
-                // a radius of 8 is nearly five thousand blocks per check
-                boolean growing = compare.op().startsWith(">");
-                // and the answer is kept until the player steps off the block they were on,
-                // or a second passes: a radius of six is two thousand lookups, and nobody
-                // notices terrain arriving a moment late. Ticking is single threaded, and a
-                // weak key lets a player who logs out fall out of the map on its own.
-                java.util.Map<ServerPlayer, long[]> seen = new java.util.WeakHashMap<>();
-                return player -> {
-                    long at = player.blockPosition().asLong();
-                    long now = player.level().getGameTime();
-                    long[] last = seen.get(player);
-                    if (last != null && last[0] == at && now - last[1] < 20L) {
-                        return last[2] != 0L;
-                    }
-                    BlockPos origin = player.blockPosition();
-                    Level level = player.level();
-                    int count = 0;
-                    boolean answer = false;
-                    for (BlockPos pos : BlockPos.betweenClosed(origin.offset(-r, -r, -r), origin.offset(r, r, r))) {
-                        if (sphere && origin.distSqr(pos) > radiusSqr) continue;
-                        if (!block.test(level.getBlockState(pos))) continue;
-                        count++;
-                        if (growing && compare.test(count)) {
-                            answer = true;
-                            break;
-                        }
-                    }
-                    if (!answer) answer = compare.test(count);
-                    seen.put(player, new long[] {at, now, answer ? 1L : 0L});
-                    return answer;
-                };
+                // the tiers of one path ask about the same ground: "six blocks of it",
+                // "eighteen", "thirty-six". One look answers all three.
+                String question = "blocks|" + r + "|" + sphere + "|" + json.get("block_condition");
+                Scans.expect(question, compare.value());
+                return player -> compare.test(Scans.blocks(player, question, r, sphere, block));
             }
             default:
                 return null;
