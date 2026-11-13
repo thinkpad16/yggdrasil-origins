@@ -70,8 +70,9 @@ public final class FirstPersonParts {
 
             pose.pushPose();
             arm.translateAndRotate(pose);
-            float out = (VisualPartsLayer.slimArms(player) ? 0.5F : 0.0F)
-                - (chest ? 1.0F : 0.0F);
+            // the same pixel the third-person layer accounts for: a slim arm is narrower
+            // on its outer side by a whole pixel, and armour is wider by one
+            float out = chest ? -1.0F : (VisualPartsLayer.slimArms(player) ? 1.0F : 0.0F);
             if (out != 0.0F) pose.translate((left ? -out : out) / 16.0F, 0.0F, 0.0F);
             if (trim.dx() != 0.0F || trim.dy() != 0.0F || trim.dz() != 0.0F) {
                 pose.translate(trim.dx() / 16.0F, trim.dy() / 16.0F, trim.dz() / 16.0F);

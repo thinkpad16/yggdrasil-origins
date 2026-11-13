@@ -16,8 +16,7 @@
   "visual": {
     "parts": [
       "wolf_ears",
-      "tail",
-      "fangs"
+      "tail"
     ],
     "height": 1.04,
     "width": 1.05,
@@ -37,8 +36,7 @@
         "size": 1.0,
         "shapes": {
           "wolf_ears": 0,
-          "tail": 0,
-          "fangs": 0
+          "tail": 0
         }
       },
       {
@@ -47,8 +45,7 @@
         "size": 1.1,
         "shapes": {
           "wolf_ears": 1,
-          "tail": 1,
-          "fangs": 1
+          "tail": 1
         }
       },
       {
@@ -57,8 +54,7 @@
         "size": 0.92,
         "shapes": {
           "wolf_ears": 2,
-          "tail": 2,
-          "fangs": 2
+          "tail": 2
         }
       }
     ]
