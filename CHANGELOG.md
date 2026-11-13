@@ -77,6 +77,14 @@ Work since 1.0.0. Minecraft 1.21.1, Fabric.
 
 ### Fixes
 
+- **Marks that did not read.** Every origin was drawn with its real texture colours over a
+  grey body and looked at one by one. Six came out too faint to tell apart from the skin at
+  playing distance and were strengthened: blazing's embers are coals rather than specks and
+  come in four sizes, a cantharis antenna is a stalk with a club at the tip and a knuckle
+  midway instead of a hairline, an orc's tusks are half again as large, a dragonborn's crest
+  stands a pixel taller, a half-giant's brow is a heavier shelf, and geonite's crystal is
+  lighter and less gritty so it stops reading as mud.
+
 - **Arm marks sit on slim arms.** A slim skin's arm is three pixels wide, not four, and the
   whole missing pixel comes off its outer side - so every piece cut for the wide arm hung a
   pixel off the sleeve. Geonite's stone fists, the dwarf's vambrace, the dragonborn's claws,
