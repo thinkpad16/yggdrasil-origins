@@ -73,7 +73,26 @@ Work since 1.0.0. Minecraft 1.21.1, Fabric.
 - **A power that throws is switched off**, loudly, instead of costing the server its tick -
   while ticking, on a hit, on a kill saved from death and on a broken block. `/ygg perf` says
   how many were put aside, and what looking around costs.
-- **The bar packet goes out once per tick** per player, however many powers moved together.
+- **The bar packet goes out once per tick** per player, however many powers moved together -
+  a cooldown or resource change now waits for the end of the tick too.
+- **Every player ticks on their own phase**: once-a-second work, scans included, no longer
+  lands on the same tick for the whole server.
+- **A class is granted in one go**, and the picker's class list is written once per set of
+  choices, not for every player on every join, respawn and reload. A player's looks packet is
+  written once, not for every pair of eyes that sees them.
+- **No modifier trace that grows forever**: a conditional attribute switching on again no longer
+  records itself a second time.
+
+### Fixes
+
+- **`modify_food` changes nutrition and saturation for players.** The hunger bar was fed before
+  the change reached the food, so only `prevent_effects` worked. A stew still leaves its bowl.
+- **Scans stop counting early again**: the numbers they count to were wiped right after loading.
+  They now stop one past the largest number asked about, which answers every comparison.
+- **Permanent effects come back** after milk, `/effect clear` or a `clear_effect` action,
+  within a second, instead of being gone until the next respawn.
+- **`modify_harvest` with `"allow": false` forbids harvesting**, and wins over a power that
+  allows it.
 
 ### Checks
 

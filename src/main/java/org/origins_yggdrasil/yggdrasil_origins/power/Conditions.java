@@ -452,7 +452,10 @@ public final class Conditions {
     }
 
     /** Comparison from JSON: {"comparison": ">=", "compare_to": 0.3}. */
-    private record Compare(String op, double value) {
+    private record Compare(Op op, double value) {
+
+        /** Read once, so a check that runs every few ticks does not compare strings. */
+        enum Op { LT, LE, GT, GE, NE, EQ }
 
         static Compare of(JsonObject json) {
             return of(json, "==", 0);
@@ -461,17 +464,24 @@ public final class Conditions {
         static Compare of(JsonObject json, String defaultOp, double defaultValue) {
             String op = json.has("comparison") ? json.get("comparison").getAsString() : defaultOp;
             double value = json.has("compare_to") ? json.get("compare_to").getAsDouble() : defaultValue;
-            return new Compare(op, value);
+            return new Compare(switch (op) {
+                case "<" -> Op.LT;
+                case "<=" -> Op.LE;
+                case ">" -> Op.GT;
+                case ">=" -> Op.GE;
+                case "!=" -> Op.NE;
+                default -> Op.EQ;
+            }, value);
         }
 
         boolean test(double actual) {
             return switch (op) {
-                case "<" -> actual < value;
-                case "<=" -> actual <= value;
-                case ">" -> actual > value;
-                case ">=" -> actual >= value;
-                case "!=" -> actual != value;
-                default -> actual == value;
+                case LT -> actual < value;
+                case LE -> actual <= value;
+                case GT -> actual > value;
+                case GE -> actual >= value;
+                case NE -> actual != value;
+                case EQ -> actual == value;
             };
         }
     }

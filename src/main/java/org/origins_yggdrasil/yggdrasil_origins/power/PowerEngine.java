@@ -167,8 +167,12 @@ public final class PowerEngine {
     private Map<ResourceLocation, List<B>> supported = Map.of();
     private final Map<UUID, Set<ResourceLocation>> granted = new HashMap<>();
     private final Map<UUID, Cache> caches = new HashMap<>();
-    /** Exactly which modifiers we applied to this player, so they come off without a registry walk. */
-    private final Map<UUID, List<Mod>> appliedMods = new HashMap<>();
+    /**
+     * Exactly which modifiers we applied to this player, so they come off without a registry walk.
+     * A set: a conditional attribute switching on again must not add itself a second time, or a
+     * player walking along a forest edge grows this for the whole session.
+     */
+    private final Map<UUID, Set<Mod>> appliedMods = new HashMap<>();
     /** Who was already swept fully this session (leftovers from older versions). */
     private final Set<UUID> deepSwept = new HashSet<>();
     private final Set<ResourceLocation> missingAttributes = new HashSet<>();
@@ -203,6 +207,9 @@ public final class PowerEngine {
 
     public void load(Map<ResourceLocation, JsonObject> powers) {
         Map<ResourceLocation, List<B>> parsed = new LinkedHashMap<>();
+        // before parsing, not after: parsing is what records how far each scan has to count,
+        // and wiping that afterwards left every scan counting to the end
+        Scans.forgetAll();
         missingAttributes.clear();
         missingUsers.clear();
         unsupportedPowers.clear();
@@ -237,7 +244,6 @@ public final class PowerEngine {
         // ground and neighbours: the questions themselves may have changed
         broken.clear();
         complained.clear();
-        Scans.forgetAll();
         // appliedMods is deliberately kept: it records the modifiers physically written onto
         // players, and a reload does not undo those. Dropping it here would leave the old
         // numbers on everyone who is online - an edit would appear to do nothing.
@@ -678,7 +684,9 @@ public final class PowerEngine {
             return;
         }
         if (behaviour instanceof Eff eff) {
-            if (eff.cond() != null) cache.timed.add(new Cache.Timed(id, eff, 5));
+            // a permanent effect is re-checked too, more slowly: milk, a clear_effect action
+            // or /effect clear would otherwise take it away until the next respawn
+            cache.timed.add(new Cache.Timed(id, eff, eff.cond() != null ? 5 : 20));
             return;
         }
         if (behaviour instanceof Immune immune) {
@@ -825,12 +833,23 @@ public final class PowerEngine {
     // ------------------------------------------------------------------ granting
 
     public void grant(ServerPlayer player, ResourceLocation powerId) {
-        if (!supported.containsKey(powerId)) return;
-        granted.computeIfAbsent(player.getUUID(), uuid -> new HashSet<>()).add(powerId);
-        for (B behaviour : supported.get(powerId)) {
-            if (behaviour instanceof Attr attr && attr.cond() == null) apply(player, attr.mods(), true);
-            if (behaviour instanceof Eff eff && eff.cond() == null) addEffect(player, eff);
+        grantAll(player, List.of(powerId));
+    }
+
+    /** Grants several powers and rebuilds the player layout once, not once per power. */
+    public void grantAll(ServerPlayer player, java.util.Collection<ResourceLocation> powerIds) {
+        boolean any = false;
+        for (ResourceLocation powerId : powerIds) {
+            List<B> behaviours = supported.get(powerId);
+            if (behaviours == null) continue;
+            granted.computeIfAbsent(player.getUUID(), uuid -> new HashSet<>()).add(powerId);
+            for (B behaviour : behaviours) {
+                if (behaviour instanceof Attr attr && attr.cond() == null) apply(player, attr.mods(), true);
+                if (behaviour instanceof Eff eff && eff.cond() == null) addEffect(player, eff);
+            }
+            any = true;
         }
+        if (!any) return;
         rebuild(player);
         clampHealth(player);
     }
@@ -848,7 +867,7 @@ public final class PowerEngine {
         caches.remove(player.getUUID());
 
         // remove exactly what we applied ourselves
-        List<Mod> mine = appliedMods.remove(player.getUUID());
+        Set<Mod> mine = appliedMods.remove(player.getUUID());
         if (mine != null) {
             for (Mod mod : mine) {
                 AttributeInstance instance = player.getAttribute(mod.attribute());
@@ -902,7 +921,7 @@ public final class PowerEngine {
                     instance.addOrUpdateTransientModifier(
                         new AttributeModifier(mod.id(), mod.amount(), mod.operation()));
                 }
-                appliedMods.computeIfAbsent(player.getUUID(), uuid -> new ArrayList<>()).add(mod);
+                appliedMods.computeIfAbsent(player.getUUID(), uuid -> new LinkedHashSet<>()).add(mod);
             } else {
                 instance.removeModifier(mod.id());
             }
@@ -1083,24 +1102,38 @@ public final class PowerEngine {
     public FoodProperties modifyFood(ServerPlayer player, ItemStack stack, FoodProperties props) {
         List<Food> list = cache(player).foods;
         if (list.isEmpty()) return props;
-        List<VMod> nutrition = new ArrayList<>();
-        List<VMod> saturation = new ArrayList<>();
+        List<VMod> nutrition = null;
+        List<VMod> saturation = null;
         boolean prevent = false;
-        for (Food food : list) {
+        for (int i = 0; i < list.size(); i++) {
+            Food food = list.get(i);
             if (!food.item().test(stack)) continue;
-            nutrition.addAll(food.nutrition());
-            saturation.addAll(food.saturation());
+            if (!food.nutrition().isEmpty()) {
+                if (nutrition == null) nutrition = new ArrayList<>(2);
+                nutrition.addAll(food.nutrition());
+            }
+            if (!food.saturation().isEmpty()) {
+                if (saturation == null) saturation = new ArrayList<>(2);
+                saturation.addAll(food.saturation());
+            }
             prevent |= food.preventEffects();
-            if (food.action() != null) food.action().accept(player, player);
+            if (food.action() != null) {
+                try {
+                    food.action().accept(player, player);
+                } catch (Exception | LinkageError failed) {
+                    complain("food actions", failed);
+                }
+            }
         }
-        if (nutrition.isEmpty() && saturation.isEmpty() && !prevent) return props;
-        FoodProperties.Builder builder = new FoodProperties.Builder()
-            .nutrition(Math.round(applyMods(nutrition, props.nutrition())))
-            .saturationModifier(applyMods(saturation, props.saturation()));
-        if (props.canAlwaysEat()) builder.alwaysEdible();
-        if (!prevent) props.effects().forEach(effect -> builder.effect(
-            new MobEffectInstance(effect.effect()), effect.probability()));
-        return builder.build();
+        if (nutrition == null && saturation == null && !prevent) return props;
+        // the record itself, not the builder: the builder would turn saturation into a
+        // "modifier" and drop the eating time and the bowl a stew leaves behind
+        int newNutrition = nutrition == null ? props.nutrition()
+            : Math.round(applyMods(nutrition, props.nutrition()));
+        float newSaturation = saturation == null ? props.saturation()
+            : applyMods(saturation, props.saturation());
+        return new FoodProperties(newNutrition, newSaturation, props.canAlwaysEat(), props.eatSeconds(),
+            props.usingConvertsTo(), prevent ? List.of() : props.effects());
     }
 
     /** Changes the duration or amplifier of an effect applied to the player. */
@@ -1135,13 +1168,20 @@ public final class PowerEngine {
         return applyMods(mods, amount);
     }
 
-    public boolean allowsHarvest(ServerPlayer player, BlockState state) {
+    /**
+     * What the powers say about harvesting this block: 1 - allowed, -1 - forbidden, 0 - no say.
+     * A power that forbids wins over one that allows.
+     */
+    public int harvestVerdict(ServerPlayer player, BlockState state) {
         List<Harvest> list = cache(player).harvests;
+        int verdict = 0;
         for (int i = 0; i < list.size(); i++) {
             Harvest harvest = list.get(i);
-            if (harvest.allow() && harvest.block().test(state)) return true;
+            if (!harvest.block().test(state)) continue;
+            if (!harvest.allow()) return -1;
+            verdict = 1;
         }
-        return false;
+        return verdict;
     }
 
     public boolean regenDisabled(ServerPlayer player) {
@@ -1222,7 +1262,10 @@ public final class PowerEngine {
 
     public void tick(MinecraftServer server) {
         ticks++;
-        if (caches.isEmpty()) return;
+        if (caches.isEmpty()) {
+            HudSync.flush(server);
+            return;
+        }
         long started = System.nanoTime();
         for (ServerPlayer player : server.getPlayerList().getPlayers()) {
             tickPlayer(player);
@@ -1239,10 +1282,13 @@ public final class PowerEngine {
         Cache cache = caches.get(player.getUUID());
         if (cache == null) return;
 
+        // each player runs on their own phase: with one shared clock every player's
+        // once-a-second work (scans included) landed on the same tick
+        long clock = ticks + player.getId();
         List<Cache.Timed> timed = cache.timed;
         for (int i = 0; i < timed.size(); i++) {
             Cache.Timed entry = timed.get(i);
-            if (entry.interval() > 1 && ticks % entry.interval() != 0) continue;
+            if (entry.interval() > 1 && clock % entry.interval() != 0) continue;
             if (!broken.isEmpty() && broken.contains(entry.power())) continue;
             try {
                 tickBehaviour(player, entry.behaviour());
@@ -1341,8 +1387,7 @@ public final class PowerEngine {
             return;
         }
         if (behaviour instanceof Eff eff) {
-            if (eff.cond() == null) return;
-            if (eff.cond().test(player)) addEffect(player, eff);
+            if (eff.cond() == null || eff.cond().test(player)) addEffect(player, eff);
             else removeEffect(player, eff);
             return;
         }

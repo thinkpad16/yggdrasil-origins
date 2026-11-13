@@ -25,6 +25,8 @@ public final class Visuals {
 
     private static final Map<UUID, VisualProfile> PROFILES = new HashMap<>();
     private static final Map<UUID, VisualStyle> STYLES = new HashMap<>();
+    /** The packet text per player, written once: every new pair of eyes used to rebuild it. */
+    private static final Map<UUID, String> PACKETS = new HashMap<>();
 
     private Visuals() { }
 
@@ -52,6 +54,7 @@ public final class Visuals {
         }
 
         STYLES.put(player.getUUID(), StyleManager.read(player));
+        PACKETS.remove(player.getUUID());
         VisualProfile previous = PROFILES.put(player.getUUID(), profile);
         VisualSource.apply(player, profile);
         if (previous != null && previous.equals(profile)) return;
@@ -78,11 +81,21 @@ public final class Visuals {
     private static void sendOne(ServerPlayer target, UUID uuid, VisualProfile profile) {
         if (target.connection == null) return;
         if (!ServerPlayNetworking.canSend(target, YggPackets.Visuals.TYPE)) return;
+        ServerPlayNetworking.send(target, new YggPackets.Visuals(packet(uuid, profile)));
+    }
+
+    /** The packet text for one player, cached until their profile or style changes. */
+    private static String packet(UUID uuid, VisualProfile profile) {
+        String cached = PACKETS.get(uuid);
+        if (cached != null) return cached;
         JsonArray array = new JsonArray();
         array.add(entry(uuid, profile));
         JsonObject root = new JsonObject();
         root.add("players", array);
-        ServerPlayNetworking.send(target, new YggPackets.Visuals(root.toString()));
+        String json = root.toString();
+        // only the current profile is cached: a stray profile passed in must not stick
+        if (profile.equals(of(uuid))) PACKETS.put(uuid, json);
+        return json;
     }
 
     /** On join a player gets their own profile (they do not "track" themselves). */
@@ -92,11 +105,7 @@ public final class Visuals {
 
     /** Origin changed - the packet goes only to those who see this player, plus the player. */
     private static void broadcast(ServerPlayer player, VisualProfile profile) {
-        JsonArray array = new JsonArray();
-        array.add(entry(player.getUUID(), profile));
-        JsonObject root = new JsonObject();
-        root.add("players", array);
-        String json = root.toString();
+        String json = packet(player.getUUID(), profile);
 
         for (ServerPlayer watcher : net.fabricmc.fabric.api.networking.v1.PlayerLookup.tracking(player)) {
             if (watcher.connection == null) continue;
@@ -123,16 +132,19 @@ public final class Visuals {
 
     public static void setStyle(ServerPlayer player, VisualStyle style) {
         STYLES.put(player.getUUID(), style == null ? VisualStyle.EMPTY : style);
+        PACKETS.remove(player.getUUID());
         broadcast(player, of(player.getUUID()));
     }
 
     public static void forget(UUID uuid) {
         PROFILES.remove(uuid);
         STYLES.remove(uuid);
+        PACKETS.remove(uuid);
     }
 
     public static void clear() {
         PROFILES.clear();
         STYLES.clear();
+        PACKETS.clear();
     }
 }

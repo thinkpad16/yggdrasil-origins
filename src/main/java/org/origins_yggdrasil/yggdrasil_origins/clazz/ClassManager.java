@@ -322,6 +322,7 @@ public final class ClassManager {
 
         int granted = 0;
         List<String> unsupported = new ArrayList<>();
+        List<ResourceLocation> toGrant = new ArrayList<>();
 
         for (Map.Entry<String, String> picked : chosen(player).entrySet()) {
             ResourceLocation classId = ResourceLocation.tryParse(picked.getValue());
@@ -330,13 +331,16 @@ public final class ClassManager {
             if (def.isEmpty()) continue;
             for (ResourceLocation powerId : def.get().powers()) {
                 if (PowerEngine.INSTANCE.supports(powerId)) {
-                    PowerEngine.INSTANCE.grant(player, powerId);
+                    toGrant.add(powerId);
                     granted++;
                 } else {
                     unsupported.add(powerId.getPath());
                 }
             }
         }
+
+        // all at once: the engine rebuilds the player layout once instead of once per power
+        PowerEngine.INSTANCE.grantAll(player, toGrant);
 
         if (YggdrasilOrigins.LOGGER.isDebugEnabled()) {
             YggdrasilOrigins.LOGGER.debug("{}: granted {} powers for choice {} | HP={}, armor={}",

@@ -111,6 +111,7 @@ public final class ClassRegistry implements IdentifiableResourceReloadListener, 
             }
         }
         PowerEngine.INSTANCE.load(powerJsons);
+        layersJson.clear();
 
         // utility powers (timers, counters) exist for the engine only; they have
         // no place on the picker screen and no translation either
@@ -221,10 +222,36 @@ public final class ClassRegistry implements IdentifiableResourceReloadListener, 
         return ResourceLocation.fromNamespaceAndPath(file.getNamespace(), path);
     }
 
+    /**
+     * The "layers" part of the snapshot, already written out, per set of choices. It only
+     * changes with the data, and the same few choices are shared by many players: building it
+     * once instead of on every join, respawn and reload of every player saves real work.
+     */
+    private final Map<Map<String, String>, String> layersJson = new java.util.concurrent.ConcurrentHashMap<>();
+
     /** Client snapshot: everything the picker needs (names and texts come from lang). */
     public String snapshot(Map<String, String> chosen, Map<String, Boolean> flags,
                            Map<String, Float> numbers) {
-        JsonObject root = new JsonObject();
+        String layersPart = layersJson.get(chosen);
+        if (layersPart == null) {
+            layersPart = GSON.toJson(layersArray(chosen));
+            // a bound for safety: the number of choice combinations is small in practice
+            if (layersJson.size() > 512) layersJson.clear();
+            layersJson.put(Map.copyOf(chosen), layersPart);
+        }
+        JsonObject chosenJson = new JsonObject();
+        chosen.forEach(chosenJson::addProperty);
+        JsonObject flagsJson = new JsonObject();
+        flags.forEach(flagsJson::addProperty);
+        JsonObject numbersJson = new JsonObject();
+        numbers.forEach(numbersJson::addProperty);
+        return "{\"layers\":" + layersPart
+            + ",\"chosen\":" + GSON.toJson(chosenJson)
+            + ",\"flags\":" + GSON.toJson(flagsJson)
+            + ",\"numbers\":" + GSON.toJson(numbersJson) + "}";
+    }
+
+    private JsonArray layersArray(Map<String, String> chosen) {
         JsonArray layerArray = new JsonArray();
         for (Layer layer : layers) {
             JsonObject layerJson = new JsonObject();
@@ -255,16 +282,6 @@ public final class ClassRegistry implements IdentifiableResourceReloadListener, 
             layerJson.add("origins", classArray);
             layerArray.add(layerJson);
         }
-        root.add("layers", layerArray);
-        JsonObject chosenJson = new JsonObject();
-        chosen.forEach(chosenJson::addProperty);
-        root.add("chosen", chosenJson);
-        JsonObject flagsJson = new JsonObject();
-        flags.forEach(flagsJson::addProperty);
-        root.add("flags", flagsJson);
-        JsonObject numbersJson = new JsonObject();
-        numbers.forEach(numbersJson::addProperty);
-        root.add("numbers", numbersJson);
-        return GSON.toJson(root);
+        return layerArray;
     }
 }
