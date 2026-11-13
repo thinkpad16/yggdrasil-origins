@@ -39,6 +39,14 @@ Work since 1.0.0. Minecraft 1.21.1, Fabric.
   the amber that broke through the collarbone and the forearms.
   Mara's braid, the orc's war paint, the dragonborn's crest and the human's headband are
   elements an origin offers rather than wears.
+- **Every element is painted its own way.** The atlas used to hand one pattern to a dozen
+  regions: eleven marks were "plain cloth", seven were "strands", seven were "scales". Each
+  element now has a pattern written for it and for the origin that wears it - an orc's ivory
+  is chipped, a werewolf's enamel is clean, a dwarf's beard is caught in metal bands, a
+  viper's back runs in diamonds while a dragon's is rounds, a halfling knits and a Cossack
+  embroiders. Three marks that borrowed another origin's texture - a half-giant's brow, a
+  halfling's hair, a werewolf's fangs - were given regions of their own, so nothing a class
+  wears looks like anything another class wears.
 - 57 elements, each belonging to exactly one origin family.
 
 ### Server cost and stability
