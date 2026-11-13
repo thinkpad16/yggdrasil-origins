@@ -89,8 +89,22 @@ Work since 1.0.0. Minecraft 1.21.1, Fabric.
   the change reached the food, so only `prevent_effects` worked. A stew still leaves its bowl.
 - **Scans stop counting early again**: the numbers they count to were wiped right after loading.
   They now stop one past the largest number asked about, which answers every comparison.
-- **Permanent effects come back** after milk, `/effect clear` or a `clear_effect` action,
-  within a second, instead of being gone until the next respawn.
+- **Milk does not wash off an origin.** The endless effects a class gives pass through milk,
+  `/effect clear` and a `clear_effect` action untouched, with no flicker; a potion of the same
+  effect still washes off. The method is wrapped rather than cancelled, so other mods that keep
+  their own effects through milk (Potions_LD's potion sickness) keep working beside it. Anything
+  that removes one of them by name gets it back within a second.
+- **Attribute powers with Apoli's wildcard or missing modifier id run.** `"id": "*:*"` threw
+  while reading, so the whole power was reported as an unknown type - 71 of the Fallen Eden
+  RPG pack's stat powers among them. Such a modifier now gets an id of our own.
+
+### Engine
+
+- **`fluid_height`** condition: how deep the player stands in water or lava.
+- **`invulnerability`** power: damage matching its `damage_condition` does not land at all.
+- **`damage_over_time`** power: `interval`, `onset_delay`, `damage` and `damage_easy`. A
+  `damage_type` that is not registered (Origins' own leave with Origins) falls back to plain
+  damage; `protection_enchantment` is not read.
 - **`modify_harvest` with `"allow": false` forbids harvesting**, and wins over a power that
   allows it.
 

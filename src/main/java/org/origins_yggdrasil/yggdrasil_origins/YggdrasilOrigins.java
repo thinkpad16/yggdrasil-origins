@@ -109,7 +109,9 @@ public class YggdrasilOrigins implements ModInitializer {
         // fire immunity: cancel the fire damage itself
         ServerLivingEntityEvents.ALLOW_DAMAGE.register((entity, source, amount) -> {
             if (!(entity instanceof ServerPlayer player)) return true;
-            return !(source.is(DamageTypeTags.IS_FIRE) && PowerEngine.INSTANCE.fireImmune(player));
+            if (source.is(DamageTypeTags.IS_FIRE) && PowerEngine.INSTANCE.fireImmune(player)) return false;
+            // invulnerability powers: damage of their kind does not land at all
+            return !PowerEngine.INSTANCE.invulnerableTo(player, source);
         });
 
         // hit reactions: we were hit / we hit someone

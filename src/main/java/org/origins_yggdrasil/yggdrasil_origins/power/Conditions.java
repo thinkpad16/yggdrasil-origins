@@ -124,6 +124,14 @@ public final class Conditions {
                 boolean lava = fluid.getPath().contains("lava");
                 return player -> player.isEyeInFluid(lava ? FluidTags.LAVA : FluidTags.WATER);
             }
+            case "fluid_height": {
+                // how deep the player stands in the fluid: 0 is dry, above 0 is wet
+                ResourceLocation fluid = ResourceLocation.parse(json.get("fluid").getAsString());
+                TagKey<net.minecraft.world.level.material.Fluid> tag =
+                    fluid.getPath().contains("lava") ? FluidTags.LAVA : FluidTags.WATER;
+                Compare compare = Compare.of(json);
+                return player -> compare.test(player.getFluidHeight(tag));
+            }
             case "dimension": {
                 ResourceLocation dimension = ResourceLocation.parse(json.get("dimension").getAsString());
                 return player -> player.level().dimension().location().equals(dimension);
