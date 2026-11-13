@@ -22,7 +22,9 @@ public abstract class ClientFluidWalkMixin {
         LivingEntity self = (LivingEntity) (Object) this;
         if (!self.level().isClientSide() || self != Minecraft.getInstance().player) return;
         boolean lava = state.is(FluidTags.LAVA);
+        // the same fluids the server accepts: lava, or anything tagged water
+        if (!lava && !state.is(FluidTags.WATER)) return;
         boolean allowed = lava ? ClientFlags.walkOnLava : ClientFlags.walkOnWater;
-        if (allowed && !state.isEmpty() && !self.isShiftKeyDown()) info.setReturnValue(true);
+        if (allowed && !self.isShiftKeyDown()) info.setReturnValue(true);
     }
 }

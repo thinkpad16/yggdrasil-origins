@@ -33,14 +33,14 @@ public final class VisualToggle {
 
         ClientTickEvents.END_CLIENT_TICK.register(client -> {
             while (key.consumeClick()) {
-                toggle(client, !YggdrasilOrigins.config().enableVisuals);
+                toggle(client, !YggdrasilOrigins.config().showVisuals);
             }
         });
 
         ClientCommandRegistrationCallback.EVENT.register((dispatcher, registry) ->
             dispatcher.register(ClientCommandManager.literal("yggvisuals")
                 .executes(context -> {
-                    toggle(Minecraft.getInstance(), !YggdrasilOrigins.config().enableVisuals);
+                    toggle(Minecraft.getInstance(), !YggdrasilOrigins.config().showVisuals);
                     return 1;
                 })
                 .then(ClientCommandManager.literal("on").executes(context -> {
@@ -75,11 +75,11 @@ public final class VisualToggle {
     }
 
     private static void toggle(Minecraft client, boolean on) {
-        if (YggdrasilOrigins.config().enableVisuals == on) {
+        if (YggdrasilOrigins.config().showVisuals == on) {
             message(client, on);
             return;
         }
-        YggdrasilOrigins.config().enableVisuals = on;
+        YggdrasilOrigins.config().showVisuals = on;
         YggdrasilOrigins.config().save();
         // models and hitboxes re-read the profile - refreshing the players is enough
         if (client.level != null) {

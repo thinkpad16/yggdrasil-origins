@@ -19,8 +19,10 @@ public abstract class NightVisionMixin {
     private static void yggdrasil$scaleNightVision(LivingEntity entity, float partialTick,
                                                    CallbackInfoReturnable<Float> info) {
         float strength = ClientFlags.nightVisionStrength;
-        if (strength < 1f && entity == net.minecraft.client.Minecraft.getInstance().player) {
-            info.setReturnValue(info.getReturnValue() * strength);
-        }
+        if (strength >= 1f || entity != net.minecraft.client.Minecraft.getInstance().player) return;
+        // only the power's own night vision is endless; a potion keeps its full strength
+        var effect = entity.getEffect(net.minecraft.world.effect.MobEffects.NIGHT_VISION);
+        if (effect == null || !effect.isInfiniteDuration()) return;
+        info.setReturnValue(info.getReturnValue() * strength);
     }
 }

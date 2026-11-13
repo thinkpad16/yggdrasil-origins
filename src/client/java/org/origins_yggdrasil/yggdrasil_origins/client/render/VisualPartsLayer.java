@@ -45,6 +45,8 @@ public class VisualPartsLayer extends RenderLayer<AbstractClientPlayer, PlayerMo
     /** The part being drawn and the settings it was given, read by {@link #pivot}. */
     private VisualPart shaping;
     private VisualStyle.Trim shapingTrim;
+    /** The hurt flash of the player being drawn: the parts are body, so they redden with it. */
+    private int overlay = OverlayTexture.NO_OVERLAY;
 
     public VisualPartsLayer(RenderLayerParent<AbstractClientPlayer, PlayerModel<AbstractClientPlayer>> parent,
                             ModelPart skinRoot, ModelPart propRoot, ModelPart bodyRoot,
@@ -72,7 +74,11 @@ public class VisualPartsLayer extends RenderLayer<AbstractClientPlayer, PlayerMo
                        float limbSwing, float limbSwingAmount, float partialTick, float age,
                        float headYaw, float headPitch) {
 
-        if (player.isInvisible() || player.isSpectator()) return;
+        if (player.isSpectator()) return;
+        // invisible to this viewer, not merely invisible: a teammate who sees friendly
+        // invisibles sees the body, and the parts belong to it
+        var viewer = Minecraft.getInstance().player;
+        if (viewer == null ? player.isInvisible() : player.isInvisibleTo(viewer)) return;
         VisualProfile profile = ClientVisuals.of(player.getUUID());
         List<VisualPart> parts = profile.parts();
         if (parts.isEmpty()) return;
@@ -85,11 +91,15 @@ public class VisualPartsLayer extends RenderLayer<AbstractClientPlayer, PlayerMo
         // glowing parts breathe slightly - one factor per frame, no extra maths
         float pulse = 0.78F + 0.22F * (0.5F + 0.5F * Mth.sin(age * 0.08F));
 
-        boolean helmet = wearsArmor(player, EquipmentSlot.HEAD);
+        // anything on the head covers it: a carved pumpkin or a skull is drawn there just as a
+        // helmet is, and a horn would poke straight through it
+        boolean helmet = !player.getItemBySlot(EquipmentSlot.HEAD).isEmpty();
         boolean elytra = player.getItemBySlot(EquipmentSlot.CHEST)
             .getItem() instanceof net.minecraft.world.item.ElytraItem;
-        // an elytra covers the back like a chestplate does, and it has wings of its own
-        boolean chest = wearsArmor(player, EquipmentSlot.CHEST) || elytra;
+        // an elytra covers only the back (handled per part below) - not the chest, the
+        // shoulders or the arms, so it does not count as a chestplate
+        boolean chest = wearsArmor(player, EquipmentSlot.CHEST);
+        overlay = net.minecraft.client.renderer.entity.LivingEntityRenderer.getOverlayCoords(player, 0.0F);
         // the part colour is multiplied by the class tint, so a dark tint would crush it twice:
         // solid parts take half the saturation, glowing ones take it in full
         int glowTint = profile.tint();
@@ -106,6 +116,12 @@ public class VisualPartsLayer extends RenderLayer<AbstractClientPlayer, PlayerMo
             if (!worn(style, profile, part)) continue;
             switch (part.anchor()) {
                 case HEAD -> {
+                    // the list is in data order, so a head part can follow a body one: the
+                    // body transform must come off first, or the head part hangs off the chest
+                    if (body) {
+                        pose.popPose();
+                        body = false;
+                    }
                     if (!head) {
                         pose.pushPose();
                         getParentModel().head.translateAndRotate(pose);
@@ -175,7 +191,8 @@ public class VisualPartsLayer extends RenderLayer<AbstractClientPlayer, PlayerMo
                     pose.pushPose();
                     getParentModel().leftArm.translateAndRotate(pose);
                     pose.translate(-narrow, 0.0F, 0.0F);
-                    shape(pose, part, trim);
+                    // the pair is mirrored: a nudge outward is outward on both arms
+                    shapeMirrored(pose, trim);
                     detail(pose, out.props(), light, ownTint, armPiece(part, true));
                     pose.popPose();
                 }
@@ -184,6 +201,7 @@ public class VisualPartsLayer extends RenderLayer<AbstractClientPlayer, PlayerMo
         }
         shaping = null;
         shapingTrim = null;
+        overlay = OverlayTexture.NO_OVERLAY;
         if (head) pose.popPose();
         if (body) pose.popPose();
     }
@@ -419,6 +437,13 @@ public class VisualPartsLayer extends RenderLayer<AbstractClientPlayer, PlayerMo
         }
     }
 
+    /** {@link #shape} for the left one of a mirrored pair: sideways moves the other way. */
+    private static void shapeMirrored(PoseStack pose, VisualStyle.Trim trim) {
+        if (trim.dx() != 0.0F || trim.dy() != 0.0F || trim.dz() != 0.0F) {
+            pose.translate(-trim.dx() / 16.0F, trim.dy() / 16.0F, trim.dz() / 16.0F);
+        }
+    }
+
     /** The pivot for whatever the layer is drawing at this moment. */
     private boolean pivot(PoseStack pose, ModelPart piece) {
         return pivot(pose, piece, shaping, shapingTrim);
@@ -440,12 +465,16 @@ public class VisualPartsLayer extends RenderLayer<AbstractClientPlayer, PlayerMo
 
         pose.pushPose();
         pose.translate(piece.x / 16.0F, piece.y / 16.0F, piece.z / 16.0F);
-        if (trim.roll() != 0.0F) pose.mulPose(com.mojang.math.Axis.ZP.rotation(trim.roll()));
+        // a pair is mirrored about the middle: the left piece (+x in model space) turns the
+        // other way, so a roll or a variant tilts both ears, horns or wings outward together
+        // instead of leaning one in and one out. Pieces on the middle line are left alone.
+        float side = piece.x > 0.01F ? -1.0F : 1.0F;
+        if (trim.roll() != 0.0F) pose.mulPose(com.mojang.math.Axis.ZP.rotation(trim.roll() * side));
         if (hasShape) {
             float[] v = shapes[trim.variant()];
             if (v[1] != 0.0F) pose.mulPose(com.mojang.math.Axis.XP.rotation(v[1]));
-            if (v[2] != 0.0F) pose.mulPose(com.mojang.math.Axis.YP.rotation(v[2]));
-            if (v[3] != 0.0F) pose.mulPose(com.mojang.math.Axis.ZP.rotation(v[3]));
+            if (v[2] != 0.0F) pose.mulPose(com.mojang.math.Axis.YP.rotation(v[2] * side));
+            if (v[3] != 0.0F) pose.mulPose(com.mojang.math.Axis.ZP.rotation(v[3] * side));
             if (v[0] != 1.0F) pose.scale(v[0], v[0], v[0]);
         }
         if (hasStretch) {
@@ -761,7 +790,7 @@ public class VisualPartsLayer extends RenderLayer<AbstractClientPlayer, PlayerMo
                 // a positive zRot lifts the tip (in model space +Y points down).
                 // Wings open on the way up and fold on landing, and they take a moment over
                 // it: snapping between the two poses was the harshest thing on the model.
-                float open = wingOpen(player, !player.onGround());
+                float open = wingOpen(player, !player.onGround(), age);
                 float beat = Mth.sin(age * 0.22F) * (0.03F + 0.13F * open);
                 float sweep = Mth.lerp(open, 0.52F, 0.30F);
                 float lift = Mth.lerp(open, -0.32F, 0.34F) + beat;
@@ -1210,7 +1239,7 @@ public class VisualPartsLayer extends RenderLayer<AbstractClientPlayer, PlayerMo
             ModelPart part = child(root, name);
             if (part == null) continue;
             boolean pivoted = pivot(pose, part);
-            part.render(pose, consumer, light, OverlayTexture.NO_OVERLAY, color);
+            part.render(pose, consumer, light, overlay, color);
             if (pivoted) pose.popPose();
         }
         // the lit detail goes on in a second pass, after every piece has had the first one:
@@ -1251,17 +1280,33 @@ public class VisualPartsLayer extends RenderLayer<AbstractClientPlayer, PlayerMo
         part.zScale = scale;
     }
 
-    /** How far each player's wings are open, eased so they never snap between poses. */
-    private static final java.util.Map<AbstractClientPlayer, Float> WING_OPEN =
+    /**
+     * How far each player's wings are open, eased so they never snap between poses:
+     * {open, the age it was last eased at}.
+     */
+    private static final java.util.Map<AbstractClientPlayer, float[]> WING_OPEN =
         new java.util.WeakHashMap<>();
 
-    private static float wingOpen(AbstractClientPlayer player, boolean flying) {
+    /**
+     * Eased by the game time that passed, not once per draw: per draw, wings opened eight
+     * times faster at 240 fps than at 30, and a second draw of the same player in one frame
+     * (the shader shadow pass, an inventory preview) pushed them along again.
+     */
+    private static float wingOpen(AbstractClientPlayer player, boolean flying, float age) {
         float target = flying ? 1.0F : 0.0F;
-        float open = WING_OPEN.getOrDefault(player, target);
-        open += (target - open) * 0.06F;
-        if (Math.abs(target - open) < 0.004F) open = target;
-        WING_OPEN.put(player, open);
-        return open;
+        float[] state = WING_OPEN.get(player);
+        if (state == null) {
+            WING_OPEN.put(player, new float[] {target, age});
+            return target;
+        }
+        float ticks = Mth.clamp(age - state[1], 0.0F, 20.0F);
+        state[1] = age;
+        if (ticks > 0.0F) {
+            // about a sixth of the way per tick - what the old per-frame step gave at ~60 fps
+            state[0] += (target - state[0]) * (1.0F - (float) Math.pow(0.83, ticks));
+            if (Math.abs(target - state[0]) < 0.004F) state[0] = target;
+        }
+        return state[0];
     }
 
     /** Parts come from data - a missing one must not bring down the whole world render. */

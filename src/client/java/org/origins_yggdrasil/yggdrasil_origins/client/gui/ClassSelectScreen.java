@@ -509,21 +509,40 @@ public class ClassSelectScreen extends Screen {
     private net.minecraft.world.entity.LivingEntity portraitStand() {
         if (minecraft == null || minecraft.player == null || minecraft.level == null) return null;
         if (stand == null || stand.level() != minecraft.level) {
+            // the stand shares the player's profile (that is where the skin comes from), so it
+            // would also read their game mode off the tab list - and a spectator is drawn as a
+            // floating head with no class parts at all. The portrait is never a spectator.
             stand = new net.minecraft.client.player.RemotePlayer(
-                minecraft.level, minecraft.player.getGameProfile());
+                    minecraft.level, minecraft.player.getGameProfile()) {
+                @Override
+                public boolean isSpectator() {
+                    return false;
+                }
+
+                // a fresh entity shows no outer skin layer (hat, jacket, sleeves) - take the
+                // player's own choice, so the portrait wears the skin they actually have
+                @Override
+                public boolean isModelPartShown(net.minecraft.world.entity.player.PlayerModelPart part) {
+                    var self = minecraft.player;
+                    return self != null && self.isModelPartShown(part);
+                }
+            };
         }
         // the portrait rotation was tuned against the real player, so the stand copies its
         // bearing exactly and only the equipment differs
         var self = minecraft.player;
         stand.setPos(self.getX(), self.getY(), self.getZ());
-        stand.setYRot(self.getYRot());
-        stand.yRotO = self.yRotO;
-        stand.setXRot(self.getXRot());
-        stand.xRotO = self.xRotO;
-        stand.yHeadRot = self.yHeadRot;
-        stand.yHeadRotO = self.yHeadRotO;
-        stand.yBodyRot = self.yBodyRot;
-        stand.yBodyRotO = self.yBodyRotO;
+        // head and body face the same way: copying both from the player kept whatever twist
+        // they had between them, and the portrait looked over its shoulder
+        // 180 is "facing the viewer" in an inventory render, as vanilla's own preview uses
+        stand.setYRot(180.0F);
+        stand.yRotO = 180.0F;
+        stand.yHeadRot = 180.0F;
+        stand.yHeadRotO = 180.0F;
+        stand.yBodyRot = 180.0F;
+        stand.yBodyRotO = 180.0F;
+        // it never ticks, so it would count as airborne forever - and spread its wings
+        stand.setOnGround(true);
         // always upright: the portrait must not copy a swim, a crawl or a glide
         stand.setPose(net.minecraft.world.entity.Pose.STANDING);
         stand.setXRot(0.0F);

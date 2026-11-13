@@ -27,8 +27,14 @@ public abstract class LavaSightMixin {
         Entity entity = camera.getEntity();
         if (entity != net.minecraft.client.Minecraft.getInstance().player) return;
         if (camera.getFluidInCamera() != FogType.LAVA) return;
-        // the numbers vanilla itself uses for a fire-resistant entity
+        // a spectator and a fire-resistant player already see further than this
+        if (entity.isSpectator()) return;
+        if (entity instanceof net.minecraft.world.entity.LivingEntity living
+                && living.hasEffect(net.minecraft.world.effect.MobEffects.FIRE_RESISTANCE)) {
+            return;
+        }
+        // the numbers vanilla 1.21.1 itself uses for a fire-resistant entity
         RenderSystem.setShaderFogStart(0.0F);
-        RenderSystem.setShaderFogEnd(3.0F);
+        RenderSystem.setShaderFogEnd(5.0F);
     }
 }

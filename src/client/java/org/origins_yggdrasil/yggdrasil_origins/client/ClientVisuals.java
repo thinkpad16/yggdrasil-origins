@@ -44,7 +44,7 @@ public final class ClientVisuals {
 
     public static VisualProfile of(UUID player) {
         if (preview != null) return preview;
-        if (!YggdrasilOrigins.config().enableVisuals) return VisualProfile.NONE;
+        if (!YggdrasilOrigins.config().showVisuals) return VisualProfile.NONE;
         return raw(player);
     }
 
@@ -91,9 +91,13 @@ public final class ClientVisuals {
     /** The player left the world - the profile is no longer needed. */
     public static void forget(UUID id) {
         PROFILES.remove(id);
+        STYLES.remove(id);
     }
 
     public static void clear() {
         PROFILES.clear();
+        STYLES.clear();
+        preview = null;
+        previewStyle = null;
     }
 }

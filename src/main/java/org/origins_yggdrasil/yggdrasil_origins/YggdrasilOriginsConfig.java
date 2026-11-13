@@ -53,6 +53,12 @@ public class YggdrasilOriginsConfig {
 
     public boolean removeVanillaOrigins = true;
     public boolean enableVisuals = true;
+    /**
+     * The player's own switch for seeing class looks on this client. Separate from
+     * {@code enableVisuals}: in singleplayer and LAN the client and the server share this
+     * file, and a personal preference must not turn hitboxes and looks off for everyone.
+     */
+    public boolean showVisuals = true;
     public boolean enableHud = true;
     public List<String> disabledOrigins = new ArrayList<>();
     public int graceSeconds = 30;

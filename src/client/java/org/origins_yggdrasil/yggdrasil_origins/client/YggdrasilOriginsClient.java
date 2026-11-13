@@ -36,6 +36,9 @@ public class YggdrasilOriginsClient implements ClientModInitializer {
             (handler, client) -> {
                 ClientHud.clear();
                 ClientVisuals.clear();
+                // the next server or world must not inherit lava walking, dimmed night
+                // vision or lava sight from this one
+                org.origins_yggdrasil.yggdrasil_origins.power.ClientFlags.reset();
             });
 
         // The look pickers are parked (see VisualStyle#EDITABLE), so this opens nothing. The
@@ -54,6 +57,11 @@ public class YggdrasilOriginsClient implements ClientModInitializer {
         net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientEntityEvents.ENTITY_UNLOAD.register(
             (entity, world) -> {
                 if (entity instanceof net.minecraft.world.entity.player.Player player) {
+                    // never our own: a respawn or a change of dimension unloads the old body
+                    // of this very player, and the server sends the profile only on join -
+                    // forgetting it here left the new body with a vanilla hitbox and no looks
+                    var self = net.minecraft.client.Minecraft.getInstance().getUser().getProfileId();
+                    if (player.getUUID().equals(self)) return;
                     ClientVisuals.forget(player.getUUID());
                 }
             });

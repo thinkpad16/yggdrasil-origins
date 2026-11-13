@@ -23,10 +23,9 @@ public abstract class PlayerDimensionsMixin {
         VisualProfile profile = VisualSource.get(self);
         if (profile.isDefault()) return;
 
-        EntityDimensions base = info.getReturnValue();
-        float width = base.width() * profile.width();
-        float height = base.height() * profile.height();
-        info.setReturnValue(EntityDimensions.scalable(width, height)
-            .withEyeHeight(base.eyeHeight() * profile.height()));
+        // scale(), not a fresh box: it carries the eye height and the attachment points
+        // (where a boat or a horse seats the player) along, and leaves fixed poses alone.
+        // A fresh box lost the seat and every scaled player rode half a block above it.
+        info.setReturnValue(info.getReturnValue().scale(profile.width(), profile.height()));
     }
 }

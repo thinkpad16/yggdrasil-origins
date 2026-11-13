@@ -119,6 +119,34 @@ Work since 1.0.0. Minecraft 1.21.1, Fabric.
   see-through. `check_uv` now fails the build on any skin-mesh piece whose UV leaves the
   skin, or any prop whose UV leaves the atlas.
 - The werewolf's teeth are gone; it keeps its ears and its tail. 56 elements.
+- **The brow and the hair tuft read the right part of the skin.** At UV (0,0) their faces
+  landed in the skin's unused corner - black on a downloaded skin, empty on a default one.
+  The brow now takes the forehead and hairline, the tuft the top of the head.
+- **The picker portrait is a whole figure in any game mode.** It shared the player's
+  profile, so a spectator's portrait was a floating head with no class looks. It also wears
+  the outer skin layer now, faces the viewer square-on, and keeps its wings folded.
+- **Your own looks and hitbox survive death and a change of dimension.** The old body's
+  unload made the client forget its own profile, which the server sends only on join.
+- **A seated player sits in the seat**: the scaled hitbox dropped the vanilla riding point,
+  so every scaled player rode half a block above a boat, cart or horse.
+- **An elytra is not a chestplate**: it hides what is on the back, no longer the gorget,
+  the sash or the arm pieces. Anything on the head (a pumpkin, a skull) covers head parts.
+- **Parts flash red with the body when hurt**, and show on an invisible teammate whose
+  body you can see.
+- **Mirrored pairs mirror**: a roll, a variant tilt or a sideways nudge turns both ears,
+  horns, wings or arm pieces outward together instead of one in and one out. The
+  first-person hand no longer adds the chestplate's pixel to a bare arm.
+- **Wings open at the same speed at any frame rate**, and a second draw in one frame (the
+  shader shadow pass) no longer pushes them along.
+- **Night-vision strength dims only the class's own night vision**, never a potion; lava
+  sight is the vanilla fire-resistance view and never worse than what a spectator or a
+  fire-resistant player already has; fluid walking agrees between client and server
+  (sneaking sinks on both, and only water-tagged fluids count as water).
+- **Leaving a server forgets its powers on the client**: lava walking, dimmed night vision
+  and lava sight no longer follow the player to the next world.
+- **The visuals key is the player's own.** It wrote the shared config, so in singleplayer
+  and LAN it switched looks and hitboxes off on the server for everyone. It now has a
+  setting of its own, `showVisuals`.
 
 ### Engine
 

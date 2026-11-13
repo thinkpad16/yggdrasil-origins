@@ -48,6 +48,7 @@ public final class FirstPersonParts {
         VisualProfile profile = ClientVisuals.of(player.getUUID());
         if (profile.parts().isEmpty()) return;
         boolean chest = player.getItemBySlot(EquipmentSlot.CHEST).getItem() instanceof ArmorItem;
+        int overlay = net.minecraft.client.renderer.entity.LivingEntityRenderer.getOverlayCoords(player, 0.0F);
         boolean left = side == HumanoidArm.LEFT;
         ModelPart arm = left ? model.leftArm : model.rightArm;
         VisualStyle style = ClientVisuals.styleOf(player.getUUID());
@@ -70,18 +71,20 @@ public final class FirstPersonParts {
 
             pose.pushPose();
             arm.translateAndRotate(pose);
-            // the same pixel the third-person layer accounts for: a slim arm is narrower
-            // on its outer side by a whole pixel, and armour is wider by one
-            float out = chest ? -1.0F : (VisualPartsLayer.slimArms(player) ? 1.0F : 0.0F);
+            // the same pixel the third-person layer accounts for: a slim arm is narrower on
+            // its outer side by a whole pixel. Armour is not: the first-person hand is always
+            // drawn bare, so the chestplate's extra pixel would leave the piece floating
+            float out = VisualPartsLayer.slimArms(player) ? 1.0F : 0.0F;
             if (out != 0.0F) pose.translate((left ? -out : out) / 16.0F, 0.0F, 0.0F);
             if (trim.dx() != 0.0F || trim.dy() != 0.0F || trim.dz() != 0.0F) {
-                pose.translate(trim.dx() / 16.0F, trim.dy() / 16.0F, trim.dz() / 16.0F);
+                // mirrored like the third-person pair: outward on both arms
+                pose.translate((left ? -trim.dx() : trim.dx()) / 16.0F, trim.dy() / 16.0F, trim.dz() / 16.0F);
             }
             // the same half scale the third person view draws double-density parts at
             pose.scale(0.5F, 0.5F, 0.5F);
             boolean pivoted = VisualPartsLayer.pivot(pose, piece, part, trim);
             piece.render(pose, buffers.getBuffer(RenderType.entityCutoutNoCull(VisualParts.TEXTURE)),
-                light, OverlayTexture.NO_OVERLAY, 0xFF000000 | (colour & 0xFFFFFF));
+                light, overlay, 0xFF000000 | (colour & 0xFFFFFF));
             if (pivoted) pose.popPose();
             pose.popPose();
         }

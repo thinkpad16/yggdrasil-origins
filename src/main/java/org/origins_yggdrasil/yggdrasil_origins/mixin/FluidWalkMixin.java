@@ -18,6 +18,8 @@ public abstract class FluidWalkMixin {
     private void yggdrasil$walkOnFluid(FluidState state, CallbackInfoReturnable<Boolean> info) {
         LivingEntity self = (LivingEntity) (Object) this;
         if (!(self instanceof ServerPlayer player)) return;
+        // sneaking sinks, as the client predicts: otherwise the two disagree and it stutters
+        if (player.isShiftKeyDown()) return;
         boolean lava = state.is(FluidTags.LAVA);
         if (!lava && !state.is(FluidTags.WATER)) return;
         if (PowerEngine.INSTANCE.walksOnFluid(player, lava)) info.setReturnValue(true);

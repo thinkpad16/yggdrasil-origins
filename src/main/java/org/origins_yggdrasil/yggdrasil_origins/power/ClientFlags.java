@@ -20,6 +20,11 @@ public final class ClientFlags {
 
     private ClientFlags() { }
 
+    /** Back to a player with no powers - on leaving a server. */
+    public static void reset() {
+        set(false, false, false, 1f, 1f, false, false);
+    }
+
     public static void set(boolean lava, boolean water, boolean glow, float nightVision, float swim,
                            boolean swimsInLava, boolean seesInLava) {
         walkOnLava = lava;

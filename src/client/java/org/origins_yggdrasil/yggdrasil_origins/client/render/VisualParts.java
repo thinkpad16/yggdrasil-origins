@@ -202,22 +202,28 @@ public final class VisualParts {
                 .texOffs(2, 9).addBox(-0.5F, -1.5F, -0.9F, 1.0F, 2.0F, 1.0F, new CubeDeformation(-0.1F)),
             PartPose.offsetAndRotation(3.4F, -7.4F, 0.0F, 0.0F, 0.0F, 0.25F));
 
-        // brow: a ridge above the eyes with a faint bridge of the nose
+        // brow: a ridge above the eyes with a faint bridge of the nose.
+        // UVs at (7,7): a box's front face starts at (u + depth, v + depth), so this lands on
+        // the top rows of the head's front (8..16, 8..16) - the player's own forehead and
+        // hairline. At (0,0) it landed in the unused corner of the skin, which a downloaded
+        // skin fills with black and the default skins leave empty.
         root.addOrReplaceChild(BROW,
             CubeListBuilder.create()
-                .texOffs(0, 0).addBox(-4.0F, -1.3F, -0.6F, 8.0F, 1.4F, 1.1F)
-                .texOffs(0, 0).addBox(-4.3F, -1.5F, -0.7F, 2.4F, 1.4F, 1.2F, new CubeDeformation(-0.15F))
-                .texOffs(0, 0).addBox(1.9F, -1.5F, -0.7F, 2.4F, 1.4F, 1.2F, new CubeDeformation(-0.15F))
-                .texOffs(0, 0).addBox(-1.1F, -0.7F, -0.7F, 2.2F, 1.1F, 1.1F, new CubeDeformation(-0.2F)),
+                .texOffs(7, 7).addBox(-4.0F, -1.3F, -0.6F, 8.0F, 1.4F, 1.1F)
+                .texOffs(7, 7).addBox(-4.3F, -1.5F, -0.7F, 2.4F, 1.4F, 1.2F, new CubeDeformation(-0.15F))
+                .texOffs(7, 7).addBox(1.9F, -1.5F, -0.7F, 2.4F, 1.4F, 1.2F, new CubeDeformation(-0.15F))
+                .texOffs(7, 7).addBox(-1.1F, -0.7F, -0.7F, 2.2F, 1.1F, 1.1F, new CubeDeformation(-0.2F)),
             PartPose.offset(0.0F, -4.5F, -4.2F));
 
-        // hair tuft: four strands of different height
+        // hair tuft: four strands of different height, painted from the top of the head
+        // (8..16, 0..8 on the skin) - the hair the player already has. (0,0) was the unused
+        // corner of the skin, see the brow above.
         root.addOrReplaceChild(HAIR_TUFT,
             CubeListBuilder.create()
-                .texOffs(0, 0).addBox(-3.0F, -1.5F, -3.0F, 3.0F, 2.0F, 3.0F)
-                .texOffs(0, 0).addBox(0.5F, -2.0F, -2.0F, 3.0F, 2.0F, 3.0F)
-                .texOffs(0, 0).addBox(-1.5F, -1.5F, 0.5F, 3.0F, 2.0F, 3.0F)
-                .texOffs(0, 0).addBox(-1.0F, -2.6F, -1.0F, 2.0F, 2.0F, 2.0F, new CubeDeformation(-0.2F)),
+                .texOffs(8, 0).addBox(-3.0F, -1.5F, -3.0F, 3.0F, 2.0F, 3.0F)
+                .texOffs(9, 1).addBox(0.5F, -2.0F, -2.0F, 3.0F, 2.0F, 3.0F)
+                .texOffs(10, 2).addBox(-1.5F, -1.5F, 0.5F, 3.0F, 2.0F, 3.0F)
+                .texOffs(11, 1).addBox(-1.0F, -2.6F, -1.0F, 2.0F, 2.0F, 2.0F, new CubeDeformation(-0.2F)),
             PartPose.offset(0.0F, -8.0F, 0.0F));
 
         return LayerDefinition.create(mesh, 64, 64);
