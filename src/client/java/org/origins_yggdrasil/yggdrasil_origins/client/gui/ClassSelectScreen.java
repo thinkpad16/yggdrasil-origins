@@ -245,6 +245,22 @@ public class ClassSelectScreen extends Screen {
         return ClientClasses.layers().indexOf(layer);
     }
 
+    /** The names chosen on the steps before this one ("Geonite"), or null on the first step. */
+    private Component chosenBefore() {
+        net.minecraft.network.chat.MutableComponent names = null;
+        for (ClientClasses.LayerInfo other : ClientClasses.layers()) {
+            if (other.id().equals(layer.id())) break;
+            var chosenId = ClientClasses.chosen(other.id());
+            if (chosenId.isEmpty()) continue;
+            for (ClientClasses.ClassInfo info : other.classes()) {
+                if (!info.id().equals(chosenId.get())) continue;
+                names = names == null ? info.name().copy() : names.append(" · ").append(info.name());
+                break;
+            }
+        }
+        return names;
+    }
+
     // ---------------------------------------------------------------- layout
 
     @Override
@@ -548,8 +564,20 @@ public class ClassSelectScreen extends Screen {
         titlePose.pushPose();
         titlePose.translate(MARGIN + 2, MARGIN + 1 - slide / 2f, 0);
         titlePose.scale(1.5f, 1.5f, 1f);
-        graphics.drawString(font, title, 1, 1, withAlpha(0x000000, 0.55f * in), false);
-        graphics.drawString(font, title, 0, 0, withAlpha(RGB_ACCENT, in), false);
+        // the layer's own title: the screen carries on from step to step, so the title it
+        // was opened with ("Origin") would otherwise stay on the path step too
+        Component heading = readOnly ? title : layer.title();
+        graphics.drawString(font, heading, 1, 1, withAlpha(0x000000, 0.55f * in), false);
+        graphics.drawString(font, heading, 0, 0, withAlpha(RGB_ACCENT, in), false);
+        // on a later step, what was chosen before it: picking a path, you see whose path
+        Component before = readOnly ? null : chosenBefore();
+        if (before != null) {
+            int at = font.width(heading) + 8;
+            graphics.drawString(font, "·", at, 0, withAlpha(RGB_DIM, 0.8f * in), false);
+            at += font.width("·") + 6;
+            graphics.drawString(font, before, at + 1, 1, withAlpha(0x000000, 0.55f * in), false);
+            graphics.drawString(font, before, at, 0, withAlpha(RGB_TEXT, 0.9f * in), false);
+        }
         titlePose.popPose();
         int underline = (int) ((listW + 40) * in);
         graphics.fillGradient(MARGIN + 2, MARGIN + 17, MARGIN + 2 + underline, MARGIN + 18,

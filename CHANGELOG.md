@@ -159,6 +159,10 @@ Work since 1.0.0. Minecraft 1.21.1, Fabric.
 - **A mane is the colour of the player's hair**, read off their skin, instead of one brown for
   everybody.
 
+- **The picker's heading follows the step**: the path step was still headed "Origin". It now
+  reads "Path · <origin>", naming the origin the path is for.
+- **Geonite's Stonecaller path is amethyst**: its stone shards and fists take a violet tint.
+
 ### Engine
 
 - **`fluid_height`** condition: how deep the player stands in water or lava.
