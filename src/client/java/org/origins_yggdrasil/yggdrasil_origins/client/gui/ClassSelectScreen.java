@@ -59,7 +59,7 @@ public class ClassSelectScreen extends Screen {
     private static final long IN_MS = 260L;
     private static final long FADE_MS = 170L;
 
-    private final ClientClasses.LayerInfo layer;
+    private ClientClasses.LayerInfo layer;
     private final List<ClientClasses.ClassInfo> shown = new ArrayList<>();
 
     private YggSearchBox search;
@@ -89,13 +89,33 @@ public class ClassSelectScreen extends Screen {
     private long lastClickTime = 0L;
     private long scrolledAt = 0L;
     private long closingAt = 0L;
-    private YggPackets.Choose closing;
     private static final long CLOSE_MS = 140L;
+    /**
+     * A choice (or "back") was sent and the screen stays open for the answer: the server
+     * either opens the next step ({@link #switchTo}) or has nothing left ({@link #synced}).
+     */
+    private boolean waiting;
+    private long waitingSince;
+    /** No answer this long - the screen closes rather than hang. */
+    private static final long WAIT_MS = 3000L;
+
+    /** A scroll bar as last drawn: where it is and how far its content scrolls. */
+    private record Bar(int x, int top, int track, int barY, int barH, float max) {
+        boolean hit(double mouseX, double mouseY) {
+            return mouseX >= x - 3 && mouseX <= x + SCROLL_W + 3 && mouseY >= top && mouseY <= top + track;
+        }
+    }
+    private Bar listBar;
+    private Bar detailBar;
+    /** 0 - nothing, 1 - the list bar, 2 - the details bar, 3 - the portrait. */
+    private int dragging;
+    /** Where on the thumb it was grabbed, so it does not jump under the cursor. */
+    private double grabOffset;
     private int lastClickIndex = -1;
 
     private int listX, listY, listW, listH, detailX, detailY, detailW, detailH;
     private int portraitX, portraitY, portraitW, portraitH;
-    /** Accumulated portrait rotation angle. */
+    /** Portrait turn in degrees: the player drags it round, it never turns by itself. */
     private float portraitSpin;
     /** The bare figure the portrait draws, built once from the player's own profile. */
     private net.minecraft.client.player.RemotePlayer stand;
@@ -143,11 +163,7 @@ public class ClassSelectScreen extends Screen {
         listChangedAt = Util.getMillis();
         for (ClientClasses.ClassInfo info : layer.classes()) {
             if (impactFilter > 0 && tierOf(info.impact()) != impactFilter) continue;
-            if (query.isEmpty()
-                || info.name().getString().toLowerCase(Locale.ROOT).contains(query)
-                || info.description().getString().toLowerCase(Locale.ROOT).contains(query)) {
-                shown.add(info);
-            }
+            if (query.isEmpty() || matches(info, query)) shown.add(info);
         }
         picked = 0;
         if (previous != null) {
@@ -159,6 +175,51 @@ public class ClassSelectScreen extends Screen {
         selectedAt = Util.getMillis();
         updateButtons();
         selectionGlide = picked;
+    }
+
+    /** The languages the pack is written in: a search matches any of them, whatever the game shows. */
+    private static final List<String> SEARCH_LANGUAGES = List.of("en_us", "uk_ua");
+
+    /**
+     * The game language and every pack language count: someone playing in Ukrainian who types
+     * "human" finds Людина, and someone playing in English who types "людина" finds Human.
+     * The id counts too, for anyone who knows it.
+     */
+    private static boolean matches(ClientClasses.ClassInfo info, String query) {
+        if (info.name().getString().toLowerCase(Locale.ROOT).contains(query)) return true;
+        if (info.description().getString().toLowerCase(Locale.ROOT).contains(query)) return true;
+        if (info.id().getPath().replace('_', ' ').contains(query)) return true;
+        for (net.minecraft.locale.Language other : otherLanguages()) {
+            if (other.getOrDefault(info.key("name"), "").toLowerCase(Locale.ROOT).contains(query)
+                || other.getOrDefault(info.key("description"), "").toLowerCase(Locale.ROOT).contains(query)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private static List<net.minecraft.locale.Language> otherTexts = List.of();
+    private static Object otherFrom;
+    private static String otherFor;
+
+    /** The pack languages other than the one the game shows, read once per resource reload. */
+    private static List<net.minecraft.locale.Language> otherLanguages() {
+        var client = net.minecraft.client.Minecraft.getInstance();
+        String selected = client.getLanguageManager().getSelected();
+        var resources = client.getResourceManager();
+        if (otherFrom != resources || !selected.equals(otherFor)) {
+            List<net.minecraft.locale.Language> read = new ArrayList<>();
+            for (String code : SEARCH_LANGUAGES) {
+                if (code.equals(selected)) continue;
+                // en_us underneath, as the game itself does: a key missing in Ukrainian falls back
+                read.add(net.minecraft.client.resources.language.ClientLanguage.loadFrom(
+                    resources, code.equals("en_us") ? List.of("en_us") : List.of("en_us", code), false));
+            }
+            otherTexts = List.copyOf(read);
+            otherFrom = resources;
+            otherFor = selected;
+        }
+        return otherTexts;
     }
 
     /** Zero impact counts together with low - it has no icon of its own. */
@@ -304,29 +365,73 @@ public class ClassSelectScreen extends Screen {
 
     private void choose() {
         ClientClasses.ClassInfo info = selected();
-        if (readOnly || info == null || minecraft == null || closingAt > 0L) return;
-        // a short fade first, then the packet and the close - no abrupt jump
-        closing = new YggPackets.Choose(layer.id().toString(), info.id().toString());
-        closingAt = Util.getMillis();
+        if (readOnly || info == null || minecraft == null || waiting || closingAt > 0L) return;
+        ClientPlayNetworking.send(new YggPackets.Choose(layer.id().toString(), info.id().toString()));
+        startWaiting();
     }
 
-    /** Finishes the fade and sends the choice. */
+    private void goBack() {
+        if (minecraft == null || waiting || closingAt > 0L) return;
+        ClientPlayNetworking.send(new YggPackets.Back(layer.id().toString()));
+        startWaiting();
+    }
+
+    /**
+     * The screen stays open after a choice: the next step arrives in it, so nothing blinks
+     * and the cursor stays where it was. Closing and reopening re-grabbed the mouse, which
+     * put it back in the middle of the screen every time.
+     */
+    private void startWaiting() {
+        waiting = true;
+        waitingSince = Util.getMillis();
+        if (confirm != null) confirm.active = false;
+    }
+
+    /** A picker that chooses, as opposed to the read-only "my origin" view. */
+    public boolean isPicker() {
+        return !readOnly;
+    }
+
+    /** The server opened the next step (or the previous one): show it in this same screen. */
+    public void switchTo(ClientClasses.LayerInfo next) {
+        layer = next;
+        waiting = false;
+        closingAt = 0L;
+        picked = 0;
+        impactFilter = -1;
+        listScrollTarget = 0;
+        listScroll = 0f;
+        detailScrollTarget = 0;
+        detailScroll = 0f;
+        selectionGlide = -1f;
+        dragging = 0;
+        long now = Util.getMillis();
+        listChangedAt = now;
+        selectedAt = now;
+        rowsChangedAt = now;
+        // widgets only: the background, the panels and the open animation carry on as they are
+        rebuildWidgets();
+    }
+
+    /** New data arrived; if this screen was waiting and nothing is left to choose, it closes. */
+    public void synced() {
+        if (waiting && ClientClasses.pending().isEmpty()) beginClose();
+    }
+
+    private void beginClose() {
+        waiting = false;
+        if (closingAt == 0L) closingAt = Util.getMillis();
+    }
+
+    /** A short fade to the world, then the screen goes. */
     private void finishClosing(GuiGraphics graphics) {
+        if (waiting && Util.getMillis() - waitingSince > WAIT_MS) beginClose();
         if (closingAt == 0L) return;
         float progress = Mth.clamp((Util.getMillis() - closingAt) / (float) CLOSE_MS, 0f, 1f);
         graphics.fill(0, 0, width, height, withAlpha(0x05060C, progress));
         if (progress < 1f) return;
-        if (closing != null && minecraft != null) {
-            ClientPlayNetworking.send(closing);
-            closing = null;
-            minecraft.setScreen(null);
-        }
-    }
-
-    private void goBack() {
-        if (minecraft == null) return;
-        ClientPlayNetworking.send(new YggPackets.Back(layer.id().toString()));
-        minecraft.setScreen(null);
+        closingAt = 0L;
+        if (minecraft != null) minecraft.setScreen(null);
     }
 
     // ---------------------------------------------------------------- animation
@@ -361,8 +466,6 @@ public class ClassSelectScreen extends Screen {
             if (Math.abs(selectionGlide - picked) < 0.004f) selectionGlide = picked;
         }
         portraitPop = Math.max(0f, portraitPop - dt * 5f);
-        portraitSpin += dt * 22f;              // slow portrait rotation
-        if (portraitSpin > 360f) portraitSpin -= 360f;
     }
 
     // ---------------------------------------------------------------- drawing
@@ -523,6 +626,8 @@ public class ClassSelectScreen extends Screen {
                 // player's own choice, so the portrait wears the skin they actually have
                 @Override
                 public boolean isModelPartShown(net.minecraft.world.entity.player.PlayerModelPart part) {
+                    // the cape hangs over the back, which is where the class looks are
+                    if (part == net.minecraft.world.entity.player.PlayerModelPart.CAPE) return false;
                     var self = minecraft.player;
                     return self != null && self.isModelPartShown(part);
                 }
@@ -685,6 +790,9 @@ public class ClassSelectScreen extends Screen {
             float ratio = listScroll / Math.max(1f, (shown.size() - visible) * (float) ROW);
             int barY = top + (int) ((track - barH) * Mth.clamp(ratio, 0f, 1f));
             scrollbar(graphics, listX + dx + listW - PAD - SCROLL_W, top, track, barY, barH, in);
+            listBar = new Bar(listX + listW - PAD - SCROLL_W, top, track, barY, barH, shown.size() - visible);
+        } else {
+            listBar = null;
         }
     }
 
@@ -803,6 +911,9 @@ public class ClassSelectScreen extends Screen {
         int track = bottom - top;
         int maxScroll = Math.max(0, total - track);
         detailScrollTarget = Mth.clamp(detailScrollTarget, 0, maxScroll);
+        // the eased position too: it moves before the target is clamped, so one scroll past the
+        // end pushed the text and the thumb out of the frame for a moment
+        detailScroll = Mth.clamp(detailScroll, 0f, maxScroll);
 
         graphics.enableScissor(x0, top, x1, bottom);
         int y = (int) (top - detailScroll);
@@ -840,8 +951,11 @@ public class ClassSelectScreen extends Screen {
 
         if (maxScroll > 0) {
             int barH = Math.max(16, track * track / Math.max(1, total));
-            int barY = top + (int) ((track - barH) * (detailScroll / (float) maxScroll));
+            int barY = top + (int) ((track - barH) * Mth.clamp(detailScroll / (float) maxScroll, 0f, 1f));
             scrollbar(graphics, detailX + dx + detailW - PAD - SCROLL_W, top, track, barY, barH, in);
+            detailBar = new Bar(detailX + detailW - PAD - SCROLL_W, top, track, barY, barH, maxScroll);
+        } else {
+            detailBar = null;
         }
     }
 
@@ -849,6 +963,23 @@ public class ClassSelectScreen extends Screen {
 
     @Override
     public boolean mouseClicked(double mouseX, double mouseY, int button) {
+        if (button == 0) {
+            // a scroll bar: grab the thumb, or click the track to jump there and keep dragging
+            Bar bar = listBar != null && listBar.hit(mouseX, mouseY) ? listBar
+                : detailBar != null && detailBar.hit(mouseX, mouseY) ? detailBar : null;
+            if (bar != null) {
+                dragging = bar == listBar ? 1 : 2;
+                boolean onThumb = mouseY >= bar.barY() && mouseY <= bar.barY() + bar.barH();
+                grabOffset = onThumb ? mouseY - bar.barY() : bar.barH() / 2.0;
+                dragBar(mouseY);
+                return true;
+            }
+            if (portraitW > 0 && mouseX >= portraitX && mouseX <= portraitX + portraitW
+                && mouseY >= portraitY && mouseY <= portraitY + portraitH) {
+                dragging = 3;
+                return true;
+            }
+        }
         if (button == 0 && mouseX >= listX + PAD && mouseX <= listX + listW - PAD
             && mouseY >= listY + PAD && mouseY <= listY + listH - PAD) {
             int index = (int) ((mouseY - listY - PAD + listScroll) / ROW);
@@ -863,6 +994,45 @@ public class ClassSelectScreen extends Screen {
             }
         }
         return super.mouseClicked(mouseX, mouseY, button);
+    }
+
+    @Override
+    public boolean mouseDragged(double mouseX, double mouseY, int button, double dragX, double dragY) {
+        if (button == 0 && (dragging == 1 || dragging == 2)) {
+            dragBar(mouseY);
+            return true;
+        }
+        if (button == 0 && dragging == 3) {
+            // dragging right turns the figure to the right, about a degree per pixel
+            portraitSpin = (portraitSpin + (float) dragX * 1.2f) % 360f;
+            return true;
+        }
+        return super.mouseDragged(mouseX, mouseY, button, dragX, dragY);
+    }
+
+    @Override
+    public boolean mouseReleased(double mouseX, double mouseY, int button) {
+        if (button == 0 && dragging != 0) {
+            dragging = 0;
+            return true;
+        }
+        return super.mouseReleased(mouseX, mouseY, button);
+    }
+
+    /** Moves the list or the details so the thumb sits under the cursor; it follows at once. */
+    private void dragBar(double mouseY) {
+        Bar bar = dragging == 1 ? listBar : dragging == 2 ? detailBar : null;
+        if (bar == null) return;
+        scrolledAt = Util.getMillis();
+        float room = Math.max(1, bar.track() - bar.barH());
+        float ratio = Mth.clamp((float) (mouseY - grabOffset - bar.top()) / room, 0f, 1f);
+        if (dragging == 1) {
+            listScrollTarget = Math.round(ratio * bar.max());
+            listScroll = listScrollTarget * (float) ROW;
+        } else {
+            detailScrollTarget = Math.round(ratio * bar.max());
+            detailScroll = detailScrollTarget;
+        }
     }
 
     @Override

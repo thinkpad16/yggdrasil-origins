@@ -15,7 +15,11 @@ public class YggdrasilOriginsClient implements ClientModInitializer {
     public void onInitializeClient() {
 
         ClientPlayNetworking.registerGlobalReceiver(YggPackets.Sync.TYPE, (payload, context) ->
-            context.client().execute(() -> ClientClasses.accept(payload.json())));
+            context.client().execute(() -> {
+                ClientClasses.accept(payload.json());
+                // a picker waiting on its own choice learns here whether anything is left
+                if (context.client().screen instanceof ClassSelectScreen picker) picker.synced();
+            }));
 
         ClientPlayNetworking.registerGlobalReceiver(YggPackets.Open.TYPE, (payload, context) ->
             context.client().execute(() -> {
@@ -23,7 +27,16 @@ public class YggdrasilOriginsClient implements ClientModInitializer {
                 if (layerId == null) return;
                 ClientClasses.layer(layerId)
                     .filter(layer -> !layer.classes().isEmpty())
-                    .ifPresent(layer -> context.client().setScreen(new ClassSelectScreen(layer)));
+                    .ifPresent(layer -> {
+                        // the next step goes into the screen that is already open: closing and
+                        // opening a new one blinked the whole screen and put the cursor back
+                        // in the middle
+                        if (context.client().screen instanceof ClassSelectScreen picker && picker.isPicker()) {
+                            picker.switchTo(layer);
+                        } else {
+                            context.client().setScreen(new ClassSelectScreen(layer));
+                        }
+                    });
             }));
 
         ClientPlayNetworking.registerGlobalReceiver(YggPackets.Hud.TYPE, (payload, context) ->

@@ -148,6 +148,17 @@ Work since 1.0.0. Minecraft 1.21.1, Fabric.
   and LAN it switched looks and hitboxes off on the server for everyone. It now has a
   setting of its own, `showVisuals`.
 
+- **The picker stays open between steps.** Choosing an origin used to close the screen and
+  open a new one for the path, so it blinked and the cursor jumped to the middle. The next step
+  now arrives in the same screen, and it closes by itself when nothing is left to choose.
+- **Search finds a name in English or Ukrainian**, whatever language the game is in.
+- **Scroll bars can be clicked and dragged**, and the details bar no longer slips out of its frame
+  when scrolled past the end.
+- **The portrait turns when dragged** instead of spinning on its own, without the cape, and
+  its elements move: the portrait never ticks, so shards, flames and ears used to stand still.
+- **A mane is the colour of the player's hair**, read off their skin, instead of one brown for
+  everybody.
+
 ### Engine
 
 - **`fluid_height`** condition: how deep the player stands in water or lava.

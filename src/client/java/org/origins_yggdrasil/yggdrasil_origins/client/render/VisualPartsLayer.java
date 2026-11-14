@@ -83,6 +83,10 @@ public class VisualPartsLayer extends RenderLayer<AbstractClientPlayer, PlayerMo
         List<VisualPart> parts = profile.parts();
         if (parts.isEmpty()) return;
 
+        // the picker portrait never ticks, so its age stands still and every element froze;
+        // there the clock runs on real time instead (twenty ticks a second, as in the world)
+        if (ClientVisuals.previewing()) age = (net.minecraft.Util.getMillis() % 3_600_000L) / 50.0F;
+
         double distance = Minecraft.getInstance().gameRenderer.getMainCamera().getPosition()
             .distanceToSqr(player.getX(), player.getY(), player.getZ());
         if (distance > ANY_DISTANCE_SQR) return;
@@ -969,7 +973,8 @@ public class VisualPartsLayer extends RenderLayer<AbstractClientPlayer, PlayerMo
                 if (mane != null) {
                     mane.xRot = -limbSwingAmount * 0.10F + Mth.sin(age * 0.031F) * 0.02F;
                 }
-                draw(bodyRoot, pose, out.props(), light, tint, shape);
+                // grey fur in the player's own hair colour, read off their skin
+                draw(bodyRoot, pose, out.props(), light, HairColour.furTint(player, tint), shape);
             }
             case TORC -> {
                 // metal does not flex: it only swings a hair on the collarbone

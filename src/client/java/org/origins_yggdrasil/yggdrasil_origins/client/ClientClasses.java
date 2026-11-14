@@ -37,7 +37,8 @@ public final class ClientClasses {
             return Component.translatable("origin." + id.getNamespace() + "." + id.getPath() + ".name");
         }
 
-        private String key(String suffix) {
+        /** The translation key of one of this origin's texts, e.g. "name". */
+        public String key(String suffix) {
             return "origin." + id.getNamespace() + "." + id.getPath() + "." + suffix;
         }
 
@@ -130,6 +131,16 @@ public final class ClientClasses {
         LAYERS.putAll(layers);
         CHOSEN.clear();
         CHOSEN.putAll(chosen);
+    }
+
+    /** The first required layer with something to choose and nothing chosen yet. */
+    public static Optional<LayerInfo> pending() {
+        for (LayerInfo info : layers()) {
+            if (info.required() && chosen(info.id()).isEmpty() && !info.classes().isEmpty()) {
+                return Optional.of(info);
+            }
+        }
+        return Optional.empty();
     }
 
     public static Optional<LayerInfo> layer(ResourceLocation id) {

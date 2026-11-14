@@ -31,6 +31,11 @@ public final class ClientVisuals {
         preview = profile;
     }
 
+    /** True while the picker portrait is being drawn. */
+    public static boolean previewing() {
+        return preview != null;
+    }
+
     /** The customisation on this player - colours, sizes, shapes they chose. */
     public static org.origins_yggdrasil.yggdrasil_origins.visual.VisualStyle styleOf(UUID player) {
         if (previewStyle != null) return previewStyle;
