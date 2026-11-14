@@ -115,8 +115,11 @@ public class ClassSelectScreen extends Screen {
 
     private int listX, listY, listW, listH, detailX, detailY, detailW, detailH;
     private int portraitX, portraitY, portraitW, portraitH;
-    /** Portrait turn in degrees: the player drags it round, it never turns by itself. */
+    /** Portrait turn in degrees: it turns slowly by itself, and the player can drag it round. */
     private float portraitSpin;
+    /** When the player last turned it by hand: it holds still for {@link #HOLD_MS} after. */
+    private long turnedByHandAt;
+    private static final long HOLD_MS = 5000L;
     /** The bare figure the portrait draws, built once from the player's own profile. */
     private net.minecraft.client.player.RemotePlayer stand;
 
@@ -482,6 +485,10 @@ public class ClassSelectScreen extends Screen {
             if (Math.abs(selectionGlide - picked) < 0.004f) selectionGlide = picked;
         }
         portraitPop = Math.max(0f, portraitPop - dt * 5f);
+        // a slow turn of its own, which pauses while the player is looking at it their way
+        if (dragging != 3 && now - turnedByHandAt > HOLD_MS) {
+            portraitSpin = (portraitSpin + dt * 22f) % 360f;
+        }
     }
 
     // ---------------------------------------------------------------- drawing
@@ -1033,6 +1040,7 @@ public class ClassSelectScreen extends Screen {
         if (button == 0 && dragging == 3) {
             // dragging right turns the figure to the right, about a degree per pixel
             portraitSpin = (portraitSpin + (float) dragX * 1.2f) % 360f;
+            turnedByHandAt = Util.getMillis();
             return true;
         }
         return super.mouseDragged(mouseX, mouseY, button, dragX, dragY);

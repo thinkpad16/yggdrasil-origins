@@ -47,6 +47,8 @@ public class VisualPartsLayer extends RenderLayer<AbstractClientPlayer, PlayerMo
     private VisualStyle.Trim shapingTrim;
     /** The hurt flash of the player being drawn: the parts are body, so they redden with it. */
     private int overlay = OverlayTexture.NO_OVERLAY;
+    /** The frame's partial tick, for the pieces that follow the player's motion between ticks. */
+    private float partialTick;
 
     public VisualPartsLayer(RenderLayerParent<AbstractClientPlayer, PlayerModel<AbstractClientPlayer>> parent,
                             ModelPart skinRoot, ModelPart propRoot, ModelPart bodyRoot,
@@ -104,6 +106,7 @@ public class VisualPartsLayer extends RenderLayer<AbstractClientPlayer, PlayerMo
         // shoulders or the arms, so it does not count as a chestplate
         boolean chest = wearsArmor(player, EquipmentSlot.CHEST);
         overlay = net.minecraft.client.renderer.entity.LivingEntityRenderer.getOverlayCoords(player, 0.0F);
+        this.partialTick = partialTick;
         // the part colour is multiplied by the class tint, so a dark tint would crush it twice:
         // solid parts take half the saturation, glowing ones take it in full
         int glowTint = profile.tint();
@@ -858,11 +861,11 @@ public class VisualPartsLayer extends RenderLayer<AbstractClientPlayer, PlayerMo
             case SCARF -> {
                 ModelPart scarf = child(bodyRoot, VisualParts.SCARF);
                 if (scarf != null) {
-                    // the scarf tail lags while running and sways gently when standing
-                    // half the swing of before, and the stride beat is slower than the legs
-                    scarf.xRot = -Mth.cos(limbSwing * 0.33F) * 0.12F * limbSwingAmount
-                        + Mth.sin(age * 0.062F) * 0.03F;
-                    scarf.zRot = Mth.sin(limbSwing * 0.33F) * 0.05F * limbSwingAmount;
+                    scarf.xRot = 0.0F;
+                    scarf.zRot = 0.0F;
+                    if (scarf.hasChild(VisualParts.SCARF_TAIL)) {
+                        capeSwing(scarf.getChild(VisualParts.SCARF_TAIL), player, partialTick, age);
+                    }
                 }
                 draw(bodyRoot, pose, out.props(), light, tint, VisualParts.SCARF);
             }
@@ -993,9 +996,11 @@ public class VisualPartsLayer extends RenderLayer<AbstractClientPlayer, PlayerMo
                     VisualParts.ROOT_LEFT, VisualParts.ROOT_RIGHT, VisualParts.ROOT_BACK);
             }
             case MOTES -> {
+                // far enough out to clear the body all the way round: at 7 (and 5 front to
+                // back) the motes passed through the chest and shoulders
                 drift(pose, out.glow(), LightTexture.FULL_BRIGHT, dim(glowTint, pulse), age,
                     bodyRoot, new String[] {VisualParts.MOTE_A, VisualParts.MOTE_B,
-                                            VisualParts.MOTE_C}, 7.0F, 6.0F);
+                                            VisualParts.MOTE_C}, 11.0F, 6.0F);
             }
             case FROST_SHARDS -> {
                 ring(pose, out.props(), light, tint, age, bodyRoot,
@@ -1312,6 +1317,40 @@ public class VisualPartsLayer extends RenderLayer<AbstractClientPlayer, PlayerMo
             if (Math.abs(target - state[0]) < 0.004F) state[0] = target;
         }
         return state[0];
+    }
+
+    /**
+     * Moves a hanging piece the way vanilla moves a cape (CapeLayer): it streams back with the
+     * speed the player moves forward at, lifts when they fall and settles when they land,
+     * swings out to the side on a turn, bobs with the stride, and lifts over a sneak.
+     * The numbers are vanilla's, so a scarf and a cape on one player move together.
+     */
+    private static void capeSwing(ModelPart piece, AbstractClientPlayer player, float partialTick, float age) {
+        // the picker portrait never ticks, so its "cloak" lags a whole world behind it - there
+        // the piece just hangs and breathes
+        if (ClientVisuals.previewing()) {
+            piece.xRot = 0.05F + Mth.sin(age * 0.062F) * 0.04F;
+            piece.yRot = 0.0F;
+            piece.zRot = 0.0F;
+            return;
+        }
+        double dx = Mth.lerp(partialTick, player.xCloakO, player.xCloak) - Mth.lerp(partialTick, player.xo, player.getX());
+        double dy = Mth.lerp(partialTick, player.yCloakO, player.yCloak) - Mth.lerp(partialTick, player.yo, player.getY());
+        double dz = Mth.lerp(partialTick, player.zCloakO, player.zCloak) - Mth.lerp(partialTick, player.zo, player.getZ());
+        float body = Mth.rotLerp(partialTick, player.yBodyRotO, player.yBodyRot) * Mth.DEG_TO_RAD;
+        double sin = Mth.sin(body);
+        double cos = -Mth.cos(body);
+        float lift = Mth.clamp((float) dy * 10.0F, -6.0F, 32.0F);
+        float back = Mth.clamp((float) (dx * sin + dz * cos) * 100.0F, 0.0F, 150.0F);
+        float side = Mth.clamp((float) (dx * cos - dz * sin) * 100.0F, -20.0F, 20.0F);
+        float bob = Mth.lerp(partialTick, player.oBob, player.bob);
+        lift += Mth.sin(Mth.lerp(partialTick, player.walkDistO, player.walkDist) * 6.0F) * 32.0F * bob;
+        if (player.isCrouching()) lift += 25.0F;
+        // vanilla's 6 degree rest lean is the scarf's own hang already; a breath on top so a
+        // scarf on a player standing still is not a plank
+        piece.xRot = (back / 2.0F + lift) * Mth.DEG_TO_RAD + Mth.sin(age * 0.062F) * 0.03F;
+        piece.zRot = side / 2.0F * Mth.DEG_TO_RAD;
+        piece.yRot = -side / 2.0F * Mth.DEG_TO_RAD;
     }
 
     /** Parts come from data - a missing one must not bring down the whole world render. */

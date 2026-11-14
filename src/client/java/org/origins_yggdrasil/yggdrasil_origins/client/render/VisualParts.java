@@ -73,6 +73,8 @@ public final class VisualParts {
     public static final String PLATE_RIGHT = "plate_right";
     public static final String BONE_SPUR = "bone_spur";
     public static final String SCARF = "scarf";
+    /** The hanging end of the scarf, hinged at the nape so it can move like a cape. */
+    public static final String SCARF_TAIL = "scarf_tail";
     public static final String WISP_LEFT = "wisp_left";
     public static final String WISP_BACK = "wisp_back";
     public static final String STREAMER_RIGHT = "streamer_right";
@@ -497,14 +499,19 @@ public final class VisualParts {
                 .texOffs(77, 0).addBox(-1.5F, -3.4F, -0.4F, 1.0F, 1.6F, 0.9F, new CubeDeformation(-0.3F)),
             PartPose.offsetAndRotation(-4.0F, 1.5F, 0.0F, 0.0F, 0.0F, -0.45F));
 
-        // a scarf trailing behind the back (vortan)
-        root.addOrReplaceChild(SCARF,
+        // a scarf: the wrap round the neck and the knot stay put, the ends hang from the nape
+        // as a child of their own, so they can stream and swing the way a cape does
+        PartDefinition scarf = root.addOrReplaceChild(SCARF,
             CubeListBuilder.create()
                 .texOffs(0, 38).addBox(-4.0F, 0.0F, -2.6F, 8.0F, 2.0F, 5.0F, none)
-                .texOffs(27, 38).addBox(-1.5F, 1.0F, 2.4F, 3.0F, 7.0F, 1.0F, none)
-                .texOffs(27, 38).addBox(1.0F, 1.4F, 2.5F, 2.0F, 5.0F, 1.0F, new CubeDeformation(-0.1F))
                 .texOffs(0, 38).addBox(-2.0F, -0.4F, 1.8F, 2.0F, 2.0F, 2.0F, new CubeDeformation(-0.2F)),
             PartPose.offset(0.0F, 0.0F, 0.0F));
+        // the same boxes as before, moved by the hinge (0, 1, 2.4) so nothing shifts at rest
+        scarf.addOrReplaceChild(SCARF_TAIL,
+            CubeListBuilder.create()
+                .texOffs(27, 38).addBox(-1.5F, 0.0F, 0.0F, 3.0F, 7.0F, 1.0F, none)
+                .texOffs(27, 38).addBox(1.0F, 0.4F, 0.1F, 2.0F, 5.0F, 1.0F, new CubeDeformation(-0.1F)),
+            PartPose.offset(0.0F, 1.0F, 2.4F));
 
         // glowing wind sparks (sylph)
         root.addOrReplaceChild(WISP_RIGHT,

@@ -163,6 +163,14 @@ Work since 1.0.0. Minecraft 1.21.1, Fabric.
   reads "Path · <origin>", naming the origin the path is for.
 - **Geonite's Stonecaller path is amethyst**: its stone shards and fists take a violet tint.
 
+- **The portrait turns on its own again**, and holds still for five seconds after it was turned
+  by hand.
+- **Lightbearer's motes orbit clear of the body**: at 7 pixels out (5 front to back) they passed
+  through the chest and shoulders; now 11.
+- **The halfling scarf moves like a cape**: its ends hang from the nape and follow vanilla's cape
+  motion - streaming back at speed, lifting in a fall, swinging on a turn, bobbing with the stride
+  and lifting over a sneak - while the wrap and the knot stay on the neck.
+
 ### Engine
 
 - **`fluid_height`** condition: how deep the player stands in water or lava.
