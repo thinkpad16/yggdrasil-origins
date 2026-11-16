@@ -2,10 +2,16 @@
   "type": "apoli:attribute",
   "modifiers": [
     {
-      "id": "yggdrasil_origins:path_half_giant_second_wind_no_roll_count",
-      "attribute": "combat_roll:count",
-      "amount": -1.0,
-      "operation": "add_value"
+      "id": "yggdrasil_origins:path_half_giant_second_wind_no_roll_distance",
+      "attribute": "combat_roll:distance",
+      "amount": -0.15,
+      "operation": "add_multiplied_base"
+    },
+    {
+      "id": "yggdrasil_origins:path_half_giant_second_wind_no_roll_recharge",
+      "attribute": "combat_roll:recharge",
+      "amount": 0.3,
+      "operation": "add_multiplied_base"
     }
   ]
 }

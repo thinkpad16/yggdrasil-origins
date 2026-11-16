@@ -18,8 +18,7 @@
     "yggdrasil_origins:dwarf_short_roll",
     "yggdrasil_origins:dwarf_magic_resistance",
     "yggdrasil_origins:dwarf_deep_reserves",
-    "yggdrasil_origins:dwarf_shield_wall",
-    "yggdrasil_origins:dwarf_lava_sight"
+    "yggdrasil_origins:dwarf_shield_wall"
   ],
   "visual": {
     "parts": [

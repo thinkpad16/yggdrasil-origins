@@ -16,12 +16,6 @@
   },
   "modifiers": [
     {
-      "id": "yggdrasil_origins:path_cantharis_swarm_lone_warrior",
-      "attribute": "attributes_ld:warrior_weapon_damage",
-      "amount": -0.08,
-      "operation": "add_multiplied_base"
-    },
-    {
       "id": "yggdrasil_origins:path_cantharis_swarm_lone_generic.max_health",
       "attribute": "minecraft:generic.max_health",
       "amount": -2.0,
@@ -30,7 +24,7 @@
     {
       "id": "yggdrasil_origins:path_cantharis_swarm_lone_generic.movement_speed",
       "attribute": "minecraft:generic.movement_speed",
-      "amount": -0.05,
+      "amount": -0.10,
       "operation": "add_multiplied_base"
     }
   ]

@@ -4,7 +4,7 @@
     {
       "id": "yggdrasil_origins:path_elf_venomstring_hands_rogue_weapon_damage",
       "attribute": "attributes_ld:rogue_weapon_damage",
-      "amount": 0.06,
+      "amount": 0.03,
       "operation": "add_multiplied_base"
     }
   ]

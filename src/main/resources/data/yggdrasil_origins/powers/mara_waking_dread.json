@@ -4,7 +4,7 @@
     {
       "id": "yggdrasil_origins:mara_waking_dread_0",
       "attribute": "attributes_ld:dagger_damage",
-      "amount": 0.12,
+      "amount": 0.05,
       "operation": "add_multiplied_base"
     },
     {

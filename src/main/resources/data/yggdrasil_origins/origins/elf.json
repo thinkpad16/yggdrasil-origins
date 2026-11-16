@@ -11,8 +11,7 @@
     "yggdrasil_origins:elf_finesse",
     "yggdrasil_origins:elf_frail",
     "yggdrasil_origins:elf_poor_sweeping",
-    "yggdrasil_origins:elf_heavy_weapon_weakness",
-    "yggdrasil_origins:elf_vulnerable"
+    "yggdrasil_origins:elf_heavy_weapon_weakness"
   ],
   "visual": {
     "parts": [

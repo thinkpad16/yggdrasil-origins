@@ -122,7 +122,7 @@ public class YggdrasilOrigins implements ModInitializer {
             if (source.getEntity() instanceof ServerPlayer attacker && attacker != entity && taken > 0.0F) {
                 PowerEngine.INSTANCE.onDealt(attacker, entity);
                 boolean projectile = source.getDirectEntity() != null && source.getDirectEntity() != attacker;
-                PowerEngine.INSTANCE.onDamageLanded(attacker, entity, source, projectile);
+                PowerEngine.INSTANCE.onDamageLanded(attacker, entity, source, projectile, taken);
             }
         });
 

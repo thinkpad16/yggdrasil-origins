@@ -10,7 +10,7 @@
     {
       "id": "yggdrasil_origins:vortan_fists_attack_speed",
       "attribute": "minecraft:generic.attack_speed",
-      "amount": 0.13,
+      "amount": 0.05,
       "operation": "add_multiplied_base"
     }
   ]

@@ -2,15 +2,25 @@
   "type": "apoli:conditioned_attribute",
   "tick_rate": 10,
   "condition": {
-    "type": "apoli:brightness",
-    "comparison": "<",
-    "compare_to": 0.2
+    "type": "apoli:all_of",
+    "conditions": [
+      {
+        "type": "apoli:brightness",
+        "comparison": "<",
+        "compare_to": 0.2
+      },
+      {
+        "type": "apoli:status_effect",
+        "effect": "minecraft:night_vision",
+        "inverted": true
+      }
+    ]
   },
   "modifiers": [
     {
       "id": "yggdrasil_origins:aurelite_light_starved_paladin_weapon_damage",
       "attribute": "attributes_ld:paladin_weapon_damage",
-      "amount": -0.95,
+      "amount": -0.06,
       "operation": "add_multiplied_base"
     },
     {
@@ -28,7 +38,7 @@
     {
       "id": "yggdrasil_origins:aurelite_light_starved_movement_speed",
       "attribute": "minecraft:generic.movement_speed",
-      "amount": -0.06,
+      "amount": -0.10,
       "operation": "add_multiplied_base"
     }
   ]

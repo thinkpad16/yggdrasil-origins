@@ -4,7 +4,7 @@
     {
       "id": "yggdrasil_origins:werewolf_claws_dagger_damage",
       "attribute": "attributes_ld:dagger_damage",
-      "amount": 0.32,
+      "amount": 0.03,
       "operation": "add_multiplied_base"
     }
   ]

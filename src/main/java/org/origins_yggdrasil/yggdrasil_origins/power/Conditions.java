@@ -97,6 +97,9 @@ public final class Conditions {
                 Compare compare = Compare.of(json);
                 return player -> compare.test(player.level().getDayTime() % 24000L);
             }
+            case "daytime":
+                // the world's own day, wherever the player stands; fixed-time dimensions never have one
+                return player -> player.level().isDay();
             case "exposed_to_sun":
                 return player -> {
                     Level level = player.level();
@@ -137,7 +140,14 @@ public final class Conditions {
                 return player -> player.level().dimension().location().equals(dimension);
             }
             case "moving":
-                return player -> player.getDeltaMovement().horizontalDistanceSqr() > 1.0E-5D;
+                // a server-side player's delta movement stays near zero (the client moves it by
+                // packets), so compare against where it stood the last time a tick looked
+                return Conditions::movedSinceLastLook;
+            case "combat_recently": {
+                // hit something or was hit by something living within the last N seconds
+                long ticks = Math.round((json.has("seconds") ? json.get("seconds").getAsDouble() : 5.0D) * 20.0D);
+                return player -> PowerEngine.combatWithin(player, ticks);
+            }
             case "sneaking":
                 return ServerPlayer::isShiftKeyDown;
             case "sprinting":
@@ -395,6 +405,33 @@ public final class Conditions {
             default:
                 return null;
         }
+    }
+
+    // ------------------------------------------------------------------ movement
+
+    /** Where each player stood on the last tick something asked, and on the tick before that. */
+    private static final class Steps {
+        long time = Long.MIN_VALUE;
+        double x, z, prevX, prevZ;
+    }
+
+    private static final java.util.Map<java.util.UUID, Steps> STEPS = new java.util.concurrent.ConcurrentHashMap<>();
+
+    private static boolean movedSinceLastLook(ServerPlayer player) {
+        Steps steps = STEPS.computeIfAbsent(player.getUUID(), id -> new Steps());
+        long now = player.level().getGameTime();
+        if (steps.time != now) {
+            // first look this tick: the old "now" becomes "before"; a long gap means no baseline
+            boolean fresh = steps.time == Long.MIN_VALUE || now - steps.time > 40;
+            steps.prevX = fresh ? player.getX() : steps.x;
+            steps.prevZ = fresh ? player.getZ() : steps.z;
+            steps.x = player.getX();
+            steps.z = player.getZ();
+            steps.time = now;
+        }
+        double dx = steps.x - steps.prevX;
+        double dz = steps.z - steps.prevZ;
+        return dx * dx + dz * dz > 1.0E-4D;
     }
 
     // ------------------------------------------------------------------ block

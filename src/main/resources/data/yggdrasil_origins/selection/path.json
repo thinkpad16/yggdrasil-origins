@@ -63,10 +63,6 @@
       "requires": "yggdrasil_origins:orc"
     },
     {
-      "id": "yggdrasil_origins:path_orc_shieldbreaker",
-      "requires": "yggdrasil_origins:orc"
-    },
-    {
       "id": "yggdrasil_origins:path_dwarf_oreseeker",
       "requires": "yggdrasil_origins:dwarf"
     },
@@ -167,10 +163,6 @@
       "requires": "yggdrasil_origins:human"
     },
     {
-      "id": "yggdrasil_origins:path_human_road",
-      "requires": "yggdrasil_origins:human"
-    },
-    {
       "id": "yggdrasil_origins:path_amberborn_resin",
       "requires": "yggdrasil_origins:amberborn"
     },
@@ -191,10 +183,6 @@
       "requires": "yggdrasil_origins:dragonborn"
     },
     {
-      "id": "yggdrasil_origins:path_ferrine_ironweight",
-      "requires": "yggdrasil_origins:ferrine"
-    },
-    {
       "id": "yggdrasil_origins:path_half_giant_stride",
       "requires": "yggdrasil_origins:half_giant"
     },
@@ -209,10 +197,6 @@
     {
       "id": "yggdrasil_origins:path_lunaris_tide",
       "requires": "yggdrasil_origins:lunaris"
-    },
-    {
-      "id": "yggdrasil_origins:path_mara_ring",
-      "requires": "yggdrasil_origins:mara"
     },
     {
       "id": "yggdrasil_origins:path_serpentfolk_venom",

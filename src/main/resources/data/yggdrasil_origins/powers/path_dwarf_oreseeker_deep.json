@@ -7,21 +7,21 @@
   },
   "modifiers": [
     {
-      "id": "yggdrasil_origins:path_dwarf_oreseeker_deep_block_break_speed",
-      "attribute": "minecraft:player.block_break_speed",
-      "amount": 0.21,
+      "id": "yggdrasil_origins:path_dwarf_oreseeker_deep_movement_speed",
+      "attribute": "minecraft:generic.movement_speed",
+      "amount": 0.08,
       "operation": "add_multiplied_base"
     },
     {
-      "id": "yggdrasil_origins:path_dwarf_oreseeker_deep_luck",
-      "attribute": "minecraft:generic.luck",
-      "amount": 1.0,
-      "operation": "add_value"
+      "id": "yggdrasil_origins:path_dwarf_oreseeker_deep_axe_damage",
+      "attribute": "attributes_ld:axe_damage",
+      "amount": 0.15,
+      "operation": "add_multiplied_base"
     },
     {
-      "id": "yggdrasil_origins:path_dwarf_oreseeker_deep_mining_efficiency",
-      "attribute": "minecraft:player.mining_efficiency",
-      "amount": 1.0,
+      "id": "yggdrasil_origins:path_dwarf_oreseeker_deep_armor",
+      "attribute": "minecraft:generic.armor",
+      "amount": 2.0,
       "operation": "add_value"
     }
   ]

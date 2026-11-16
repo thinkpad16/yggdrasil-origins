@@ -10,7 +10,7 @@
     {
       "id": "yggdrasil_origins:halfling_small_max_health",
       "attribute": "minecraft:generic.max_health",
-      "amount": -2.0,
+      "amount": -5.0,
       "operation": "add_value"
     },
     {

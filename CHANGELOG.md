@@ -8,7 +8,7 @@ Work since 1.0.0. Minecraft 1.21.1, Fabric.
 
 ### Content
 
-- **25 origins and 55 paths**, 346 abilities. Umbral (Nichnytsia) was removed outright, with
+- **25 origins and 51 paths**, 334 abilities. Umbral (Nichnytsia) was removed outright, with
   its three paths and every ability behind them.
 - **The Beaten Track** (human) is no longer tied to the block underfoot: trodden ground around
   the player stacks three times — a trail, a road, a paved street — up to +9% movement speed
@@ -16,9 +16,76 @@ Work since 1.0.0. Minecraft 1.21.1, Fabric.
 - **The pack** (werewolf) reads at a glance: the leader gains +3% rogue and +4% warrior weapon
   damage per pack member within 20 blocks, three at most; a follower sees their leader out to
   30 blocks. The leader's lone-beast penalty is half what it was.
+- **The mara**: Waking Dread gives +5% dagger damage, down from +12%. Unseen works in dusk as well as darkness (light 7 or lower, was 3 or lower, which open night never reaches), and after she hits or is hit she cannot vanish for 30 seconds.
+- **Trodden Road** (human path) is gone; Levy is the human's only path.
+- **Mermaid Ring** (mara path) is gone; Veil is the mara's only path.
+- **The serpentfolk**: Serpent Blood gives +5% rogue weapon and dagger damage, down from +11%.
+- **The werewolf**: Night Hunter works by night only (wherever he stands) and is small: +10% movement speed, +3% crit chance, +5% rogue weapon damage, no warrior bonus. Claws give +3% dagger damage, down from +32%. By day in shade neither Night Hunter nor Sun-Weary applies.
+- **The dragonborn**: Dragon Scales give +4 armor, down from +8.
+- **The halfling**: Sling gives +5% dagger damage, down from +14%.
+- **Shieldbreaker** (orc path) is gone; Bloodscent is the orc's only path.
 - **Bloodscent** (orc) has no visual at all: instead of making the wounded glow through walls,
   a wounded creature within 10 blocks gives the orc +5% movement speed and +6% warrior weapon
   damage.
+- **The vortan fights with Forcemaster knuckles.** Knuckles count as swords in that mod, so Dead Steel used to cut his damage by 46% with them; knuckles are now exempt. Empty Palm became Fist in Iron (+10% movement speed with knuckles in hand; the flat +4.5 unarmed damage is gone), Fists became Knuckles, and Iron Shirt holds with knuckles as well as with empty hands.
+- **The mara**: Waking Dread gives +5% dagger damage, down from +12%. Unseen works in dusk as well as darkness (light 7 or lower, was 3 or lower, which open night never reaches), and after she hits or is hit she cannot vanish for 30 seconds.
+- **Trodden Road** (human path) is gone; Levy is the human's only path.
+- **Mermaid Ring** (mara path) is gone; Veil is the mara's only path.
+- **The serpentfolk**: Serpent Blood gives +5% rogue weapon and dagger damage, down from +11%.
+- **The werewolf**: Night Hunter works by night only (wherever he stands) and is small: +10% movement speed, +3% crit chance, +5% rogue weapon damage, no warrior bonus. Claws give +3% dagger damage, down from +32%. By day in shade neither Night Hunter nor Sun-Weary applies.
+- **The dragonborn**: Dragon Scales give +4 armor, down from +8.
+- **The halfling**: Sling gives +5% dagger damage, down from +14%.
+- **Shieldbreaker** (orc path) is gone; Bloodscent is the orc's only path.
+- **Bloodscent** (orc): the scent and Finish the Bloodied trigger below 10% health instead of 50%, and Finish the Bloodied gives +5% damage, down from +15%.
+- **The orc**: Bloodlust starts below 20% health instead of 50% and gives +10% lifesteal and +10% warrior weapon damage, down from +49% and +37%.
+- **Moon paths** (lunaris): Alone (Bond) is -1.5 hearts and Low Water (Tide) -0.5 hearts instead of +18% and +8% damage taken.
+- **The vortan**: Fists give +5% attack speed, down from +13%, and the description now shows the real +30% knuckles damage. No attack-speed bonus goes above +8%.
+- **Iron Burden** (ferrine path) is gone; Retribution is the ferrine's only path.
+- **Retribution** (ferrine): Anvil is -4 hearts, up from -0.5; Retribution Spikes now deal 3% of his own max health per hit instead of 3% of the damage taken.
+- **The sylph**: No Sky Above slows her by 10% instead of cutting air spell power by 25%.
+- **Stonecaller** (geonite): Heart of the Rock gives +8% earth spell power, up from +5%.
+- **The geonite** no longer sees through lava (Glow of the Rock is gone), and Unyielding reflects 5% of damage, down from 13%.
+- **The dwarf** no longer sees through lava; Eyes for the Deep is gone. **Forgehand** now costs
+  -10% movement speed, up from -8%.
+- **Oreseeker** (dwarf) no longer stacks more digging on a race that already digs fast. Under
+  stone he gets +8% movement speed, +15% axe damage and +2 armor, mirroring what the open sky
+  takes from him; the new Ore Sense gives +25% block break speed with ore within 5 blocks.
+- **The elf's Finesse** no longer boosts daggers; rogue weapon and archer melee damage stay +14%.
+- **Fragility costs hearts, not damage taken.** The 25 always-on penalties that raised damage
+  taken now lower max health instead, by the same effective amount: +X% damage taken became
+  20 × X / (1 + X) health, rounded to the half heart, at least half a heart. Penalties that only
+  apply under a condition (sun, snow, sprinting, the Nether, after a hit) still raise damage taken,
+  so a condition switching on does not strip hearts.
+- **One heart penalty per origin.** Elf, halfling and tiefling each had two abilities taking hearts;
+  each now has one. Bodily Vulnerability is folded into the elf's Frail Frame (-4.5 hearts),
+  Easily Thrown gives its hearts to Small Stature (-2.5) and Cursed Flesh to Demonic Blood (-1.5).
+- **Venomstring** (elf) now has a cost: Thin String, -8% ranged damage. Light Hand is +3% rogue
+  weapon damage, down from +6%.
+- **Second Voice** (cantharis): Strained Voice is -3 hearts, up from -1.5.
+- **Swarm Sense** (cantharis): Alone no longer cuts warrior damage; it slows by 10% instead of 5%.
+- **Current** (undine): Thin Blood is -4 hearts and -2 armor, up from -2 hearts.
+- **Potions answer conditional debuffs.** A potion now switches off a debuff that hangs on the surroundings, without granting the matching bonus: Water Breathing for undine Out of Element, Drying Out (renamed from the second "Evaporation") and Pearl Out of Water, and for the blazing, dwarf and ferrine water weaknesses; Invisibility for the sun debuffs of lunaris, mara, werewolf and Tide; Night Vision for aurelite Light Starved and Dawnsong After Dark; Slow Falling for sylph No Sky Above.
+- **The aurelite**: Light Starved slows by 10% and cuts paladin damage by 6% (the data had -95% on paladin damage and -6% on speed, the reverse of its description). Sun-Weary's description now lists the numbers the data uses.
+- **Pyromancer** (blazing): Kindling is -4 hearts and no longer takes armor.
+- **Second Wind** (half-giant) no longer takes the roll away: Heavy Roll gives -15% roll distance
+  and +30% roll recharge instead.
+- **The undead**: Scythe and Guard is gone, Grave Reaper is halved (sickle +6.5%, rogue weapon +5%,
+  axe +4.5%), and the new Stale Blood halves how long beneficial potions last on him, Fire
+  Resistance included. Fire Resistance still switches Sunburn off entirely while it lasts.
+- **Reaper** (undead): Harvest heals 10% of the damage the hit dealt instead of half a heart,
+  and Dull Scythe became Withered, -3 hearts instead of -15% damage to healthy targets. The
+  `heal` action takes `fraction_of_damage` for this.
+- **No ability undoes another.** The angel gave +2 hearts and took 2.5; the orc gave 3.5 and took 2.
+  Each now has one value, and it is a gain: the angel's Blessing is +2 hearts and the orc's Deep
+  Reserves +4, while Mortal Frame and No Retreat no longer take hearts at all.
+
+### Picker
+
+- **The path step names the origin plainly**: the header reads "Path for the origin Ferrine" instead of "Path · Ferrine", which looked like the path was called Ferrine.
+- **Ability texts read like a card.** The effect comes first with every number drawn bright, and
+  the flavour line follows it in italics and quotes, a size smaller and in a muted shade of the
+  ability's colour - on the same line when it fits, wrapping below when it does not. In the lang
+  files the flavour is whatever follows the last `\n` of a description; 246 abilities have one.
 
 ### Looks
 
@@ -85,6 +152,9 @@ Work since 1.0.0. Minecraft 1.21.1, Fabric.
 
 ### Fixes
 
+- **`moving` works on the server.** It read the player's delta movement, which stays near zero server-side, so "standing still" was always true: Unseen ignored steps, and the stand-still buffs (Resin Set, Bulwark Rooted, Rootbound Hold) never switched off. It now compares positions between checks.
+- Six ability descriptions showed old heart counts after hearts were merged into one penalty per origin: Small and Easily Thrown (halfling), Frail (elf), Demon Blood and Cursed Flesh (tiefling), Hollow Frame (cantharis).
+- Two Temptation descriptions carried a raw line break inside the lang string; it is an escaped \n now.
 - **`modify_food` changes nutrition and saturation for players.** The hunger bar was fed before
   the change reached the food, so only `prevent_effects` worked. A stew still leaves its bowl.
 - **Scans stop counting early again**: the numbers they count to were wiped right after loading.
@@ -173,6 +243,9 @@ Work since 1.0.0. Minecraft 1.21.1, Fabric.
 
 ### Engine
 
+- **`combat_recently`** condition: the player hit or was hit by something living within the last `seconds`.
+- **`daytime`** condition: true while the world has day, wherever the player stands.
+- **`damage` action** takes `fraction_of_owner_max_health`: a share of the power owner's max health.
 - **`fluid_height`** condition: how deep the player stands in water or lava.
 - **`invulnerability`** power: damage matching its `damage_condition` does not land at all.
 - **`damage_over_time`** power: `interval`, `onset_delay`, `damage` and `damage_easy`. A

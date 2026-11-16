@@ -1,0 +1,11 @@
+{
+  "type": "apoli:attribute",
+  "modifiers": [
+    {
+      "id": "yggdrasil_origins:path_elf_venomstring_thin_damage",
+      "attribute": "ranged_weapon:damage",
+      "amount": -0.08,
+      "operation": "add_multiplied_total"
+    }
+  ]
+}

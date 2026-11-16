@@ -10,7 +10,7 @@
     {
       "id": "yggdrasil_origins:geonite_unyielding_damage_reflect_modifier",
       "attribute": "mrpg_lib:damage_reflect_modifier",
-      "amount": 0.13,
+      "amount": 0.05,
       "operation": "add_multiplied_base"
     }
   ]

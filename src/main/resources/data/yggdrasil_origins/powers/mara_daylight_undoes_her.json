@@ -2,7 +2,17 @@
   "type": "apoli:conditioned_attribute",
   "tick_rate": 20,
   "condition": {
-    "type": "apoli:exposed_to_sun"
+    "type": "apoli:all_of",
+    "conditions": [
+      {
+        "type": "apoli:exposed_to_sun"
+      },
+      {
+        "type": "apoli:status_effect",
+        "effect": "minecraft:invisibility",
+        "inverted": true
+      }
+    ]
   },
   "modifiers": [
     {

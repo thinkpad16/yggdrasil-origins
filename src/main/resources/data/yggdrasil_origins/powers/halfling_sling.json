@@ -10,7 +10,7 @@
     {
       "id": "yggdrasil_origins:halfling_sling_dagger_damage",
       "attribute": "attributes_ld:dagger_damage",
-      "amount": 0.14,
+      "amount": 0.05,
       "operation": "add_multiplied_base"
     }
   ]

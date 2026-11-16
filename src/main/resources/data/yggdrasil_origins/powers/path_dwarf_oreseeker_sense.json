@@ -1,0 +1,22 @@
+{
+  "type": "apoli:conditioned_attribute",
+  "tick_rate": 20,
+  "condition": {
+    "type": "apoli:block_in_radius",
+    "radius": 5,
+    "comparison": ">=",
+    "compare_to": 1,
+    "block_condition": {
+      "type": "apoli:in_tag",
+      "tag": "c:ores"
+    }
+  },
+  "modifiers": [
+    {
+      "id": "yggdrasil_origins:path_dwarf_oreseeker_sense_block_break_speed",
+      "attribute": "minecraft:player.block_break_speed",
+      "amount": 0.25,
+      "operation": "add_multiplied_base"
+    }
+  ]
+}

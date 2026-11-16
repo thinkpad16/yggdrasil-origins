@@ -4,7 +4,7 @@
     {
       "id": "yggdrasil_origins:path_dwarf_forgehand_weight_movement_speed",
       "attribute": "minecraft:generic.movement_speed",
-      "amount": -0.08,
+      "amount": -0.1,
       "operation": "add_multiplied_base"
     },
     {

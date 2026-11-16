@@ -2,9 +2,19 @@
   "type": "apoli:conditioned_attribute",
   "tick_rate": 5,
   "condition": {
-    "type": "apoli:brightness",
-    "comparison": "<=",
-    "compare_to": 0.35
+    "type": "apoli:all_of",
+    "conditions": [
+      {
+        "type": "apoli:brightness",
+        "comparison": "<=",
+        "compare_to": 0.35
+      },
+      {
+        "type": "apoli:status_effect",
+        "effect": "minecraft:night_vision",
+        "inverted": true
+      }
+    ]
   },
   "modifiers": [
     {

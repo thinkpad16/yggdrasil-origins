@@ -4,19 +4,19 @@
     {
       "id": "yggdrasil_origins:undead_grave_reaper_sickle_damage",
       "attribute": "attributes_ld:sickle_damage",
-      "amount": 0.13,
+      "amount": 0.065,
       "operation": "add_multiplied_base"
     },
     {
       "id": "yggdrasil_origins:undead_grave_reaper_rogue_weapon_damage",
       "attribute": "attributes_ld:rogue_weapon_damage",
-      "amount": 0.1,
+      "amount": 0.05,
       "operation": "add_multiplied_base"
     },
     {
       "id": "yggdrasil_origins:undead_grave_reaper_axe_damage",
       "attribute": "attributes_ld:axe_damage",
-      "amount": 0.09,
+      "amount": 0.045,
       "operation": "add_multiplied_base"
     }
   ]

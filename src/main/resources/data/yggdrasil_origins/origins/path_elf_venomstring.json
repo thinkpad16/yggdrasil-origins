@@ -6,6 +6,7 @@
   "impact": 1,
   "powers": [
     "yggdrasil_origins:path_elf_venomstring_coating",
-    "yggdrasil_origins:path_elf_venomstring_hands"
+    "yggdrasil_origins:path_elf_venomstring_hands",
+    "yggdrasil_origins:path_elf_venomstring_thin"
   ]
 }

@@ -4,7 +4,7 @@
     {
       "id": "yggdrasil_origins:orc_deep_reserves_max_health",
       "attribute": "minecraft:generic.max_health",
-      "amount": 7.0,
+      "amount": 8.0,
       "operation": "add_value"
     }
   ]

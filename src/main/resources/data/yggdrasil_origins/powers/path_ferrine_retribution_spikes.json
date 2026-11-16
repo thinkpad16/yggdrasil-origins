@@ -3,6 +3,6 @@
   "entity_action": {
     "type": "apoli:damage",
     "damage_type": "minecraft:thorns",
-    "fraction_of_damage_taken": 0.03
+    "fraction_of_owner_max_health": 0.03
   }
 }

@@ -10,7 +10,7 @@
     {
       "id": "yggdrasil_origins:tiefling_demon_blood_max_health",
       "attribute": "minecraft:generic.max_health",
-      "amount": -2.0,
+      "amount": -3.0,
       "operation": "add_value"
     }
   ]

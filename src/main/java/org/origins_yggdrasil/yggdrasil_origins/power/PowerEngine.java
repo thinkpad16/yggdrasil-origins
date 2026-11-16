@@ -1050,8 +1050,22 @@ public final class PowerEngine {
         return false;
     }
 
+    /** Game time of each player's last hit, given or taken, for the {@code combat_recently} condition. */
+    private static final Map<java.util.UUID, Long> LAST_COMBAT = new java.util.concurrent.ConcurrentHashMap<>();
+
+    /** Whether the player hit or was hit within the last {@code ticks} ticks. */
+    public static boolean combatWithin(ServerPlayer player, long ticks) {
+        Long last = LAST_COMBAT.get(player.getUUID());
+        return last != null && player.level().getGameTime() - last < ticks;
+    }
+
+    private static void markCombat(ServerPlayer player) {
+        LAST_COMBAT.put(player.getUUID(), player.level().getGameTime());
+    }
+
     /** The player was hit. {@code taken} is the damage that actually went through. */
     public void onDamaged(ServerPlayer player, DamageSource source, float taken) {
+        if (source.getEntity() instanceof LivingEntity) markCombat(player);
         List<Map.Entry<ResourceLocation, WhenHit>> list = cache(player).whenHit;
         if (list.isEmpty()) return;
         LivingEntity attacker = source.getEntity() instanceof LivingEntity living ? living : null;
@@ -1175,17 +1189,23 @@ public final class PowerEngine {
      * They used to run before the game decided whether there would be damage at all:
      * a hit into invulnerability frames or a shield still poisoned the target.
      */
-    public void onDamageLanded(ServerPlayer player, LivingEntity target, DamageSource source, boolean projectile) {
+    public void onDamageLanded(ServerPlayer player, LivingEntity target, DamageSource source, boolean projectile,
+                               float dealt) {
+        markCombat(player);
         List<ModDmg> list = cache(player).dealt;
         for (int i = 0; i < list.size(); i++) {
             ModDmg mod = list.get(i);
             if (mod.selfAction() == null && mod.targetAction() == null) continue;
             if (!matches(mod, player, target, source, projectile)) continue;
+            float outerDamage = Actions.hitDamage;
+            Actions.hitDamage = dealt;
             try {
                 if (mod.selfAction() != null) mod.selfAction().accept(player, player);
                 if (mod.targetAction() != null) mod.targetAction().accept(player, target);
             } catch (Exception | LinkageError failed) {
                 complain("damage actions", failed);
+            } finally {
+                Actions.hitDamage = outerDamage;
             }
         }
     }

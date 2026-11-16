@@ -3,7 +3,7 @@
   "modifier": {
     "id": "yggdrasil_origins:tiefling_spell_vampire_spell_vampire",
     "attribute": "mrpg_lib:spell_vampire",
-    "amount": 0.15,
+    "amount": 0.08,
     "operation": "add_multiplied_base"
   }
 }

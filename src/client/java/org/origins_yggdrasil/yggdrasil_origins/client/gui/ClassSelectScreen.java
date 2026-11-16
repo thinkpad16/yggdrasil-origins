@@ -46,6 +46,8 @@ public class ClassSelectScreen extends Screen {
     static final int RGB_GAIN    = 0x7BE08A;
     static final int RGB_COST    = 0xF2807E;
     static final int RGB_MIXED   = 0xF2D06B;
+    /** The quoted flavour after an ability is drawn this much smaller than its rules. */
+    private static final float FLAVOUR_SCALE = 0.8f;
 
     private static final ResourceLocation[] IMPACT_ICONS = {
         null,
@@ -579,9 +581,11 @@ public class ClassSelectScreen extends Screen {
         // on a later step, what was chosen before it: picking a path, you see whose path
         Component before = readOnly ? null : chosenBefore();
         if (before != null) {
-            int at = font.width(heading) + 8;
-            graphics.drawString(font, "·", at, 0, withAlpha(RGB_DIM, 0.8f * in), false);
-            at += font.width("·") + 6;
+            // "Path for origin Ferrine": the name is the origin it belongs to, not the path itself
+            int at = font.width(heading) + 6;
+            Component lead = Component.translatable("gui.yggdrasil_origins.picker.for_origin");
+            graphics.drawString(font, lead, at, 0, withAlpha(RGB_DIM, 0.8f * in), false);
+            at += font.width(lead) + 4;
             graphics.drawString(font, before, at + 1, 1, withAlpha(0x000000, 0.55f * in), false);
             graphics.drawString(font, before, at, 0, withAlpha(RGB_TEXT, 0.9f * in), false);
         }
@@ -863,7 +867,23 @@ public class ClassSelectScreen extends Screen {
         return Component.translatable("gui.yggdrasil_origins.picker.impact." + Mth.clamp(impact, 0, 3));
     }
 
-    private record Row(Component text, FormattedCharSequence seq, boolean impact, int rgb, int height) { }
+    /**
+     * One line of the details panel. {@code tail} is the flavour quote drawn after the line,
+     * smaller and quieter, {@code tailX} pixels in from the text start.
+     */
+    private record Row(Component text, FormattedCharSequence seq, boolean impact, int rgb, int height,
+                       FormattedCharSequence tail, int tailX, int tailRgb) {
+        Row(Component text, FormattedCharSequence seq, boolean impact, int rgb, int height) {
+            this(text, seq, impact, rgb, height, null, 0, 0);
+        }
+    }
+
+    /** The flavour colour: the ability's own hue, pulled most of the way into the panel. */
+    private static int muted(int rgb) {
+        int r = (rgb >> 16) & 0xFF, g = (rgb >> 8) & 0xFF, b = rgb & 0xFF;
+        int pr = (RGB_PANEL >> 16) & 0xFF, pg = (RGB_PANEL >> 8) & 0xFF, pb = RGB_PANEL & 0xFF;
+        return ((r + pr) / 2 << 16) | ((g + pg) / 2 << 8) | (b + pb) / 2;
+    }
 
     static int senseColour(int sense) {
         return sense > 0 ? RGB_GAIN : sense < 0 ? RGB_COST : RGB_MIXED;
@@ -872,6 +892,27 @@ public class ClassSelectScreen extends Screen {
     /** A sign in front of the name, so the colour is not the only thing carrying the meaning. */
     static String senseMark(int sense) {
         return sense > 0 ? "+" : sense < 0 ? "-" : "~";
+    }
+
+    /** A number in an ability text: an optional sign, digits, an optional fraction and percent. */
+    private static final java.util.regex.Pattern NUMBER =
+        java.util.regex.Pattern.compile("[+\\-−]?\\d+(?:[.,]\\d+)?%?");
+
+    /**
+     * The ability text with every number drawn bright, so the values stand out of the sentence.
+     * The rest keeps no colour of its own and takes the row's.
+     */
+    static Component highlightNumbers(String text) {
+        net.minecraft.network.chat.MutableComponent out = Component.empty();
+        java.util.regex.Matcher m = NUMBER.matcher(text);
+        int from = 0;
+        while (m.find()) {
+            if (m.start() > from) out.append(Component.literal(text.substring(from, m.start())));
+            out.append(Component.literal(m.group()).withColor(RGB_TEXT));
+            from = m.end();
+        }
+        if (from < text.length()) out.append(Component.literal(text.substring(from)));
+        return out;
     }
 
     /** The ability text sits a shade quieter than its heading. */
@@ -935,8 +976,32 @@ public class ClassSelectScreen extends Screen {
             int rgb = senseColour(power.sense());
             rows.add(new Row(Component.literal(senseMark(power.sense()) + " ").append(power.name()),
                 null, false, rgb, 11));
-            for (FormattedCharSequence line : font.split(power.description(), innerW - 10)) {
+            // what it does, numbers lit up; the flavour after the break follows it, smaller and quieter
+            String text = power.description().getString();
+            int cut = text.lastIndexOf('\n');
+            String effect = cut < 0 ? text : text.substring(0, cut);
+            String flavour = cut < 0 ? "" : text.substring(cut + 1).trim();
+            int width = innerW - 10;
+            List<FormattedCharSequence> lines = font.split(highlightNumbers(effect), width);
+            for (FormattedCharSequence line : lines) {
                 rows.add(new Row(null, line, false, dim(rgb), 10));
+            }
+            if (!flavour.isEmpty()) {
+                Component quote = Component.translatable("gui.yggdrasil_origins.picker.flavor", flavour)
+                    .withStyle(ChatFormatting.ITALIC);
+                int tailRgb = muted(rgb);
+                int gap = 4;
+                int lastW = lines.isEmpty() ? -gap : font.width(lines.get(lines.size() - 1));
+                if (!lines.isEmpty() && lastW + gap + font.width(quote) * FLAVOUR_SCALE <= width) {
+                    // it fits at the end of the last line - it rides along there
+                    Row last = rows.remove(rows.size() - 1);
+                    rows.add(new Row(null, last.seq(), false, last.rgb(), last.height(),
+                        quote.getVisualOrderText(), lastW + gap, tailRgb));
+                } else {
+                    for (FormattedCharSequence line : font.split(quote, (int) (width / FLAVOUR_SCALE))) {
+                        rows.add(new Row(null, null, false, 0, 8, line, 0, tailRgb));
+                    }
+                }
             }
             rows.add(new Row(null, null, false, 0, 4));
         }
@@ -973,6 +1038,14 @@ public class ClassSelectScreen extends Screen {
                     graphics.drawString(font, row.text(), innerX, y, withAlpha(row.rgb(), alpha), false);
                 } else if (row.seq() != null) {
                     graphics.drawString(font, row.seq(), innerX, y, withAlpha(row.rgb(), alpha), false);
+                }
+                if (row.tail() != null) {
+                    // smaller text sits on the same baseline as the line it follows
+                    graphics.pose().pushPose();
+                    graphics.pose().translate(innerX + row.tailX(), y + 9 * (1f - FLAVOUR_SCALE), 0f);
+                    graphics.pose().scale(FLAVOUR_SCALE, FLAVOUR_SCALE, 1f);
+                    graphics.drawString(font, row.tail(), 0, 0, withAlpha(row.tailRgb(), alpha), false);
+                    graphics.pose().popPose();
                 }
             }
             y += row.height();

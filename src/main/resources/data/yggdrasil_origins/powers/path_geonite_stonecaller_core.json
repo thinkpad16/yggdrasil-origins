@@ -4,7 +4,7 @@
     {
       "id": "yggdrasil_origins:path_geonite_stonecaller_core_earth",
       "attribute": "spell_power:earth",
-      "amount": 0.05,
+      "amount": 0.08,
       "operation": "add_multiplied_total"
     }
   ]

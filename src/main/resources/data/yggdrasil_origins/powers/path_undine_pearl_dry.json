@@ -2,9 +2,19 @@
   "type": "apoli:conditioned_attribute",
   "tick_rate": 5,
   "condition": {
-    "type": "apoli:submerged_in",
-    "fluid": "minecraft:water",
-    "inverted": true
+    "type": "apoli:all_of",
+    "conditions": [
+      {
+        "type": "apoli:submerged_in",
+        "fluid": "minecraft:water",
+        "inverted": true
+      },
+      {
+        "type": "apoli:status_effect",
+        "effect": "minecraft:water_breathing",
+        "inverted": true
+      }
+    ]
   },
   "modifiers": [
     {

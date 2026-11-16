@@ -6,6 +6,7 @@
   "impact": 1,
   "powers": [
     "yggdrasil_origins:path_dwarf_oreseeker_deep",
+    "yggdrasil_origins:path_dwarf_oreseeker_sense",
     "yggdrasil_origins:path_dwarf_oreseeker_surface"
   ]
 }

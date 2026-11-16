@@ -11,10 +11,15 @@
       {
         "type": "apoli:brightness",
         "comparison": "<",
-        "compare_to": 0.25
+        "compare_to": 0.5
       },
       {
         "type": "apoli:moving",
+        "inverted": true
+      },
+      {
+        "type": "apoli:combat_recently",
+        "seconds": 30,
         "inverted": true
       }
     ]

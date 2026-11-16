@@ -19,8 +19,7 @@
     "yggdrasil_origins:geonite_clumsy_tools",
     "yggdrasil_origins:geonite_magic_resistance",
     "yggdrasil_origins:geonite_deep_reserves",
-    "yggdrasil_origins:geonite_shield_wall",
-    "yggdrasil_origins:geonite_lava_sight"
+    "yggdrasil_origins:geonite_shield_wall"
   ],
   "visual": {
     "parts": [

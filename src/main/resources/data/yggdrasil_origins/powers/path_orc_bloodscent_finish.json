@@ -2,11 +2,11 @@
   "type": "apoli:modify_damage_dealt",
   "modifier": {
     "operation": "multiply_base_additive",
-    "amount": 0.15
+    "amount": 0.05
   },
   "target_condition": {
     "type": "apoli:relative_health",
     "comparison": "<",
-    "compare_to": 0.5
+    "compare_to": 0.1
   }
 }

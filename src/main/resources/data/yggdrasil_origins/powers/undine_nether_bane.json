@@ -26,6 +26,10 @@
             "effect": "yggdrasil_origins:warded"
           },
           {
+            "type": "apoli:status_effect",
+            "effect": "minecraft:water_breathing"
+          },
+          {
             "type": "apoli:inventory_item",
             "item_condition": {
               "type": "apoli:ingredient",

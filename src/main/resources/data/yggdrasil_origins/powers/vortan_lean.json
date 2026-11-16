@@ -4,14 +4,8 @@
     {
       "id": "yggdrasil_origins:vortan_lean_max_health",
       "attribute": "minecraft:generic.max_health",
-      "amount": -2.0,
+      "amount": -3.0,
       "operation": "add_value"
-    },
-    {
-      "id": "yggdrasil_origins:vortan_lean_damage_taken",
-      "attribute": "spell_engine:damage_taken",
-      "amount": 0.02,
-      "operation": "add_multiplied_base"
     },
     {
       "id": "yggdrasil_origins:vortan_lean_shield_bonus",

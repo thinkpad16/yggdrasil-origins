@@ -1,12 +1,11 @@
 {
-  "type": "apoli:modify_damage_dealt",
-  "modifier": {
-    "operation": "multiply_base_additive",
-    "amount": -0.15
-  },
-  "target_condition": {
-    "type": "apoli:relative_health",
-    "comparison": ">",
-    "compare_to": 0.7
-  }
+  "type": "apoli:attribute",
+  "modifiers": [
+    {
+      "id": "yggdrasil_origins:path_undead_reaper_dull_max_health",
+      "attribute": "minecraft:generic.max_health",
+      "amount": -6.0,
+      "operation": "add_value"
+    }
+  ]
 }

@@ -4,7 +4,7 @@
     {
       "id": "yggdrasil_origins:dragonborn_scales_armor",
       "attribute": "minecraft:generic.armor",
-      "amount": 8.0,
+      "amount": 4.0,
       "operation": "add_value"
     },
     {

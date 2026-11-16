@@ -39,7 +39,8 @@ public final class Actions {
 
     /**
      * How much damage the hit currently being reacted to actually dealt. Set by the engine around
-     * a hit reaction and zero outside one, so {@code fraction_of_damage_taken} has a value to use.
+     * a hit reaction (taken or dealt) and zero outside one, so {@code fraction_of_damage_taken} and
+     * {@code fraction_of_damage} have a value to use.
      */
     static float hitDamage = 0.0F;
 
@@ -82,13 +83,20 @@ public final class Actions {
                 return action;
             }
             case "heal": {
-                float amount = json.get("amount").getAsFloat();
-                return (owner, target) -> target.heal(amount);
+                float amount = json.has("amount") ? json.get("amount").getAsFloat() : 0.0F;
+                // a share of the damage the hit just dealt, for lifesteal that only some hits get
+                float ofDamage = fraction(json, "fraction_of_damage");
+                return (owner, target) -> {
+                    float heal = amount + ofDamage * hitDamage;
+                    if (heal > 0.0F) target.heal(heal);
+                };
             }
             case "damage": {
                 float amount = json.has("amount") ? json.get("amount").getAsFloat() : 0.0F;
                 float ofMaxHealth = fraction(json, "fraction_of_max_health");
                 float ofHit = fraction(json, "fraction_of_damage_taken");
+                // a share of the power owner's own max health, for thorns that scale with toughness
+                float ofOwnerMax = fraction(json, "fraction_of_owner_max_health");
                 ResourceLocation typeId = json.has("damage_type")
                     ? ResourceLocation.parse(json.get("damage_type").getAsString())
                     : ResourceLocation.withDefaultNamespace("generic");
@@ -96,7 +104,8 @@ public final class Actions {
                     if (!(target.level() instanceof ServerLevel level)) return;
                     float total = amount
                         + ofMaxHealth * target.getMaxHealth()
-                        + ofHit * hitDamage;
+                        + ofHit * hitDamage
+                        + ofOwnerMax * owner.getMaxHealth();
                     if (total <= 0.0F) return;
                     DamageSource source = level.damageSources().source(
                         net.minecraft.resources.ResourceKey.create(

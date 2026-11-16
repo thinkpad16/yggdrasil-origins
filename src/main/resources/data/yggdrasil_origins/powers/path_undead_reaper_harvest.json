@@ -11,6 +11,6 @@
   },
   "self_action": {
     "type": "apoli:heal",
-    "amount": 1.0
+    "fraction_of_damage": 0.1
   }
 }
